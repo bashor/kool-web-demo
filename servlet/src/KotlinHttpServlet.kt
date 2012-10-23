@@ -22,19 +22,19 @@ import javax.servlet.ServletResponse
 import javax.servlet.ServletConfig
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpUtils
+import java.util.Hashtable
 
 class KotlinHttpServlet : HttpServlet() {
-    public override fun init(config: ServletConfig?) {
-        super.init(config)
-        println("OK")
-    }
+    protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
+        //todo fix this workaround after issue KT-2982 will be fixed
+        val params = HttpUtils.parseQueryString(request.getQueryString()) as Hashtable<String, String>
 
-    public override fun destroy() {
-        super.destroy()
+        when(params["type"]) {
+            //
+            // processing
+            //
+            else -> super.service(request, response)
+        }
     }
-
-    protected override fun service(req: HttpServletRequest?, resp: HttpServletResponse?) {
-        super.service(req, resp)
-    }
-
 }

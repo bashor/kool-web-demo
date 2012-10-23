@@ -9,7 +9,6 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="KotlinRuntime" />
-          <element id="library" level="project" name="javax.servlet" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="servlet/web/Web" />

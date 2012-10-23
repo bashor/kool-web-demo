@@ -28,9 +28,15 @@ import java.util.Hashtable
 class KotlinHttpServlet : HttpServlet() {
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         //todo fix this workaround after issue KT-2982 will be fixed
-        val params = HttpUtils.parseQueryString(request.getQueryString()) as Hashtable<String, String>
+        val params = HttpUtils.parseQueryString(request.getQueryString()) as Hashtable<String, Array<String>>
 
-        when(params["type"]) {
+        fun <T> Array<T>.firstOrDefault(default: T): T {
+            if (this.isEmpty())
+                return default
+            return this[0]
+        }
+
+        when(params["type"]?.firstOrDefault("")) {
             //
             // processing
             //

@@ -1,0 +1,12 @@
+<root>
+    <item name='javax.servlet.ServletResponse java.io.PrintWriter getWriter()'>
+        <annotation name='jet.runtime.typeinfo.KotlinSignature'>
+            <val name="value" val="&quot;fun getWriter() : PrintWriter&quot;"/>
+        </annotation>
+    </item>
+    <item name='javax.servlet.ServletRequest java.util.Map getParameterMap()'>
+        <annotation name='jet.runtime.typeinfo.KotlinSignature'>
+            <val name="value" val="&quot;fun getParameterMap() : MutableMap&lt;out Any, out Any&gt;&quot;"/>
+        </annotation>
+    </item>
+</root>

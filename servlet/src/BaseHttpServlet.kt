@@ -16,6 +16,13 @@
 
 package org.jetbrains.webdemo.servlet
 
+/**
+ * Created by IntelliJ IDEA.
+ * User: Zalim Bahsorov
+ * Date: 10/23/12
+ * Time: 9:45 PM
+ */
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
@@ -25,22 +32,28 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpUtils
 import java.util.Hashtable
 
-private fun <T> Array<T>.firstOrDefault(default: T): T {
-    if (this.isEmpty())
-        return default
-    return this[0]
-}
+import org.jetbrains.webdemo.common.utils.firstOrDefault
+import org.jetbrains.webdemo.common.utils.write
+import org.jetbrains.webdemo.common.utils.ResponseStatusCode
 
-class KotlinHttpServlet : HttpServlet() {
+
+trait BaseHttpServlet : HttpServlet {
+    fun handle(command: String, params: Map<String, Array<String>>): String?
+
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         //todo fix this workaround after issue KT-2982 will be fixed
-        val params = HttpUtils.parseQueryString(request.getQueryString()) as Hashtable<String, Array<String>>
+        val params = request.getParameterMap() as Map<String, Array<String>>
 
-        when(params["type"]?.firstOrDefault("")) {
-            //
-            // processing
-            //
-            else -> super.service(request, response)
+        val command = params["do"]
+
+        if (command != null && command.notEmpty()) {
+            val responseBody = handle(command[0], params)
+            if (responseBody != null) {
+                response.write(responseBody, ResponseStatusCode.OK)
+                return
+            }
         }
+
+        //todo report bad request
     }
 }

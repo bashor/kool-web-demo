@@ -6,9 +6,12 @@
         <element id="directory" name="classes">
           <element id="module-output" name="servlet" />
           <element id="module-output" name="server" />
+          <element id="module-output" name="common" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="KotlinRuntime" />
+          <element id="library" level="project" name="json" />
+          <element id="library" level="project" name="log4j-1.2.16" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="servlet/web/Web" />

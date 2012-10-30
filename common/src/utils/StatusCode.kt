@@ -15,21 +15,8 @@
  */
 package org.jetbrains.webdemo.common.utils
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 1:42 PM
- */
+import javax.servlet.http.HttpServletResponse
 
-inline public fun <T> Array<T>.firstOrDefault(default: T): T {
-    if (this.isEmpty())
-        return default
-    return this[0]
-}
-
-inline public fun <T> Array<T>?.firstOrDefault(default: T): T {
-    if (this == null || this.isEmpty())
-        return default
-    return this[0]
+enum class StatusCode(val value: Int) {
+    OK : StatusCode(HttpServletResponse.SC_OK)
 }

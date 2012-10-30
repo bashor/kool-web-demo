@@ -29,13 +29,6 @@ import org.xml.sax.SAXException
 import com.sun.xml.internal.ws.util.xml.NodeListIterator
 import org.jetbrains.webdemo.common.utils.notEmpty
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 7:00 PM
- */
-
 public fun Document(file : File) : Document? {
     val docBuilderFactory = DocumentBuilderFactory.newInstance()
     try {
@@ -64,21 +57,31 @@ val org.w3c.dom.Node.value : String
     get() = this.getNodeValue()!!
 
 
-class HelpHolder(path: String, val containerTag: String) {
-    val file = File(path)
-    var help = ""
-    var lastModified: Long = 0
+class HelpHolder(path: String,
+                 private val containerTag: String,
+                 private val contentUpdatedHandler: (List<Map<String, String>>) -> Unit = {}) {
 
-    fun updateHelp() {
-        if (file.lastModified() == lastModified)
-            return
+    private val file = File(path)
+    private var lastModified: Long = 0
 
-        val result= JSONArray()
+    public var content: String = ""
+        get() {
+            //todo check file existing???
+            if (file.lastModified() != lastModified)
+                $content = loadHelp()
+            return $content
+        }
+        private set
+
+    private fun loadHelp(): String {
+        val elements = arrayList<Map<String, String>>()
+        val result = JSONArray()
 
         val doc = Document(file)
 
         if (doc == null) {
-            return
+            //todo logging
+            return ""
         }
 
         val nodeList = doc.getElementsByTagName(containerTag)!!
@@ -97,16 +100,14 @@ class HelpHolder(path: String, val containerTag: String) {
                 map.put(subNode.name, subNode.value)
             }
 
-            if (map.notEmpty())
+            if (map.notEmpty()) {
+                elements.add(map)
                 result.put(map)
+            }
         }
 
         lastModified = file.lastModified()
-        help = result.toString()!!
-    }
-
-    fun toString(): String {
-        updateHelp()
-        return help
+        contentUpdatedHandler(elements)
+        return result.toString().orEmpty()
     }
 }

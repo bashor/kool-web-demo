@@ -16,13 +16,6 @@
 
 package org.jetbrains.webdemo.servlet
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/23/12
- * Time: 9:45 PM
- */
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
@@ -33,12 +26,11 @@ import javax.servlet.http.HttpUtils
 import java.util.Hashtable
 
 import org.jetbrains.webdemo.common.utils.firstOrDefault
+import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.common.utils.write
-import org.jetbrains.webdemo.common.utils.ResponseStatusCode
 
-
-trait BaseHttpServlet : HttpServlet {
-    fun handle(command: String, params: Map<String, Array<String>>): String?
+abstract class BaseHttpServlet : HttpServlet() {
+    abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         //todo fix this workaround after issue KT-2982 will be fixed
@@ -49,7 +41,7 @@ trait BaseHttpServlet : HttpServlet {
         if (command != null && command.notEmpty()) {
             val responseBody = handle(command[0], params)
             if (responseBody != null) {
-                response.write(responseBody, ResponseStatusCode.OK)
+                response.write(responseBody, StatusCode.OK)
                 return
             }
         }

@@ -26,3 +26,6 @@ package org.jetbrains.webdemo.common.WebIdeCommands
 public val LOAD_HELP_FOR_EXAMPLES: String = "loadHelpForExamples"
 public val LOAD_HELP_FOR_WORDS: String = "loadHelpForWords"
 public val LOAD_EXAMPLES_LIST: String = "loadExamplesList"
+public val LOAD_EXAMPLE: String = "loadExample"
+public val UPDATE_EXAMPLES_LIST: String = "updateExamplesList"
+

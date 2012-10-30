@@ -19,8 +19,9 @@ package org.jetbrains.webdemo.servlet
 import javax.servlet.http.HttpServletResponse
 import org.jetbrains.webdemo.common.WebIdeCommands.*
 import java.io.PrintWriter
-import org.jetbrains.webdemo.common.utils.ResponseStatusCode
+import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.server.WebIdeHandler
+import org.jetbrains.webdemo.common.utils.first
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,14 +30,23 @@ import org.jetbrains.webdemo.server.WebIdeHandler
  * Time: 4:16 PM
  */
 
-class WebIdeServlet : BaseHttpServlet {
-
+class WebIdeServlet : BaseHttpServlet() {
     val webIdeHandler = WebIdeHandler()
 
     override fun handle(command: String, params: Map<String, Array<String>>): String? = when (command) {
         LOAD_HELP_FOR_EXAMPLES -> webIdeHandler.loadHelpForExamples()
         LOAD_HELP_FOR_WORDS -> webIdeHandler.loadHelpForWords()
         LOAD_EXAMPLES_LIST -> webIdeHandler.loadExamplesList()
+        LOAD_EXAMPLE -> {
+            val name = params["name"]?.first
+            if (name == null) {
+                //todo handling error
+                ""
+            } else {
+                webIdeHandler.loadExample(name)
+            }
+        }
+        UPDATE_EXAMPLES_LIST -> webIdeHandler.updateExamplesList()
         else -> null
     }
 }

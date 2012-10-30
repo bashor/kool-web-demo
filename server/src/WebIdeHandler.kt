@@ -17,24 +17,69 @@
 package org.jetbrains.webdemo.server
 
 import java.io.File
+import java.util.HashMap
+import org.jetbrains.webdemo.common.TargetPlatform
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 4:49 PM
- */
+private val EXAMPLE_TAG = "example"
+private val KEYWORD_TAG = "keyword"
+
+private val NAME_TAG = "name"
+private val TEXT_TAG = "text"
+private val TARGET_TAG = "target"
+private val ARGS_TAG = "args"
 
 public class WebIdeHandler {
-    class object {
-        val EXAMPLE_TAG = "example"
-        val KEYWORD_TAG = "keyword"
+    private var examples: Map<String, ExampleOnServer> = hashMap<String, ExampleOnServer>()
+    val exampleName2Path = hashMap<String, String>()
+    var examplesList = ""
+
+    private val helpForKeywords = HelpHolder(Settings.HELP_FOR_KEYWORDS_PATH, KEYWORD_TAG)
+    private val helpForExamples = HelpHolder(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG, { examplesContentUpdatedHandler(it) })
+
+    fun loadHelpForExamples() : String = helpForExamples.content
+
+    fun loadHelpForWords() : String = helpForKeywords.content
+
+    fun loadExamplesList(): String = examplesList
+
+    fun loadExample(name: String): String {
+        val example = examples[name]
+        if (example == null)
+            // todo logging
+            return ""
+
+        return example.source
     }
 
-    val helpForExamples = HelpHolder(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
-    val helpForKeywords = HelpHolder(Settings.HELP_FOR_KEYWORDS_PATH, KEYWORD_TAG)
+    fun updateExamplesList(): String {
+        examplesList = ""
 
-    fun loadHelpForExamples() : String = helpForExamples.toString()
-    fun loadHelpForWords() : String = helpForKeywords.toString()
-    fun loadExamplesList(): String = ""
+        return examplesList
+    }
+
+    private fun examplesContentUpdatedHandler(rawExamples: List<Map<String, String>>) {
+        val newExamples: HashMap<String, ExampleOnServer> = hashMap<String, ExampleOnServer>()
+
+        for (rawExample in rawExamples) {
+            val name = rawExample[NAME_TAG]
+            if (name == null)
+                continue
+
+            val allTargets = TargetPlatform.values() map { it.toString().toLowerCase() }
+            val targets = rawExample[TARGET_TAG]
+                    .orEmpty()
+                    .split(' ')
+                    .filter { allTargets.contains(it) }
+                    .map { TargetPlatform.valueOf(it.toUpperCase()) }
+                    .toSet()
+
+            newExamples.put(name,
+                    ExampleOnServer(text = rawExample[TEXT_TAG].orEmpty(),
+                            targets = if (targets.notEmpty()) targets else hashSet(TargetPlatform.JAVA),
+                            args = rawExample[ARGS_TAG].orEmpty(),
+                            source = ""))
+        }
+
+        examples = newExamples
+    }
 }

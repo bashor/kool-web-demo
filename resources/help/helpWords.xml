@@ -44,7 +44,7 @@
             <pre>while(x > 0) {</pre>
             <pre>  x--</pre>
             <pre>}</pre>
-            <pre></pre>
+            <pre/>
             <pre>do {</pre>
             <pre>  val y = retrieveData()</pre>
             <pre>} while(y != null)<i>// y is visible here!</i></pre>

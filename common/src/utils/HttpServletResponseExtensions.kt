@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.jetbrains.webdemo.common.utils
 
 import javax.servlet.http.HttpServletResponse
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 5:38 PM
- */
-
-fun HttpServletResponse.write(body: String, statusCode : ResponseStatusCode) {
+public fun HttpServletResponse.write(body: String, statusCode : StatusCode) {
+    //todo rewrite
     this.addHeader("Cache-Control", "no-cache")
+
     this.setStatus(statusCode.value)
 
     this.getWriter() use {

@@ -22,4 +22,4 @@ package org.jetbrains.webdemo.common.utils
  * Time: 9:11 PM
  */
 
-public fun <K, V> Map<K, V>.notEmpty(): Boolean = !this.isEmpty()
+inline public fun <K, V> Map<K, V>.notEmpty(): Boolean = !this.isEmpty()

@@ -17,19 +17,20 @@
 package org.jetbrains.webdemo.server.Settings
 
 import java.io.File
+import javax.naming.InitialContext
+import javax.naming.Context
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 6:40 PM
- */
+//todo find a more elegant solution
+private val envContext = InitialContext().lookup("java:comp/env") as Context
+
+//todo check: can it  throw an exception?
+val APP_HOME = envContext.lookup("app_home") as String
 
 val EXAMPLES_DIRECTORY = "examples";
 val HELP_DIRECTORY = "help";
 
-val HELP_FOR_EXAMPLES_FILE = "helpExamples.xml";
-val HELP_FOR_KEYWORDS_FILE = "helpWords.xml";
+val HELP_FOR_EXAMPLES_FILE = "helpExamples.xml"
+val HELP_FOR_KEYWORDS_FILE = "helpWords.xml"
 
-val HELP_FOR_EXAMPLES_PATH = EXAMPLES_DIRECTORY + File.separator + HELP_FOR_EXAMPLES_FILE
-val HELP_FOR_KEYWORDS_PATH = HELP_DIRECTORY + File.separator + HELP_FOR_KEYWORDS_FILE;
+val HELP_FOR_EXAMPLES_PATH: String = APP_HOME + EXAMPLES_DIRECTORY + File.separator + HELP_FOR_EXAMPLES_FILE
+val HELP_FOR_KEYWORDS_PATH: String = APP_HOME + HELP_DIRECTORY + File.separator + HELP_FOR_KEYWORDS_FILE;

@@ -21,7 +21,7 @@ import java.io.IOException
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.ParserConfigurationException
 import org.jetbrains.webdemo.common.utils.notEmpty
-import org.jetbrains.webdemo.common.utils.w3c.dom.*
+import org.jetbrains.webdemo.common.utils.domHelpers.*
 import org.json.JSONArray
 import org.w3c.dom.Document
 import org.w3c.dom.Element

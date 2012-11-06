@@ -23,13 +23,6 @@ import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.server.WebIdeHandler
 import org.jetbrains.webdemo.common.utils.first
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 4:16 PM
- */
-
 class WebIdeServlet : BaseHttpServlet() {
     val webIdeHandler = WebIdeHandler()
 

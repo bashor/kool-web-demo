@@ -20,7 +20,7 @@ import java.util.HashSet
 import org.jetbrains.webdemo.common.TargetPlatform
 import org.jetbrains.webdemo.common.Example
 
-class ExampleOnServer(
+data class ExampleOnServer(
         override val text: String,
         override val targets: Set<TargetPlatform>,
         override val args: String,

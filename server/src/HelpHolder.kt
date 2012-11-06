@@ -17,17 +17,15 @@
 package org.jetbrains.webdemo.server
 
 import java.io.File
-import org.w3c.dom.Node
-import org.w3c.dom.Element
-import java.util.HashMap
-import org.json.JSONArray
-import org.w3c.dom.Document
-import javax.xml.parsers.ParserConfigurationException
 import java.io.IOException
 import javax.xml.parsers.DocumentBuilderFactory
-import org.xml.sax.SAXException
-import com.sun.xml.internal.ws.util.xml.NodeListIterator
+import javax.xml.parsers.ParserConfigurationException
 import org.jetbrains.webdemo.common.utils.notEmpty
+import org.jetbrains.webdemo.common.utils.w3c.dom.*
+import org.json.JSONArray
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.xml.sax.SAXException
 
 public fun Document(file : File) : Document? {
     val docBuilderFactory = DocumentBuilderFactory.newInstance()
@@ -49,14 +47,6 @@ public fun Document(file : File) : Document? {
     }
 }
 
-fun org.w3c.dom.NodeList.iterator() = NodeListIterator(this)
-val org.w3c.dom.Node.name : String
-        get() = this.getNodeName()!!
-
-val org.w3c.dom.Node.value : String
-    get() = this.getNodeValue()!!
-
-
 class HelpHolder(path: String,
                  private val containerTag: String,
                  private val contentUpdatedHandler: (List<Map<String, String>>) -> Unit = {}) {
@@ -64,7 +54,7 @@ class HelpHolder(path: String,
     private val file = File(path)
     private var lastModified: Long = 0
 
-    public var content: String = ""
+    public var content: String = loadHelp()
         get() {
             //todo check file existing???
             if (file.lastModified() != lastModified)
@@ -88,16 +78,16 @@ class HelpHolder(path: String,
 
         for (node in nodeList) {
             //todo fix this workaround after issue KT-2982 will be fixed
-            if (node !is Node || node.hasChildNodes() || node.getNodeType() != Node.ELEMENT_NODE)
+            if (node !is Element || !node.hasChildNodes())
                 continue
 
             val map = hashMap<String, String>();
             for (subNode in node.getChildNodes()!!) {
                 //todo fix this workaround after issue KT-2982 will be fixed
-                if (subNode !is Node)
+                if (subNode !is Element)
                     continue
 
-                map.put(subNode.name, subNode.value)
+                map.put(subNode.name, subNode.inner)
             }
 
             if (map.notEmpty()) {

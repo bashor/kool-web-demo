@@ -19,18 +19,26 @@ package org.jetbrains.webdemo.server
 import java.io.File
 import java.util.HashMap
 import org.jetbrains.webdemo.common.TargetPlatform
+import org.jetbrains.webdemo.common.utils.files.baseName
+import org.jetbrains.webdemo.common.utils.files.div
+import org.jetbrains.webdemo.common.utils.join
+import org.json.JSONArray
 
 private val EXAMPLE_TAG = "example"
 private val KEYWORD_TAG = "keyword"
 
-private val NAME_TAG = "name"
-private val TEXT_TAG = "text"
-private val TARGET_TAG = "target"
-private val ARGS_TAG = "args"
+private val NAME_PROP = "name"
+private val TEXT_PROP = "text"
+private val TARGET_PROP = "target"
+private val ARGS_PROP = "args"
+
+private val FILES_PROP = "files"
+private val TYPE_PROP = "type"
+private val FOLDER = "folder"
+private val FILE = "file"
 
 public class WebIdeHandler {
-    private var examples: Map<String, ExampleOnServer> = hashMap<String, ExampleOnServer>()
-    val exampleName2Path = hashMap<String, String>()
+    private var examples = hashMap<String, ExampleOnServer>()
     var examplesList = ""
 
     private val helpForKeywords = HelpHolder(Settings.HELP_FOR_KEYWORDS_PATH, KEYWORD_TAG)
@@ -52,21 +60,85 @@ public class WebIdeHandler {
     }
 
     fun updateExamplesList(): String {
-        examplesList = ""
+        val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
+        if (!root.exists()) {
+            //todo error handling
+//            ToExceptionAnalyzer
+//            ToConsole
 
-        return examplesList
+            return "Examples root doesn't exists"
+        }
+
+        examplesList = buildExamplesList(root).toString()
+
+        return "Examples were loaded. "
+    }
+
+    fun buildExamplesList(root: File): JSONArray {
+        val result = JSONArray()
+
+        val ORDER_TXT = "order.txt"
+        val order = (root / ORDER_TXT).readLines()
+
+        fun process(file: File) {
+            val map = hashMap<String, Any>(NAME_PROP to file.baseName)
+
+            if (file.isDirectory()) {
+                map.putAll(TYPE_PROP to FOLDER, FILES_PROP to buildExamplesList(file))
+            } else {
+                map.putAll(TYPE_PROP to FILE)
+                val source = file.readText()
+
+                val example = examples[file.baseName]
+                val newExample = if (example == null) {
+                    //todo report
+                    ExampleOnServer(
+                            text = "",
+                            targets = hashSet(TargetPlatform.JAVA),
+                            args = "",
+                            source = source)
+                } else {
+                    example.copy(source = source)
+                }
+
+                examples[file.baseName] = newExample
+
+                map.putAll(TARGET_PROP to newExample.targets.toList().map { it.toString().toLowerCase() }.join(" "))
+            }
+
+            result.put(map)
+        }
+
+        order.forEach { process(root / it) }
+
+        val KT_EXTENSION = "kt"
+        val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !order.contains(it.name)}
+
+        if (additionally == null) {
+            //todo
+            return result
+        }
+
+        if (additionally.notEmpty()) {
+            //todo
+            return result
+        }
+
+        additionally.forEach { process(it) }
+
+        return result
     }
 
     private fun examplesContentUpdatedHandler(rawExamples: List<Map<String, String>>) {
         val newExamples: HashMap<String, ExampleOnServer> = hashMap<String, ExampleOnServer>()
 
         for (rawExample in rawExamples) {
-            val name = rawExample[NAME_TAG]
+            val name = rawExample[NAME_PROP]
             if (name == null)
                 continue
 
             val allTargets = TargetPlatform.values() map { it.toString().toLowerCase() }
-            val targets = rawExample[TARGET_TAG]
+            val targets = rawExample[TARGET_PROP]
                     .orEmpty()
                     .split(' ')
                     .filter { allTargets.contains(it) }
@@ -74,12 +146,16 @@ public class WebIdeHandler {
                     .toSet()
 
             newExamples.put(name,
-                    ExampleOnServer(text = rawExample[TEXT_TAG].orEmpty(),
+                    ExampleOnServer(text = rawExample[TEXT_PROP].orEmpty(),
                             targets = if (targets.notEmpty()) targets else hashSet(TargetPlatform.JAVA),
-                            args = rawExample[ARGS_TAG].orEmpty(),
+                            args = rawExample[ARGS_PROP].orEmpty(),
                             source = ""))
         }
 
         examples = newExamples
+    }
+
+    {
+        updateExamplesList()
     }
 }

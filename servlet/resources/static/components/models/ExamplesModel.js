@@ -28,12 +28,12 @@ var ExamplesModel = (function () {
         var instance = {
             loadExample:function (url) {
                 $.ajax({
-                    url:generateAjaxUrl("loadExample", url),
+                    url:"/webIde?do=loadExample&name=" + url,
                     context:document.body,
                     success:function (data) {
                         if (checkDataForNull(data)) {
                             if (checkDataForException(data)) {
-                                instance.onLoadExample(data[0]);
+                                instance.onLoadExample(data);
                             } else {
                                 instance.onFail(data, ActionStatusMessages.load_example_fail);
                             }
@@ -62,7 +62,7 @@ var ExamplesModel = (function () {
 
         function getAllExamples() {
             $.ajax({
-                url:generateAjaxUrl("loadExample", "all"),
+                url:"/webIde?do=loadExamplesList",
                 context:document.body,
                 success:function (data) {
                     if (checkDataForNull(data)) {

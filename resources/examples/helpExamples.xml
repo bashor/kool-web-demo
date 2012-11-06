@@ -8,7 +8,7 @@
             Note that semicolons are optional.
         </text>
         <args/>
-	 <mode>java js</mode>
+	 <target>java js</target>
     </example>
     <example>
         <name>Reading a name from the command line</name>
@@ -17,7 +17,7 @@
             and <a href="http://confluence.jetbrains.net/display/Kotlin/Basic+types#Basictypes-Arrays">array access</a>.
         </text>
         <args>guest</args>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>Reading many names from the command line</name>
@@ -27,7 +27,7 @@
             , that would have been called "enhanced" if there were any other for-loop in Kotlin.
         </text>
         <args>guest1 guest2 guest3</args>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>An object-oriented Hello</name>
@@ -42,7 +42,7 @@
             keyword used to create an object.
         </text>
         <args>guest1</args>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>A multi-language Hello</name>
@@ -57,14 +57,14 @@
             expression.
         </text>
         <args>FR</args>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>Use a conditional expression</name>
         <text><a href="http://confluence.jetbrains.net/display/Kotlin/Control+structures#Controlstructures-Ifexpression"><b>if</b></a> is an expression, i.e. it returns a value. Therefore there is not ternary operator (condition ? then : else), because ordinary <b>if</b> works fine in this role.
         </text>
         <args>10 20</args>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>Null-checks</name>
@@ -72,7 +72,7 @@
             See <a href="http://confluence.jetbrains.net/display/Kotlin/Null-safety">Null-safety</a>
         </text>
         <args>2 3</args>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>is-checks and smart casts</name>
@@ -82,7 +82,7 @@
             See <a href="http://confluence.jetbrains.net/display/Kotlin/Type+casts">Type casts</a>.
         </text>
         <args/>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>Use a while-loop</name>
@@ -90,7 +90,7 @@
             See <a href="http://confluence.jetbrains.net/display/Kotlin/Control+structures#Controlstructures-While">while-loop</a>.
         </text>
         <args>guest1 guest2 guest3 guest4</args>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>Use a for-loop</name>
@@ -98,7 +98,7 @@
             See <a href="http://confluence.jetbrains.net/display/Kotlin/Control+structures#Controlstructures-For">for-loop</a>.
         </text>
         <args>guest1 guest2 guest3</args>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>Use ranges and in</name>
@@ -108,14 +108,14 @@
             See <a href="http://confluence.jetbrains.net/display/Kotlin/Ranges">Ranges</a>
         </text>
         <args>4</args>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>Use when</name>
         <text>See <a href="http://confluence.jetbrains.net/display/Kotlin/Pattern+matching">Pattern-matching</a>
         </text>
         <args/>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>99 Bottles of Beer</name>
@@ -130,7 +130,7 @@
             </p>
         </text>
         <args/>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>Maze</name>
@@ -140,7 +140,7 @@
             </p>
         </text>
         <args/>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>Life</name>
@@ -151,7 +151,7 @@
             </p>
         </text>
         <args/>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>HTML Builder</name>
@@ -166,7 +166,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>java js</mode>
+        <target>java js</target>
     </example>
     <example>
         <name>Hello, Kotlin</name>
@@ -176,7 +176,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>canvas</mode>
+        <target>canvas</target>
     </example>
     <example>
         <name>Fancy lines</name>
@@ -187,7 +187,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>canvas</mode>
+        <target>canvas</target>
     </example>
     <example>
         <name>Creatures</name>
@@ -198,7 +198,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>canvas</mode>
+        <target>canvas</target>
     </example>
     <example>
         <name>Traffic light</name>
@@ -208,7 +208,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>canvas</mode>
+        <target>canvas</target>
     </example>
     <example>
         <name>Multi-declarations</name>
@@ -218,7 +218,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>java</mode>
+        <target>java</target>
     </example>
     <example>
         <name>Data classes</name>
@@ -228,7 +228,7 @@ See <a href="http://confluence.jetbrains.net/display/Kotlin/Type-safe+Groovy-sty
             </p>
         </text>
         <args/>
-        <mode>java</mode>
+        <target>java</target>
     </example>
 
 </help>

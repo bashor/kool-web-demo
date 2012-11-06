@@ -23,6 +23,7 @@ import org.jetbrains.webdemo.common.utils.files.baseName
 import org.jetbrains.webdemo.common.utils.files.div
 import org.jetbrains.webdemo.common.utils.join
 import org.json.JSONArray
+import org.json.JSONObject
 
 private val EXAMPLE_TAG = "example"
 private val KEYWORD_TAG = "keyword"
@@ -31,6 +32,7 @@ private val NAME_PROP = "name"
 private val TEXT_PROP = "text"
 private val TARGET_PROP = "target"
 private val ARGS_PROP = "args"
+private val SOURCE_PROP = "source"
 
 private val FILES_PROP = "files"
 private val TYPE_PROP = "type"
@@ -56,7 +58,14 @@ public class WebIdeHandler {
             // todo logging
             return ""
 
-        return example.source
+        val result = JSONObject()
+
+        result.put(TEXT_PROP, example.text)
+        result.put(TARGET_PROP, example.targets.toList().map { it.toString().toLowerCase() }.join(" "))
+        result.put(ARGS_PROP, example.args)
+        result.put(SOURCE_PROP, example.source)
+
+        return result.toString()
     }
 
     fun updateExamplesList(): String {

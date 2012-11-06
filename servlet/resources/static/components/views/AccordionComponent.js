@@ -140,7 +140,7 @@ var AccordionView = (function () {
                 } else if (url.indexOf(publicLink) == 0) {
                     programsView.loadProgram(createExampleUrl(url.substring(publicLink.length), "My Programs"));
                 } else {
-                    examplesView.loadExample("Hello,_world!&name=Simplest_version");
+                    examplesView.loadExample("Simplest version");
                 }
             }
         }

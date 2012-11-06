@@ -97,6 +97,9 @@ $(function() {
         consoleView.writeException(exception);
         statusBarView.setMessage(StatusBarView.Messages.load_help_for_words_fail);
     };
+
+    //todo fix this hack
+    loginProvider.onLogin("")
 });
 
 var loginProvider = new LoginProvider();
@@ -227,12 +230,12 @@ accordion.onFail = function (exception, actionCode) {
 };
 accordion.onLoadCode = function (element, isProgram) {
     if (!isProgram) {
-        helpViewForExamples.update(element.name);
+//z        helpViewForExamples.update(element.name);
         statusBarView.setMessage(StatusBarView.Messages.load_example_ok);
     } else {
         statusBarView.setMessage(StatusBarView.Messages.load_program_ok);
     }
-    editor.setText(element.text);
+    editor.setText(element.source);
     argumentsView.setArgs(element.args);
     configurationManager.updateConfiguration(getFirstConfiguration(element.confType));
 };

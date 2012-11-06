@@ -57,23 +57,28 @@ var ExamplesView = (function () {
 
         function addAllExamplesInAccordion(data) {
             var acc = $("div.accordionForExamplesAndPrograms");
+            addAllExamplesTo(data, acc)
+        }
+
+        function addAllExamplesTo(data, to) {
             var i = 0;
             while (data[i] != undefined) {
                 var lastFolderName;
                 var ids = [];
+                var cont = document.createElement("div");
                 if (data[i].type == "folder") {
                     var folder = document.createElement("h3");
                     var folderA = document.createElement("a");
                     folderA.href = "#";
-                    folderA.id = replaceAll(data[i].text, " ", "_");
+//z                    folderA.id = replaceAll(data[i].text, " ", "_");
 
-                    folderA.innerHTML = data[i].text;
-                    lastFolderName = data[i].text;
+                    folderA.innerHTML = data[i].name;
+                    lastFolderName = data[i].name;
                     folder.appendChild(folderA);
-                    acc.append(folder);
-                    var cont = document.createElement("div");
-                }
-                if (data[i].type == "content") {
+                    $(to).append(folder);
+                    addAllExamplesTo(data[i].files, cont)
+//z                    var cont = document.createElement("div");
+                } else if (data[i].type == "file") {
                     var table = document.createElement("table");
                     var tr = document.createElement("tr");
                     var tdIcon = document.createElement("td");
@@ -81,18 +86,18 @@ var ExamplesView = (function () {
                     var span = document.createElement("div");
                     span.className = "bullet";
 
-                    if (data[i].icon == "" || data[i].icon == undefined) {
+                    if (data[i].target == "" || data[i].target == undefined) {
                         span.style.background = "url(/static/icons/java.png) no-repeat";
                         span.style.title = "java";
                     } else {
-                        span.style.background = "url(/static/icons/" + replaceAll(data[i].icon, " ", "") + ".png) no-repeat";
-                        if (data[i].icon == "java js") {
+                        span.style.background = "url(/static/icons/" + replaceAll(data[i].target, " ", "") + ".png) no-repeat";
+                        if (data[i].target == "java js") {
                             span.style.background = "Java / JavaScript";
-                        } else if (data[i].icon == "java") {
+                        } else if (data[i].target == "java") {
                             span.style.background = "Java (Standard)";
-                        } else if (data[i].icon == "js") {
+                        } else if (data[i].target == "js") {
                             span.style.background = "JavaScript (Standard)";
-                        } else if (data[i].icon == "canvas") {
+                        } else if (data[i].target == "canvas") {
                             span.style.background = "JavaScript (Canvas)";
                         }
                     }
@@ -101,12 +106,12 @@ var ExamplesView = (function () {
                     tdIcon.appendChild(span);
                     var tdContent = document.createElement("td");
                     var contA = document.createElement("a");
-                    contA.id = createExampleUrl(data[i].text, lastFolderName);
+                    contA.id = data[i].name
                     contA.style.cursor = "pointer";
                     contA.onclick = function () {
                         loadExample(this.id);
                     };
-                    contA.innerHTML = data[i].text;
+                    contA.innerHTML = data[i].name;
                     tdContent.appendChild(contA);
                     var tdLink = document.createElement("td");
                     var linkImg = document.createElement("img");
@@ -125,7 +130,7 @@ var ExamplesView = (function () {
 
                     cont.appendChild(table);
                 }
-                acc.append(cont);
+                $(to).append(cont);
 
                 i++;
             }

@@ -28,13 +28,15 @@ import java.util.Hashtable
 import org.jetbrains.webdemo.common.utils.firstOrDefault
 import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.common.utils.write
+import java.net.URLDecoder
 
 abstract class BaseHttpServlet : HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         //todo fix this workaround after issue KT-2982 will be fixed
-        val params = request.getParameterMap() as Map<String, Array<String>>
+        val decodedQuery = URLDecoder.decode(request.getQueryString(), "UTF-8")
+        val params = HttpUtils.parseQueryString(decodedQuery) as Map<String, Array<String>>
 
         val command = params["do"]
 

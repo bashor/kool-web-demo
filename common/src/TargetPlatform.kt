@@ -26,4 +26,5 @@ package org.jetbrains.webdemo.common
 public enum class TargetPlatform {
     JAVA
     JS
+    CANVAS
 }

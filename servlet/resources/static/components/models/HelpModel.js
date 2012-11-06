@@ -46,7 +46,7 @@ var HelpModel = (function () {
 
         function loadAllHelp() {
             $.ajax({
-                url:generateAjaxUrl("loadHelpFor" + helpType, "null"),
+                url:"/webIde?do=loadHelpFor" + helpType,
                 context:document.body,
                 success:function (data) {
                     if (checkDataForNull(data)) {

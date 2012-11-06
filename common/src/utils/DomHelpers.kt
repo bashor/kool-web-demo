@@ -1,0 +1,60 @@
+/*
+ * Copyright 2000-2012 JetBrains s.r.o.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.jetbrains.webdemo.common.utils.domHelpers
+
+import org.w3c.dom.NodeList
+import com.sun.xml.internal.ws.util.xml.NodeListIterator
+import org.w3c.dom.Node
+import org.w3c.dom.NamedNodeMap
+import org.w3c.dom.Text
+
+fun NodeList.iterator() = NodeListIterator(this)
+
+val Node.name : String
+    get() = this.getNodeName().orEmpty()
+
+val Node.value: String
+    get() = this.getNodeValue().orEmpty()
+
+fun NamedNodeMap.get(i: Int) = this.item(i)
+
+val Node.inner: String
+    get() {
+        val inner = StringBuilder()
+        for (node in this.getChildNodes()!!) {
+            if (node is Text) {
+                inner.append(node.value)
+            } else if (node is Node) {
+                val attributes = StringBuilder()
+
+                if (node.name == "a") {
+                    attributes.append(" target=\"_blank\"");
+                }
+
+                val map = node.getAttributes();
+                if (map != null) {
+                    for (i in 0..map.getLength() - 1) {
+                        attributes.append(" ${ map[i]?.name ?: "" }=\"${ map[i]?.value ?: "" }\"");
+                    }
+                }
+
+                inner.append("<${ node.name }${ attributes }>${ node.inner }</${ node.name }>");
+            }
+        }
+
+        return inner.toString()
+    }

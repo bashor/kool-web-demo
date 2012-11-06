@@ -60,6 +60,7 @@ public class WebIdeHandler {
 
         val result = JSONObject()
 
+        result.put(NAME_PROP, example.name)
         result.put(TEXT_PROP, example.text)
         result.put(TARGET_PROP, example.targets.toList().map { it.toString().toLowerCase() }.join(" "))
         result.put(ARGS_PROP, example.args)
@@ -90,7 +91,8 @@ public class WebIdeHandler {
         val order = (root / ORDER_TXT).readLines()
 
         fun process(file: File) {
-            val map = hashMap<String, Any>(NAME_PROP to file.baseName)
+            val baseName = file.baseName
+            val map = hashMap<String, Any>(NAME_PROP to baseName)
 
             if (file.isDirectory()) {
                 map.putAll(TYPE_PROP to FOLDER, FILES_PROP to buildExamplesList(file))
@@ -98,10 +100,11 @@ public class WebIdeHandler {
                 map.putAll(TYPE_PROP to FILE)
                 val source = file.readText()
 
-                val example = examples[file.baseName]
+                val example = examples[baseName]
                 val newExample = if (example == null) {
                     //todo report
                     ExampleOnServer(
+                            name = baseName,
                             text = "",
                             targets = hashSet(TargetPlatform.JAVA),
                             args = "",
@@ -110,7 +113,7 @@ public class WebIdeHandler {
                     example.copy(source = source)
                 }
 
-                examples[file.baseName] = newExample
+                examples[baseName] = newExample
 
                 map.putAll(TARGET_PROP to newExample.targets.toList().map { it.toString().toLowerCase() }.join(" "))
             }
@@ -155,7 +158,9 @@ public class WebIdeHandler {
                     .toSet()
 
             newExamples.put(name,
-                    ExampleOnServer(text = rawExample[TEXT_PROP].orEmpty(),
+                    ExampleOnServer(
+                            name = name,
+                            text = rawExample[TEXT_PROP].orEmpty(),
                             targets = if (targets.notEmpty()) targets else hashSet(TargetPlatform.JAVA),
                             args = rawExample[ARGS_PROP].orEmpty(),
                             source = ""))

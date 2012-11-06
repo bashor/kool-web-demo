@@ -17,6 +17,7 @@
 package org.jetbrains.webdemo.common
 
 public trait Example {
+    val name: String
     val text: String
     val targets: Set<TargetPlatform>
     val args: String

@@ -230,14 +230,14 @@ accordion.onFail = function (exception, actionCode) {
 };
 accordion.onLoadCode = function (element, isProgram) {
     if (!isProgram) {
-//z        helpViewForExamples.update(element.name);
+        helpViewForExamples.update(element.name);
         statusBarView.setMessage(StatusBarView.Messages.load_example_ok);
     } else {
         statusBarView.setMessage(StatusBarView.Messages.load_program_ok);
     }
     editor.setText(element.source);
     argumentsView.setArgs(element.args);
-    configurationManager.updateConfiguration(getFirstConfiguration(element.confType));
+    configurationManager.updateConfiguration(getFirstConfiguration(element.target));
 };
 
 accordion.onLoadAllContent = function () {

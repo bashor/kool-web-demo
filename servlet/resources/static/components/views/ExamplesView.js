@@ -90,6 +90,9 @@ var ExamplesView = (function () {
                         span.style.background = "url(/static/icons/java.png) no-repeat";
                         span.style.title = "java";
                     } else {
+                        if (data[i].target === "js java") {
+                            data[i].target = "java js"
+                        }
                         span.style.background = "url(/static/icons/" + replaceAll(data[i].target, " ", "") + ".png) no-repeat";
                         if (data[i].target == "java js") {
                             span.style.background = "Java / JavaScript";

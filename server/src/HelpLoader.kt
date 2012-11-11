@@ -20,9 +20,10 @@ import java.io.File
 import java.io.IOException
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.ParserConfigurationException
-import org.jetbrains.webdemo.common.utils.notEmpty
+import org.jetbrains.webdemo.common.ContentSnapshot
+import org.jetbrains.webdemo.common.VersionedContent
 import org.jetbrains.webdemo.common.utils.domHelpers.*
-import org.json.JSONArray
+import org.jetbrains.webdemo.common.utils.notEmpty
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.xml.sax.SAXException
@@ -47,31 +48,21 @@ public fun Document(file : File) : Document? {
     }
 }
 
-class HelpHolder(path: String,
+class HelpLoader(path: String,
                  private val containerTag: String,
-                 private val contentUpdatedHandler: (List<Map<String, String>>) -> Unit = {}) {
+                 private val contentUpdatedHandler: (List<Map<String, String>>) -> Unit = {}) : VersionedContent<List<Map<String, String>>> {
 
     private val file = File(path)
-    private var lastModified: Long = 0
 
-    public var content: String = loadHelp()
-        get() {
-            //todo check file existing???
-            if (file.lastModified() != lastModified)
-                $content = loadHelp()
-            return $content
-        }
-        private set
-
-    private fun loadHelp(): String {
+    override fun version(): Long = file.lastModified()
+    override fun content(): ContentSnapshot<List<Map<String, String>>> {
         val elements = arrayList<Map<String, String>>()
-        val result = JSONArray()
-
+        val version = version()
         val doc = Document(file)
 
         if (doc == null) {
             //todo logging
-            return ""
+            return ContentSnapshot(version, elements)
         }
 
         val nodeList = doc.getElementsByTagName(containerTag)!!
@@ -92,12 +83,10 @@ class HelpHolder(path: String,
 
             if (map.notEmpty()) {
                 elements.add(map)
-                result.put(map)
             }
         }
 
-        lastModified = file.lastModified()
         contentUpdatedHandler(elements)
-        return result.toString().orEmpty()
+        return ContentSnapshot(version, elements)
     }
 }

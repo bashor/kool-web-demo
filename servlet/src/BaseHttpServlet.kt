@@ -16,19 +16,13 @@
 
 package org.jetbrains.webdemo.servlet
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
-import javax.servlet.ServletConfig
+import java.net.URLDecoder
+import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpUtils
-import java.util.Hashtable
-
-import org.jetbrains.webdemo.common.utils.firstOrDefault
 import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.common.utils.write
-import java.net.URLDecoder
 
 abstract class BaseHttpServlet : HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?

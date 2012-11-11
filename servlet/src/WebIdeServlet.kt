@@ -16,30 +16,33 @@
 
 package org.jetbrains.webdemo.servlet
 
-import javax.servlet.http.HttpServletResponse
+import org.jetbrains.webdemo.common.ContentWatcher
 import org.jetbrains.webdemo.common.WebIdeCommands.*
-import java.io.PrintWriter
-import org.jetbrains.webdemo.common.utils.StatusCode
-import org.jetbrains.webdemo.server.WebIdeHandler
 import org.jetbrains.webdemo.common.utils.first
+import org.jetbrains.webdemo.common.utils.json.toJsonString
+import org.jetbrains.webdemo.server.WebIdeHandler
 
 class WebIdeServlet : BaseHttpServlet() {
     val webIdeHandler = WebIdeHandler()
+    val helpForKeywords = ContentWatcher(webIdeHandler.helpForKeywords, { it.toJsonString() })
+    val helpForExamples = ContentWatcher(webIdeHandler.helpForExamples, { it.toJsonString() })
+    val examplesList = ContentWatcher(webIdeHandler.examplesInfo, { it.hierarchy.toJsonString() })
+    val examples = ContentWatcher(webIdeHandler.examplesInfo, { it.examples })
 
     override fun handle(command: String, params: Map<String, Array<String>>): String? = when (command) {
-        LOAD_HELP_FOR_EXAMPLES -> webIdeHandler.loadHelpForExamples()
-        LOAD_HELP_FOR_WORDS -> webIdeHandler.loadHelpForWords()
-        LOAD_EXAMPLES_LIST -> webIdeHandler.loadExamplesList()
+        LOAD_HELP_FOR_EXAMPLES -> helpForExamples.content
+        LOAD_HELP_FOR_WORDS -> helpForKeywords.content
+        LOAD_EXAMPLES_LIST -> examplesList.content
         LOAD_EXAMPLE -> {
             val name = params["name"]?.first
             if (name == null) {
                 //todo handling error
                 ""
             } else {
-                webIdeHandler.loadExample(name)
+                examples.content[name]?.toJsonString() ?: ""
             }
         }
-        UPDATE_EXAMPLES_LIST -> webIdeHandler.updateExamplesList()
+        UPDATE_EXAMPLES_LIST -> "" //webIdeHandler.updateExamplesList()
         else -> null
     }
 }

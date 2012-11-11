@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.common
 
-import java.util.HashSet
-import org.jetbrains.webdemo.common.TargetPlatform
-import org.jetbrains.webdemo.common.Example
+class ContentWatcher<T, R>(val source: VersionedContent<T>, val mapper: (T) -> R) {
+    var version: Long = 0
+    var content: R = updateContent()
+        get() {
+            if (version != source.version()) {
+                updateContent()
+            }
 
-data class ExampleOnServer(
-        override val name: String,
-        override val text: String,
-        override val targets: Set<TargetPlatform>,
-        override val args: String,
-        override val source: String
-) : Example
+            return $content
+        }
+        private set
+
+    private fun updateContent(): R {
+        val (ver, cont) = source.content()
+        version = ver
+        $content = mapper(cont)
+        return $content
+    }
+}

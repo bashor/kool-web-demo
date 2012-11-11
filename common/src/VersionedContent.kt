@@ -16,16 +16,13 @@
 
 package org.jetbrains.webdemo.common
 
-public val NAME_PROP: String = "name"
-public val TEXT_PROP: String = "text"
-public val TARGET_PROP: String = "target"
-public val ARGS_PROP: String = "args"
-public val SOURCE_PROP: String = "source"
+//todo use data annotation after issue KT-3034 will be fixed
+class ContentSnapshot<T>(val version: Long, val content: T) {
+    fun component1() = version
+    fun component2() = content
+}
 
-public data class Example(
-    val name: String,
-    val text: String,
-    val targets: Set<TargetPlatform>,
-    val args: String,
-    val source: String
-)
+public trait VersionedContent<out T> {
+    fun version(): Long
+    fun content(): ContentSnapshot<T>
+}

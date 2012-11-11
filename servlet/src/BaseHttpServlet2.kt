@@ -16,23 +16,9 @@
 
 package org.jetbrains.webdemo.servlet
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/23/12
- * Time: 9:45 PM
- */
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
-import javax.servlet.ServletConfig
+import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpUtils
-import java.util.Hashtable
-
-import org.jetbrains.webdemo.common.utils.firstOrDefault
 
 
 trait BaseHttpServlet2 : HttpServlet {

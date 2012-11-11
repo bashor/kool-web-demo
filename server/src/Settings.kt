@@ -17,8 +17,8 @@
 package org.jetbrains.webdemo.server.Settings
 
 import java.io.File
-import javax.naming.InitialContext
 import javax.naming.Context
+import javax.naming.InitialContext
 
 //todo find a more elegant solution
 private val envContext = InitialContext().lookup("java:comp/env") as Context

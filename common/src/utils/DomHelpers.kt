@@ -16,10 +16,10 @@
 
 package org.jetbrains.webdemo.common.utils.domHelpers
 
-import org.w3c.dom.NodeList
 import com.sun.xml.internal.ws.util.xml.NodeListIterator
-import org.w3c.dom.Node
 import org.w3c.dom.NamedNodeMap
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 import org.w3c.dom.Text
 
 fun NodeList.iterator() = NodeListIterator(this)

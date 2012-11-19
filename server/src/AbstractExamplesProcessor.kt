@@ -36,7 +36,7 @@ abstract class AbstractExamplesProcessor<R>(helpForExamples: VersionedContent<Li
 
     override fun version(): Long = helpForExamplesWatcher.source.version()
 
-    override fun content(): ContentSnapshot<R> {
+    override fun snapshot(): ContentSnapshot<R> {
         val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
         if (!root.exists()) {
             //todo error handling

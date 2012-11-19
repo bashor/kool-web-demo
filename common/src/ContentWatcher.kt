@@ -29,7 +29,7 @@ class ContentWatcher<T, R>(val source: VersionedContent<T>, val mapper: (T) -> R
         private set
 
     private fun updateContent(): R {
-        val (ver, cont) = source.content()
+        val (ver, cont) = source.snapshot()
         version = ver
         $content = mapper(cont)
         return $content

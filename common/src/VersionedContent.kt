@@ -24,5 +24,6 @@ class ContentSnapshot<T>(val version: Long, val content: T) {
 
 public trait VersionedContent<out T> {
     fun version(): Long
-    fun content(): ContentSnapshot<T>
+    fun snapshot(): ContentSnapshot<T>
+    final fun content(): T = snapshot().content
 }

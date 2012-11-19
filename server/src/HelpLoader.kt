@@ -55,7 +55,7 @@ class HelpLoader(path: String,
     private val file = File(path)
 
     override fun version(): Long = file.lastModified()
-    override fun content(): ContentSnapshot<List<Map<String, String>>> {
+    override fun snapshot(): ContentSnapshot<List<Map<String, String>>> {
         val elements = arrayList<Map<String, String>>()
         val version = version()
         val doc = Document(file)

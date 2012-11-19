@@ -26,6 +26,7 @@ import org.jetbrains.webdemo.common.utils.write
 import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.header
 import java.io.UnsupportedEncodingException
+import org.jetbrains.webdemo.server.LOG
 
 abstract class BaseHttpServlet : HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?

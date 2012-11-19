@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.common
+package org.jetbrains.webdemo.server
 
-val PLUGIN_NAME = "Kool Web Demo"
+import org.apache.log4j.Logger
 
-trait ExceptionReporter {
-    fun report(exception: Throwable, lastAction: String, attach: String )
-}
+//val LOG_FOR_EXCEPTIONS = Logger.getLogger("exceptionLogger");
+public val LOG: Logger = Logger.getLogger("infoLogger")

@@ -7,12 +7,14 @@
           <element id="module-output" name="server" />
           <element id="module-output" name="common" />
           <element id="module-output" name="servlet" />
+          <element id="module-output" name="idea.patch.server" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="KotlinRuntime" />
           <element id="library" level="project" name="json" />
           <element id="library" level="project" name="log4j-1.2.16" />
           <element id="library" level="project" name="junit-4.10" />
+          <element id="file-copy" path="$PROJECT_DIR$/kotlin-plugin/Kotlin/kotlinc/lib/kotlin-compiler.jar" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="servlet/web/Web" />

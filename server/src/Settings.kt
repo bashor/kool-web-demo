@@ -21,15 +21,9 @@ import javax.naming.Context
 import javax.naming.InitialContext
 import javax.naming.NamingException
 
-//fixme find a more elegant solution
-private val envContext = InitialContext().lookup("java:comp/env") as Context
+import org.jetbrains.webdemo.server.LOG
 
-val APP_HOME = try {
-    envContext.lookup("app_home") as String
-} catch (e: NamingException) {
-    //todo log
-    ""
-}
+val APP_HOME = getAppHome()
 
 val EXAMPLES_DIRECTORY = "examples";
 val HELP_DIRECTORY = "help";
@@ -42,3 +36,18 @@ val HELP_DIRECTORY_PATH = APP_HOME + HELP_DIRECTORY
 
 val HELP_FOR_EXAMPLES_PATH: String = EXAMPLES_DIRECTORY_PATH + File.separator + HELP_FOR_EXAMPLES_FILE
 val HELP_FOR_KEYWORDS_PATH: String = HELP_DIRECTORY_PATH + File.separator + HELP_FOR_KEYWORDS_FILE;
+
+fun getAppHome(): String {
+    //fixme find a more elegant solution
+    val envContext = InitialContext().lookup("java:comp/env") as Context
+
+    val appHome = try {
+        envContext.lookup("app_home") as String
+    } catch (e: NamingException) {
+        //todo log
+        ""
+    }
+    System.setProperty("kotlin.web.demo.log4j", appHome)
+
+    return appHome
+}

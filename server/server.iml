@@ -12,6 +12,8 @@
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="KotlinRuntime" level="project" />
     <orderEntry type="library" name="junit-4.10" level="project" />
+    <orderEntry type="module" module-name="idea.patch.server" />
+    <orderEntry type="library" name="log4j-1.2.16" level="project" />
   </component>
 </module>
 

@@ -16,11 +16,7 @@
 
 package org.jetbrains.webdemo.common
 
-//todo use data annotation after issue KT-3034 will be fixed
-class ContentSnapshot<T>(val version: Long, val content: T) {
-    fun component1() = version
-    fun component2() = content
-}
+data class ContentSnapshot<T>(val version: Long, val content: T)
 
 public trait VersionedContent<out T> {
     fun version(): Long

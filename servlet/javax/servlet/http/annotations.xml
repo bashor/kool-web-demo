@@ -2,7 +2,7 @@
     <item name='javax.servlet.http.HttpServlet void service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)'>
         <annotation name='jet.runtime.typeinfo.KotlinSignature'>
             <val name="value"
-                 val="&quot;fun service(request : HttpServletRequest, response : HttpServletResponse) : Unit&quot;"/>
+                 val="&quot;fun service(request : HttpServletRequest, response: HttpServletResponse) : Unit&quot;"/>
         </annotation>
     </item>
 </root>

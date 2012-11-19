@@ -33,7 +33,7 @@ abstract class BaseHttpServlet : HttpServlet() {
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         response.header("Cache-Control" to "no-cache")
 
-        //todo fix this workaround after issue KT-2982 will be fixed
+        //fixme after issue KT-2982 will be fixed
         val decodedQuery = try {
             URLDecoder.decode(request.getQueryString(), "UTF-8")
         } catch (e: UnsupportedEncodingException) {

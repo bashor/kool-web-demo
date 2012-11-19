@@ -29,7 +29,7 @@ abstract class BaseHttpServlet2 : HttpServlet() {
     abstract val handlers : Map<String, (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit>
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
-        //fix this workaround after issue KT-2982 will be fixed
+        //fixme after issue KT-2982 will be fixed
         val params = request.getParameterMap() as Map<String, Array<String>>
 
         println("${request.getQueryString()} sid==${request.getSession()?.getId()} isNew==${request.getSession()?.isNew()}")

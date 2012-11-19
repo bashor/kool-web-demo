@@ -21,7 +21,7 @@ import javax.naming.Context
 import javax.naming.InitialContext
 import javax.naming.NamingException
 
-//todo find a more elegant solution
+//fixme find a more elegant solution
 private val envContext = InitialContext().lookup("java:comp/env") as Context
 
 val APP_HOME = try {

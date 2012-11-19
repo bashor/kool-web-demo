@@ -68,13 +68,13 @@ class HelpLoader(path: String,
         val nodeList = doc.getElementsByTagName(containerTag)!!
 
         for (node in nodeList) {
-            //todo fix this workaround after issue KT-2982 will be fixed
+            //fixme after issue KT-2982 will be fixed
             if (node !is Element || !node.hasChildNodes())
                 continue
 
             val map = hashMap<String, String>();
             for (subNode in node.getChildNodes()!!) {
-                //todo fix this workaround after issue KT-2982 will be fixed
+                //fixme after issue KT-2982 will be fixed
                 if (subNode !is Element)
                     continue
 

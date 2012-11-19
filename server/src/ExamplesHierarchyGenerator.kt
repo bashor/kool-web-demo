@@ -29,10 +29,11 @@ private val FILE = "file"
 private val KT_EXTENSION = "kt"
 private val ORDER_FILE = "order.txt"
 
+private val DEFAULT_TARGET_STR = TargetPlatform.JAVA.toString().toLowerCase()
+
 public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<Map<String, String>>>):
                 AbstractExamplesProcessor<List<Map<String, Any>>>(helpForExamples) {
 
-    val DEFAULT_TARGET = TargetPlatform.JAVA.toString().toLowerCase()
 
     protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): List<Map<String, Any>> {
         val hierarchy = ArrayList<Map<String, Any>>()
@@ -50,10 +51,10 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
             } else {
                 val rawExample = name2rawExamples[baseName]
                 val target = if (rawExample != null) {
-                    rawExample[TARGET_PROP] ?: DEFAULT_TARGET
+                    rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
                 } else {
                     //todo not found example description
-                    DEFAULT_TARGET
+                    DEFAULT_TARGET_STR
                 }
 
                 map.putAll(TYPE_PROP   to FILE,

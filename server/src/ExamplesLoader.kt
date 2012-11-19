@@ -21,10 +21,11 @@ import java.util.HashMap
 import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.common.utils.files.baseName
 
+private val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
+private val DEFAULT_TARGET = hashSet(TargetPlatform.JAVA)
+
 public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>): AbstractExamplesProcessor<Map<String, Example>>(helpForExamples) {
 
-    val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
-    val DEFAULT_TARGET = hashSet(TargetPlatform.JAVA)
 
     protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): Map<String, Example> {
         val examples: HashMap<String, Example> = hashMap<String, Example>()

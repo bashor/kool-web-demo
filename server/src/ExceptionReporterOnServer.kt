@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.common
+package org.jetbrains.webdemo.server
 
 import java.io.IOException
 
 import org.jetbrains.jet.internal.com.intellij.errorreport.itn.ITNProxy
 import org.jetbrains.jet.internal.com.intellij.errorreport.bean.ErrorBean
 import org.jetbrains.jet.internal.com.intellij.diagnostic.errordialog.Attachment
+import org.jetbrains.webdemo.common.ExceptionReporter
+import org.jetbrains.webdemo.common
 
-private val PLUGIN_NAME = "Kool Web Demo"
-
-trait ExceptionAnalyzer {
-    fun report(exception: Throwable, lastAction: String, attach: String ) {
+trait ExceptionReporterOnServer: ExceptionReporter {
+    override fun report(exception: Throwable, lastAction: String, attach: String ) {
         val bean = ErrorBean(exception, lastAction);
-        bean.setPluginName(PLUGIN_NAME);
+        bean.setPluginName(common.PLUGIN_NAME);
         bean.setAttachments(arrayList(Attachment("Example.kt", attach)));
-        if (!Settings.IS_PRODUCTION) {
+        if (common.Settings.IS_PRODUCTION) {
             sendViaITNProxy(bean);
         }
         //todo log
-//        LOG_FOR_EXCEPTIONS.error(ErrorWriter.getExceptionForLog(type, e, description))
+        //        LOG_FOR_EXCEPTIONS.error(ErrorWriter.getExceptionForLog(type, e, description))
     }
 
     private fun sendViaITNProxy(error: ErrorBean) {

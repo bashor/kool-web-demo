@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jetbrains.webdemo.common.utils
 
-import javax.servlet.http.HttpServletResponse
+package org.jetbrains.webdemo.common.Settings
 
-enum class StatusCode(val value: Int) {
-    OK : StatusCode(HttpServletResponse.SC_OK)
-    BAD_REQUEST : StatusCode(HttpServletResponse.SC_BAD_REQUEST)
-    INTERNAL_SERVER_ERROR : StatusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-}
+val KOTLIN_COMPILER_VERSION: String = "Unknown"
+val IS_PRODUCTION: Boolean  = false

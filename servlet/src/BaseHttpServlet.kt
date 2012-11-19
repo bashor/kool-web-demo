@@ -23,25 +23,61 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpUtils
 import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.common.utils.write
+import org.jetbrains.webdemo.common.utils.status
+import org.jetbrains.webdemo.common.utils.header
+import java.io.UnsupportedEncodingException
 
 abstract class BaseHttpServlet : HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
+        response.header("Cache-Control" to "no-cache")
+
         //todo fix this workaround after issue KT-2982 will be fixed
-        val decodedQuery = URLDecoder.decode(request.getQueryString(), "UTF-8")
-        val params = HttpUtils.parseQueryString(decodedQuery) as Map<String, Array<String>>
+        val decodedQuery = try {
+            URLDecoder.decode(request.getQueryString(), "UTF-8")
+        } catch (e: UnsupportedEncodingException) {
+            val exceptionMessage = e.getMessage().orEmpty()
+            val message = if (exceptionMessage.contains("URLDecoder:")) {
+                exceptionMessage
+            } else {
+                "${exceptionMessage} character encoding is not supported"
+            }
+            response.status(StatusCode.BAD_REQUEST, message)
+            return
+        }
+
+        val params = try {
+            HttpUtils.parseQueryString(decodedQuery) as Map<String, Array<String>>
+        } catch (e: IllegalArgumentException) {
+            response.status(StatusCode.BAD_REQUEST, "The query string is invalid")
+            return
+        }
 
         val command = params["do"]
 
         if (command != null && command.notEmpty()) {
-            val responseBody = handle(command[0], params)
-            if (responseBody != null) {
-                response.write(responseBody, StatusCode.OK)
+            val responseBody = try {
+                handle(command[0], params)
+            } catch (e: Throwable) {
+                //Do not stop server
+                //todo write to log
+//                ErrorWriter.ERROR_WRITER.writeExceptionToExceptionAnalyzer(e,
+//                        "UNKNOWN", param);
+                response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
                 return
             }
-        }
 
-        //todo report bad request
+            if (responseBody == null) {
+                response.status(StatusCode.BAD_REQUEST, "Unsupported command")
+                return
+            }
+
+            if (!response.status(StatusCode.OK).write(responseBody)) {
+                response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
+            }
+        } else {
+            response.status(StatusCode.BAD_REQUEST, "The Parameter \"do\" is not found or empty")
+        }
     }
 }

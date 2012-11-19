@@ -19,12 +19,17 @@ package org.jetbrains.webdemo.server.Settings
 import java.io.File
 import javax.naming.Context
 import javax.naming.InitialContext
+import javax.naming.NamingException
 
 //todo find a more elegant solution
 private val envContext = InitialContext().lookup("java:comp/env") as Context
 
-//todo check: can it  throw an exception?
-val APP_HOME = envContext.lookup("app_home") as String
+val APP_HOME = try {
+    envContext.lookup("app_home") as String
+} catch (e: NamingException) {
+    //todo log
+    ""
+}
 
 val EXAMPLES_DIRECTORY = "examples";
 val HELP_DIRECTORY = "help";

@@ -18,13 +18,39 @@ package org.jetbrains.webdemo.common.utils
 
 import javax.servlet.http.HttpServletResponse
 
-public fun HttpServletResponse.write(body: String, statusCode : StatusCode) {
-    //todo rewrite
-    this.addHeader("Cache-Control", "no-cache")
-
-    this.setStatus(statusCode.value)
-
+inline public fun HttpServletResponse.write(body: String): Boolean {
     this.getWriter() use {
         it.write(body)
     }
+    return this.getWriter().checkError()
+}
+
+inline public fun HttpServletResponse.status(statusCode : StatusCode, message: String? = null): HttpServletResponse {
+    if (message == null)
+        this.setStatus(statusCode.value)
+    else
+        this.setStatus(statusCode.value, message)
+    return this
+}
+
+public fun HttpServletResponse.header(vararg headers: Pair<String, Any>): HttpServletResponse {
+    for ((name, value) in headers) {
+        when (value) {
+            is Int -> this.setIntHeader(name, value)
+            is Long -> this.setDateHeader(name, value)
+            else -> this.setHeader(name, value.toString())
+        }
+    }
+    return this
+}
+
+public fun HttpServletResponse.addHeader(vararg headers: Pair<String, Any>): HttpServletResponse {
+    for ((name, value) in headers) {
+        when (value) {
+            is Int -> this.addIntHeader(name, value)
+            is Long -> this.addDateHeader(name, value)
+            else -> this.addHeader(name, value.toString())
+        }
+    }
+    return this
 }

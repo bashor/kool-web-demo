@@ -19,6 +19,8 @@ package org.jetbrains.webdemo.servlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import org.jetbrains.webdemo.common.utils.status
+import org.jetbrains.webdemo.common.utils.StatusCode
 
 
 abstract class BaseHttpServlet2 : HttpServlet() {
@@ -27,7 +29,7 @@ abstract class BaseHttpServlet2 : HttpServlet() {
     abstract val handlers : Map<String, (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit>
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
-        //todo fix this workaround after issue KT-2982 will be fixed
+        //fix this workaround after issue KT-2982 will be fixed
         val params = request.getParameterMap() as Map<String, Array<String>>
 
         println("${request.getQueryString()} sid==${request.getSession()?.getId()} isNew==${request.getSession()?.isNew()}")
@@ -39,7 +41,6 @@ abstract class BaseHttpServlet2 : HttpServlet() {
             return
         }
 
-        //todo bad request
-
+        response.status(StatusCode.BAD_REQUEST)
     }
 }

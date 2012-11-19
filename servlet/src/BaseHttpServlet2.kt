@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-trait BaseHttpServlet2 : HttpServlet {
+abstract class BaseHttpServlet2 : HttpServlet() {
     private inline fun handler(f: (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit) = f
 
-    val handlers : Map<String, (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit>
+    abstract val handlers : Map<String, (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit>
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         //todo fix this workaround after issue KT-2982 will be fixed

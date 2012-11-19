@@ -26,8 +26,8 @@ class WebIdeServlet : BaseHttpServlet() {
     val webIdeHandler = WebIdeHandler()
     val helpForKeywords = ContentWatcher(webIdeHandler.helpForKeywords, { it.toJsonString() })
     val helpForExamples = ContentWatcher(webIdeHandler.helpForExamples, { it.toJsonString() })
-    val examplesList = ContentWatcher(webIdeHandler.examplesInfo, { it.hierarchy.toJsonString() })
-    val examples = ContentWatcher(webIdeHandler.examplesInfo, { it.examples })
+    val examplesList = ContentWatcher(webIdeHandler.hierarchy, { it.toJsonString() })
+    val examples = ContentWatcher(webIdeHandler.examples, { it })
 
     override fun handle(command: String, params: Map<String, Array<String>>): String? = when (command) {
         LOAD_HELP_FOR_EXAMPLES -> helpForExamples.content

@@ -32,6 +32,8 @@ private val ORDER_FILE = "order.txt"
 public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<Map<String, String>>>):
                 AbstractExamplesProcessor<List<Map<String, Any>>>(helpForExamples) {
 
+    val DEFAULT_TARGET = TargetPlatform.JAVA.toString().toLowerCase()
+
     protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): List<Map<String, Any>> {
         val hierarchy = ArrayList<Map<String, Any>>()
 
@@ -47,13 +49,16 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
                            FILES_PROP to process(file, name2rawExamples))
             } else {
                 val rawExample = name2rawExamples[baseName]
-                if (rawExample != null) {
-                    val target = rawExample[TARGET_PROP] ?: TargetPlatform.JAVA.toString().toLowerCase()
-                    map.putAll(TYPE_PROP   to FILE,
-                               TARGET_PROP to target)
+                val target = if (rawExample != null) {
+                    rawExample[TARGET_PROP] ?: DEFAULT_TARGET
                 } else {
-                    //todo
+                    //todo not found example description
+                    DEFAULT_TARGET
                 }
+
+                map.putAll(TYPE_PROP   to FILE,
+                           TARGET_PROP to target)
+
             }
 
             hierarchy.add(map)

@@ -21,10 +21,10 @@ import java.util.HashMap
 import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.common.utils.files.baseName
 
-val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
-val DEFAULT_TARGETS = hashSet(TargetPlatform.JAVA)
-
 public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>): AbstractExamplesProcessor<Map<String, Example>>(helpForExamples) {
+
+    val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
+    val DEFAULT_TARGET = hashSet(TargetPlatform.JAVA)
 
     protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): Map<String, Example> {
         val examples: HashMap<String, Example> = hashMap<String, Example>()
@@ -32,9 +32,9 @@ public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, S
         root recurse {
             if (it.extension == KT_EXTENSION) {
                 val baseName = it.baseName
+                val source = it.readText()
                 val rawExample = name2rawExamples[baseName]
-                if (rawExample != null) {
-                    val source = it.readText()
+                val example = if (rawExample != null) {
                     val targets = rawExample[TARGET_PROP]
                             .orEmpty()
                             .toUpperCase()
@@ -43,14 +43,21 @@ public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, S
                             .map { TargetPlatform.valueOf(it) }
                             .toSet()
 
-                    val example = Example(name = baseName,
-                                          text = rawExample[TEXT_PROP].orEmpty(),
-                                          targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
-                                          args = rawExample[ARGS_PROP].orEmpty(),
-                                          source = source)
-
-                    examples.put(baseName, example)
+                    Example(name = baseName,
+                            text = rawExample[TEXT_PROP].orEmpty(),
+                            targets = if (targets.notEmpty()) targets else DEFAULT_TARGET,
+                            args = rawExample[ARGS_PROP].orEmpty(),
+                            source = source)
+                } else {
+                    //todo not found example description
+                    Example(name = baseName,
+                            text = "",
+                            targets = DEFAULT_TARGET,
+                            args = "",
+                            source = source)
                 }
+
+                examples.put(baseName, example)
             }
         }
 

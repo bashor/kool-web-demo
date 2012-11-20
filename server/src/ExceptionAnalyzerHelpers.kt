@@ -23,7 +23,6 @@ import java.net.URL
 import java.net.HttpURLConnection
 import java.io.OutputStream
 import java.net.URLEncoder
-import org.jetbrains.webdemo.common.utils.join
 import java.io.IOException
 
 private fun Calendar.format(format: String = "yyyy-MM-dd") = SimpleDateFormat(format).format(this.getTime()).orEmpty()
@@ -74,5 +73,5 @@ private fun List<Pair<String, String>>.toByteArray(): ByteArray {
             "${it.first}=${URLEncoder.encode(it.second, ENCODING)}"
     }
 
-    return parts.join(POST_DELIMITER).getBytes()
+    return parts.makeString(POST_DELIMITER).getBytes()
 }

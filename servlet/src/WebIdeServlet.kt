@@ -38,10 +38,10 @@ class WebIdeServlet : BaseHttpServlet() {
         LOAD_EXAMPLE -> {
             val name = params["name"]?.first
             if (name == null) {
-                sendToAnalyzer(message = "Wrong loadExample request:  parameter name not found")
-                ""
+                sendToAnalyzer(Attention("Wrong loadExample request:  parameter name not found"))
+                null
             } else {
-                examples.content[name]?.toJsonString() ?: ""
+                examples.content[name]?.toJsonString()
             }
         }
         else -> null

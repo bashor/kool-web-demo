@@ -16,5 +16,4 @@
 
 package org.jetbrains.webdemo.common.Settings
 
-val KOTLIN_COMPILER_VERSION: String = "Unknown"
 val IS_PRODUCTION: Boolean  = false

@@ -27,6 +27,7 @@ import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.header
 import java.io.UnsupportedEncodingException
 import org.jetbrains.webdemo.server.LOG
+import org.jetbrains.webdemo.server.sendToAnalyzer
 
 abstract class BaseHttpServlet : HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
@@ -62,9 +63,7 @@ abstract class BaseHttpServlet : HttpServlet() {
                 handle(command[0], params)
             } catch (e: Throwable) {
                 //Do not stop server
-                //todo write to log
-//                ErrorWriter.ERROR_WRITER.writeExceptionToExceptionAnalyzer(e,
-//                        "UNKNOWN", param);
+                sendToAnalyzer(exception = e, description = "QueryString: $decodedQuery", lastAction = "Call handler")
                 response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
                 return
             }

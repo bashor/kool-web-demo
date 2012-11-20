@@ -17,6 +17,41 @@
 package org.jetbrains.webdemo.server
 
 import org.apache.log4j.Logger
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
+import org.jetbrains.webdemo.common.utils.throwable.*
 
-//val LOG_FOR_EXCEPTIONS = Logger.getLogger("exceptionLogger");
+public val LOG_FOR_EXCEPTIONS: Logger = Logger.getLogger("exceptionLogger");
 public val LOG: Logger = Logger.getLogger("infoLogger")
+
+fun Logger.exception(exception: Throwable,
+                   lastAction: String = "",
+                   description: String = "",
+                   attachment: String = "") {
+
+
+    this.exception(ErrorReport(
+            lastAction = lastAction,
+            message = exception.message,
+            stackTrace = exception.stackTrace,
+            description = description,
+            attachment = attachment))
+}
+
+fun Logger.exception(lastAction: String = "",
+                   message: String = "",
+                   stackTrace: String = "",
+                   description: String = "",
+                   attachment: String = "") {
+
+    this.exception(ErrorReport(
+            lastAction = lastAction,
+            message = message,
+            stackTrace = stackTrace,
+            description = description,
+            attachment = attachment))
+}
+
+fun Logger.exception(error: ErrorReport) {
+    this.error(error.toJsonString())
+}

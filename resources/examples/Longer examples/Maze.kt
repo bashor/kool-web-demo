@@ -20,8 +20,8 @@
  */
 package maze
 
-import java.util.Collections.*
 import java.util.*
+import java.util.Collections.*
 
 /**
  * This function looks for a path from max.start to maze.end through

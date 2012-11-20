@@ -16,17 +16,16 @@
 
 package org.jetbrains.webdemo.servlet
 
+import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpUtils
 import org.jetbrains.webdemo.common.utils.StatusCode
-import org.jetbrains.webdemo.common.utils.write
-import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.header
-import java.io.UnsupportedEncodingException
-import org.jetbrains.webdemo.server.LOG
+import org.jetbrains.webdemo.common.utils.status
+import org.jetbrains.webdemo.common.utils.write
 import org.jetbrains.webdemo.server.sendToAnalyzer
 
 abstract class BaseHttpServlet : HttpServlet() {

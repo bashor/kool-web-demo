@@ -5,7 +5,6 @@
 package life
 
 import java.util.Collections.*
-import java.util.*
 
 /*
  * A field where cells live. Effectively immutable

@@ -21,7 +21,6 @@ import org.jetbrains.webdemo.common.WebIdeCommands.*
 import org.jetbrains.webdemo.common.utils.first
 import org.jetbrains.webdemo.common.utils.json.toJsonString
 import org.jetbrains.webdemo.server.WebIdeHandler
-import org.jetbrains.webdemo.server.ErrorReport
 import org.jetbrains.webdemo.server.sendToAnalyzer
 
 class WebIdeServlet : BaseHttpServlet() {

@@ -16,8 +16,6 @@
 
 package org.jetbrains.webdemo.server
 
-import org.json.JSONObject
-
 data class ErrorReport(val message: String = "",
                        val stackTrace: String = "",
                        val lastAction: String = "",

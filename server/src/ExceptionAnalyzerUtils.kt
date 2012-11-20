@@ -17,17 +17,11 @@
 package org.jetbrains.webdemo.server
 
 import java.io.IOException
-import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.net.URLEncoder
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import org.jetbrains.jet.internal.com.intellij.util.Base64Converter
 import org.jetbrains.jet.internal.com.intellij.util.SystemProperties
 import org.jetbrains.webdemo.common
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
 import org.jetbrains.webdemo.common.utils.throwable.*
 
 private val ENCODING = "UTF8"

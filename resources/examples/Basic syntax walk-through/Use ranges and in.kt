@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.*
 
 fun main(args : Array<String>) {
   val x = Integer.parseInt(args[0])

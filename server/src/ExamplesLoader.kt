@@ -50,7 +50,7 @@ public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, S
                             args = rawExample[ARGS_PROP].orEmpty(),
                             source = source)
                 } else {
-                    sendToAnalyzer(description = "Example \"baseName\" doesn't have description.")
+                    sendToAnalyzer(description = "Example '$baseName' doesn't have description.")
                     Example(name = baseName,
                             text = "",
                             targets = DEFAULT_TARGETS,

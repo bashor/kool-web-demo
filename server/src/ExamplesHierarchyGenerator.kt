@@ -50,7 +50,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
                 val target = if (rawExample != null) {
                     rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
                 } else {
-                    sendToAnalyzer(description = "Example \"baseName\" doesn't have description.")
+                    sendToAnalyzer(description = "Example '$baseName' doesn't have description.")
                     DEFAULT_TARGET_STR
                 }
 

@@ -16,24 +16,6 @@
 
 package org.jetbrains.webdemo.common.utils
 
-fun Iterable<String>.join(separator: String): String {
-    val result = StringBuilder()
-
-    val it = this.iterator()
-
-    if (!it.hasNext())
-        return ""
-
-    result.append(it.next())
-
-    while(it.hasNext()) {
-        result.append(separator)
-        result.append(it.next())
-    }
-
-    return result.toString()
-}
-
 //todo implementation?
 inline public fun String.stripMargin(marginChar: Char = '|'): String {
     return this.replaceFirst("""^[^\$marginChar]*\$marginChar""", "").replaceAll("""\n[^\$marginChar]*\$marginChar""", "\n")

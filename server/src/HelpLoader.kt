@@ -48,7 +48,7 @@ class HelpLoader(path: String, private val containerTag: String): VersionedConte
             return ContentSnapshot(version, elements)
         }
 
-        for (node in nodeList) {
+        for (node in nodeList)  {
             //fixme after issue KT-2982 will be fixed
             if (node !is Element || !node.hasChildNodes())
                 continue

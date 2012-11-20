@@ -28,7 +28,7 @@ import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.write
 import org.jetbrains.webdemo.server.sendToAnalyzer
 
-abstract class BaseHttpServlet : HttpServlet() {
+abstract class BaseHttpServlet: HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {

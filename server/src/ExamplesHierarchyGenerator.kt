@@ -75,7 +75,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
 
         orderLines.forEach { process(root / it) }
 
-        val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name)}
+        val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name) }
 
         if (additionally == null) {
             sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))

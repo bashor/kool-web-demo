@@ -22,10 +22,10 @@ import javax.servlet.http.HttpServletResponse
 import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.common.utils.status
 
-abstract class BaseHttpServlet2 : HttpServlet() {
+abstract class BaseHttpServlet2: HttpServlet() {
     private inline fun handler(f: (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit) = f
 
-    abstract val handlers : Map<String, (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit>
+    abstract val handlers: Map<String, (params: Map<String, Array<String>>, response: HttpServletResponse) -> Unit>
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {
         //fixme after issue KT-2982 will be fixed

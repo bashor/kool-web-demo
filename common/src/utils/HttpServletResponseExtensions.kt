@@ -25,7 +25,7 @@ inline public fun HttpServletResponse.write(body: String): Boolean {
     return this.getWriter().checkError()
 }
 
-inline public fun HttpServletResponse.status(statusCode : StatusCode, message: String? = null): HttpServletResponse {
+inline public fun HttpServletResponse.status(statusCode: StatusCode, message: String? = null): HttpServletResponse {
     if (message == null)
         this.setStatus(statusCode.value)
     else

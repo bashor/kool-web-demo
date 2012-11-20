@@ -23,9 +23,9 @@ public val LOG_FOR_EXCEPTIONS: Logger = Logger.getLogger("exceptionLogger");
 public val LOG: Logger = Logger.getLogger("infoLogger")
 
 fun Logger.exception(exception: Throwable,
-                   lastAction: String = "",
-                   description: String = "",
-                   attachment: Attachment? = null) {
+                     lastAction: String = "",
+                     description: String = "",
+                     attachment: Attachment? = null) {
 
 
     this.exception(ErrorReport(
@@ -37,10 +37,10 @@ fun Logger.exception(exception: Throwable,
 }
 
 fun Logger.exception(lastAction: String = "",
-                   message: String = "",
-                   stackTrace: String = "",
-                   description: String = "",
-                   attachment: Attachment? = null) {
+                     message: String = "",
+                     stackTrace: String = "",
+                     description: String = "",
+                     attachment: Attachment? = null) {
 
     this.exception(ErrorReport(
             lastAction = lastAction,

@@ -24,7 +24,7 @@ import org.w3c.dom.Text
 
 fun NodeList.iterator() = NodeListIterator(this)
 
-val Node.name : String
+val Node.name: String
     get() = this.getNodeName().orEmpty()
 
 val Node.value: String

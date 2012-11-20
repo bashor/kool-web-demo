@@ -16,4 +16,4 @@
 
 package org.jetbrains.webdemo.common.Settings
 
-val IS_PRODUCTION: Boolean  = false
+val IS_PRODUCTION: Boolean = false

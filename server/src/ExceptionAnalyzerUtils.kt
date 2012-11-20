@@ -42,9 +42,9 @@ private val LOGIN = "idea_anonymous"
 private val PASSWORD = "guest"
 
 public fun sendToAnalyzer(exception: Throwable,
-                   lastAction: String = "",
-                   description: String = "",
-                   attachment: Attachment? = null) {
+                          lastAction: String = "",
+                          description: String = "",
+                          attachment: Attachment? = null) {
 
     sendToAnalyzer(ErrorReport(
             message = exception.message,
@@ -71,7 +71,7 @@ private fun sendReport(error: ErrorReport) {
 }
 
 private fun postReport(error: ErrorReport) {
-    val params : List<Pair<String, String>> = createParametersFor(error)
+    val params: List<Pair<String, String>> = createParametersFor(error)
     val response = URL(NEW_THREAD_URL).duplexConnection().post(params.toByteArray())
 
     val responseCode = response.getResponseCode()

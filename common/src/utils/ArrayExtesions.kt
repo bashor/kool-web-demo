@@ -15,7 +15,7 @@
  */
 package org.jetbrains.webdemo.common.utils
 
-val <T> Array<T>.first : T?
+val <T: Any> Array<T>.first : T?
     inline get() = if (this.isEmpty()) null else this[0]
 
 inline public fun <T> Array<T>.firstOrDefault(default: T): T {

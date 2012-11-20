@@ -20,12 +20,12 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
 inline public val Throwable.message: String
-    get() {
-        return this.getMessage().orEmpty()
-    }
+    get() = getMessage().orEmpty()
+
+
 inline public val Throwable.stackTrace: String
     get() {
-        val stackTrace = ByteArrayOutputStream();
-        this.printStackTrace(PrintStream(stackTrace, true));
+        val stackTrace = ByteArrayOutputStream()
+        this.printStackTrace(PrintStream(stackTrace, true))
         return stackTrace.toString()
     }

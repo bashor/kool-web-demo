@@ -35,28 +35,29 @@ public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, S
                 val baseName = it.baseName
                 val source = it.readText()
                 val rawExample = name2rawExamples[baseName]
-                val example = if (rawExample != null) {
-                    val targets = rawExample[TARGET_PROP]
-                            .orEmpty()
-                            .toUpperCase()
-                            .split(' ')
-                            .filter { ALL_TARGETS.contains(it) }
-                            .map { TargetPlatform.valueOf(it) }
-                            .toSet()
+                val example =
+                        if (rawExample != null) {
+                            val targets = rawExample[TARGET_PROP]
+                                    .orEmpty()
+                                    .toUpperCase()
+                                    .split(' ')
+                                    .filter { ALL_TARGETS.contains(it) }
+                                    .map { TargetPlatform.valueOf(it) }
+                                    .toSet()
 
-                    Example(name = baseName,
-                            text = rawExample[TEXT_PROP].orEmpty(),
-                            targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
-                            args = rawExample[ARGS_PROP].orEmpty(),
-                            source = source)
-                } else {
-                    sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
-                    Example(name = baseName,
-                            text = "",
-                            targets = DEFAULT_TARGETS,
-                            args = "",
-                            source = source)
-                }
+                            Example(name = baseName,
+                                    text = rawExample[TEXT_PROP].orEmpty(),
+                                    targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
+                                    args = rawExample[ARGS_PROP].orEmpty(),
+                                    source = source)
+                        } else {
+                            sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
+                            Example(name = baseName,
+                                    text = "",
+                                    targets = DEFAULT_TARGETS,
+                                    args = "",
+                                    source = source)
+                        }
 
                 examples.put(baseName, example)
             }

@@ -36,37 +36,42 @@ abstract class BaseHttpServlet : HttpServlet() {
         response.header("Cache-Control" to "no-cache")
 
         //fixme after issue KT-2982 will be fixed
-        val decodedQuery = try {
-            URLDecoder.decode(request.getQueryString(), "UTF-8")
-        } catch (e: UnsupportedEncodingException) {
-            val exceptionMessage = e.getMessage().orEmpty()
-            val message = if (exceptionMessage.contains("URLDecoder:")) {
-                exceptionMessage
-            } else {
-                "${exceptionMessage} character encoding is not supported"
-            }
-            response.status(StatusCode.BAD_REQUEST, message)
-            return
-        }
+        val decodedQuery =
+                try {
+                    URLDecoder.decode(request.getQueryString(), "UTF-8")
+                } catch (e: UnsupportedEncodingException) {
+                    val exceptionMessage = e.getMessage().orEmpty()
+                    val message =
+                            if (exceptionMessage.contains("URLDecoder:")) {
+                                exceptionMessage
+                            } else {
+                                "${exceptionMessage} character encoding is not supported"
+                            }
+                    //todo logging
+                    response.status(StatusCode.BAD_REQUEST, message)
+                    return
+                }
 
-        val params = try {
-            HttpUtils.parseQueryString(decodedQuery) as Map<String, Array<String>>
-        } catch (e: IllegalArgumentException) {
-            response.status(StatusCode.BAD_REQUEST, "The query string is invalid")
-            return
-        }
+        val params =
+                try {
+                    HttpUtils.parseQueryString(decodedQuery) as Map<String, Array<String>>
+                } catch (e: IllegalArgumentException) {
+                    response.status(StatusCode.BAD_REQUEST, "The query string is invalid")
+                    return
+                }
 
         val command = params["do"]
 
         if (command != null && command.notEmpty()) {
-            val responseBody = try {
-                handle(command[0], params)
-            } catch (e: Throwable) {
-                //Do not stop server
-                sendToAnalyzer(exception = e, description = "QueryString: $decodedQuery", lastAction = "Call handler")
-                response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
-                return
-            }
+            val responseBody =
+                    try {
+                        handle(command[0], params)
+                    } catch (e: Throwable) {
+                        //Do not stop server
+                        sendToAnalyzer(exception = e, description = "QueryString: $decodedQuery", lastAction = "Call handler")
+                        response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
+                        return
+                    }
 
             if (responseBody == null) {
                 response.status(StatusCode.BAD_REQUEST, "Unsupported command")

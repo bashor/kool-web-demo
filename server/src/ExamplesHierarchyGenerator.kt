@@ -47,12 +47,13 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
                            FILES_PROP to process(file, name2rawExamples))
             } else {
                 val rawExample = name2rawExamples[baseName]
-                val target = if (rawExample != null) {
-                    rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
-                } else {
-                    sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
-                    DEFAULT_TARGET_STR
-                }
+                val target =
+                        if (rawExample != null) {
+                            rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
+                        } else {
+                            sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
+                            DEFAULT_TARGET_STR
+                        }
 
                 map.putAll(TYPE_PROP   to FILE,
                            TARGET_PROP to target)
@@ -64,12 +65,13 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
 
         val orderFile = root / ORDER_FILE
 
-        val orderLines = if (orderFile.exists()) {
-            orderFile.readLines()
-        } else {
-            sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
-            arrayList<String>()
-        }
+        val orderLines =
+                if (orderFile.exists()) {
+                    orderFile.readLines()
+                } else {
+                    sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
+                    arrayList<String>()
+                }
 
         orderLines.forEach { process(root / it) }
 

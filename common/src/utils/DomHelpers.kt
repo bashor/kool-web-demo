@@ -45,14 +45,14 @@ val Node.inner: String
                     attributes.append(" target=\"_blank\"");
                 }
 
-                val map = node.getAttributes();
+                val map = node.getAttributes()
                 if (map != null) {
                     for (i in 0..map.getLength() - 1) {
-                        attributes.append(" ${ map[i]?.name ?: "" }=\"${ map[i]?.value ?: "" }\"");
+                        attributes.append(" ${ map[i]?.name ?: "" }=\"${ map[i]?.value ?: "" }\"")
                     }
                 }
 
-                inner.append("<${ node.name }${ attributes }>${ node.inner }</${ node.name }>");
+                inner.append("<${ node.name }${ attributes }>${ node.inner }</${ node.name }>")
             }
         }
 

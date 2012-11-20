@@ -34,7 +34,7 @@ fun Iterable<String>.join(separator: String): String {
     return result.toString()
 }
 
-//todo
+//todo implementation?
 inline public fun String.stripMargin(marginChar: Char = '|'): String {
     return this.replaceFirst("""^[^\$marginChar]*\$marginChar""", "").replaceAll("""\n[^\$marginChar]*\$marginChar""", "\n")
     //    return StringReader(this).useLines {

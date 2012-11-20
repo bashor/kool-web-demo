@@ -27,7 +27,7 @@ public val LOG: Logger = Logger.getLogger("infoLogger")
 fun Logger.exception(exception: Throwable,
                    lastAction: String = "",
                    description: String = "",
-                   attachment: String = "") {
+                   attachment: Attachment? = null) {
 
 
     this.exception(ErrorReport(
@@ -42,7 +42,7 @@ fun Logger.exception(lastAction: String = "",
                    message: String = "",
                    stackTrace: String = "",
                    description: String = "",
-                   attachment: String = "") {
+                   attachment: Attachment? = null) {
 
     this.exception(ErrorReport(
             lastAction = lastAction,

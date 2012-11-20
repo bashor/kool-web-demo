@@ -148,8 +148,8 @@ private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> 
             Pair("error.stacktrace", error.stackTrace),
             Pair("error.description", error.description))
 
-    if (error.attachment.notEmpty()) {
-        params.addAll(arrayList(Pair<String, String>("attachment.name", "Example.kt"), Pair("attachment.value", error.attachment.getBytes().toBase64())))
+    if (error.attachment != null) {
+        params.addAll(arrayList(Pair<String, String>("attachment.name", error.attachment.name), Pair("attachment.value", error.attachment.content.getBytes().toBase64())))
     }
 
     return params

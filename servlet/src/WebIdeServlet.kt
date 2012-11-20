@@ -21,6 +21,8 @@ import org.jetbrains.webdemo.common.WebIdeCommands.*
 import org.jetbrains.webdemo.common.utils.first
 import org.jetbrains.webdemo.common.utils.json.toJsonString
 import org.jetbrains.webdemo.server.WebIdeHandler
+import org.jetbrains.webdemo.server.ErrorReport
+import org.jetbrains.webdemo.server.sendToAnalyzer
 
 class WebIdeServlet : BaseHttpServlet() {
     val webIdeHandler = WebIdeHandler()
@@ -36,13 +38,12 @@ class WebIdeServlet : BaseHttpServlet() {
         LOAD_EXAMPLE -> {
             val name = params["name"]?.first
             if (name == null) {
-                //todo handling error
+                sendToAnalyzer(message = "Wrong loadExample request:  parameter name not found")
                 ""
             } else {
                 examples.content[name]?.toJsonString() ?: ""
             }
         }
-        UPDATE_EXAMPLES_LIST -> "" //webIdeHandler.updateExamplesList()
         else -> null
     }
 }

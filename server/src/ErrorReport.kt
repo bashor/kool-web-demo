@@ -18,22 +18,38 @@ package org.jetbrains.webdemo.server
 
 import org.json.JSONObject
 
-data class ErrorReport(val lastAction: String = "",
-                       val message: String = "",
+data class ErrorReport(val message: String = "",
                        val stackTrace: String = "",
+                       val lastAction: String = "",
                        val description: String = "",
-                       val attachment: Attachment? = null)
+                       val attachment: Attachment? = null) {
 
-fun ErrorReport.toJsonString(): String {
-    val map = hashMap(
-            "last action" to this.lastAction,
-            "plugin version" to Settings.KOTLIN_COMPILER_VERSION,
-            "message" to this.message,
-            "stackTrace" to this.stackTrace,
-            "description" to this.description)
+    public fun toString(): String {
+        fun format(name: String, value: String, indentCount: Int): String {
+            if (name.isEmpty() || value.isEmpty())
+                return ""
 
-    if (attachment != null)
-        map.put("attachment", """{"name" : "${attachment.name}", "content" : "${attachment.content}"}""")
+            val indent = " ".repeat(4 * indentCount)
+            return "$indent'$name' : '$value'\n"
+        }
+        fun format(attachment: Attachment?): String {
+            if (attachment == null)
+                return ""
+            return """ { "name" : "${attachment.name}", "content" : "${attachment.content}" }"""
+        }
 
-    return  JSONObject(map).toString()
+        val out = StringBuilder("{\n")
+        out += format("message", message, 1)
+        out += format("stackTrace", stackTrace, 1)
+        out += format("lastAction", lastAction, 1)
+        out += format("description", description, 1)
+        out += format("attachment", format(attachment), 1)
+        out += "}"
+
+        return out.toString()
+    }
+}
+
+fun StringBuilder.plusAssign(s: Any) {
+    this.append(s)
 }

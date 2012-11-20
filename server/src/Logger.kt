@@ -53,5 +53,5 @@ fun Logger.exception(lastAction: String = "",
 }
 
 fun Logger.exception(error: ErrorReport) {
-    this.error(error.toJsonString())
+    this.error(error)
 }

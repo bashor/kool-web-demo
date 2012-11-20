@@ -48,7 +48,7 @@ class HelpLoader(path: String,
         val nodeList = doc.getElementsByTagName(containerTag)
 
         if (nodeList == null) {
-            sendToAnalyzer(description = "For ${file.path} Document#getElementsByTagName with $containerTag returned null.")
+            sendToAnalyzer(Attention("For '${file.path}' Document#getElementsByTagName with $containerTag returned null."))
             return ContentSnapshot(version, elements)
         }
 

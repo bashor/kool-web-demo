@@ -26,9 +26,9 @@ import java.util.Calendar
 import org.jetbrains.jet.internal.com.intellij.util.Base64Converter
 import org.jetbrains.jet.internal.com.intellij.util.SystemProperties
 import org.jetbrains.webdemo.common
-import org.jetbrains.webdemo.common.utils.join
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import org.jetbrains.webdemo.common.utils.throwable.*
 
 private val ENCODING = "UTF8"
 private val POST_DELIMITER = "&"
@@ -52,27 +52,10 @@ public fun sendToAnalyzer(exception: Throwable,
                    description: String = "",
                    attachment: Attachment? = null) {
 
-    val stackTrace = ByteArrayOutputStream();
-    exception.printStackTrace(PrintStream(stackTrace, true));
-
     sendToAnalyzer(ErrorReport(
+            message = exception.message,
+            stackTrace = exception.stackTrace,
             lastAction = lastAction,
-            message = exception.getMessage().orEmpty(),
-            stackTrace = stackTrace.toString(),
-            description = description,
-            attachment = attachment))
-}
-
-public fun sendToAnalyzer(lastAction: String = "",
-                   message: String = "",
-                   stackTrace: String = "",
-                   description: String = "",
-                   attachment: Attachment? = null) {
-
-    sendToAnalyzer(ErrorReport(
-            lastAction = lastAction,
-            message = message,
-            stackTrace = stackTrace,
             description = description,
             attachment = attachment))
 }
@@ -87,31 +70,31 @@ public fun sendToAnalyzer(error: ErrorReport) {
 
 private fun sendReport(error: ErrorReport) {
     try {
-        postNewThread(error)
+        postReport(error)
     } catch (e: IOException) {
         LOG_FOR_EXCEPTIONS.exception(exception = e, lastAction = "Send to Exception Analyzer")
     }
 }
 
-private fun postNewThread(error: ErrorReport) {
+private fun postReport(error: ErrorReport) {
     val params : List<Pair<String, String>> = createParametersFor(error)
     val response = URL(NEW_THREAD_URL).duplexConnection().post(params.toByteArray())
 
     val responseCode = response.getResponseCode()
     if (responseCode != HttpURLConnection.HTTP_OK) {
-        LOG_FOR_EXCEPTIONS.exception(description = "Response code $responseCode for ${error.toJsonString()}")
+        LOG_FOR_EXCEPTIONS.exception(description = "Response code $responseCode for $error")
         return
     }
 
     val reply = response.readContent()
 
     if (reply == null) {
-        LOG_FOR_EXCEPTIONS.exception(description = "Can not read responce for ${error.toJsonString()}")
+        LOG_FOR_EXCEPTIONS.exception(description = "Can not read responce for $error}")
         return
     }
 
     if (reply == "unauthorized" || reply.startsWith("update ") || reply.startsWith("message ")) {
-        LOG_FOR_EXCEPTIONS.exception(description = "Exception Analyzer respond $reply for ${error.toJsonString()}")
+        LOG_FOR_EXCEPTIONS.exception(description = "Exception Analyzer respond $reply for $error")
         return
     }
 
@@ -124,7 +107,7 @@ private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> 
     val date = Calendar.getInstance().format()
     val compilationTimestamp = System.currentTimeMillis().toString()
 
-    val params = arrayList(Pair("protocol.version", "1"),
+    val params = arrayList("protocol.version" to "1",
             Pair("user.login", LOGIN),
             Pair("user.password", PASSWORD),
             Pair("os.name", " "),
@@ -149,7 +132,8 @@ private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> 
             Pair("error.description", error.description))
 
     if (error.attachment != null) {
-        params.addAll(arrayList(Pair<String, String>("attachment.name", error.attachment.name), Pair("attachment.value", error.attachment.content.getBytes().toBase64())))
+        params.addAll(arrayList(Pair<String, String>("attachment.name", error.attachment.name),
+                Pair("attachment.value", error.attachment.content.getBytes().toBase64())))
     }
 
     return params

@@ -50,7 +50,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
                 val target = if (rawExample != null) {
                     rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
                 } else {
-                    sendToAnalyzer(description = "Example '$baseName' doesn't have description.")
+                    sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
                     DEFAULT_TARGET_STR
                 }
 
@@ -67,7 +67,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
         val orderLines = if (orderFile.exists()) {
             orderFile.readLines()
         } else {
-            sendToAnalyzer(description = "Order file ${orderFile.path} not found.")
+            sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
             arrayList<String>()
         }
 
@@ -76,13 +76,13 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
         val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name)}
 
         if (additionally == null) {
-            sendToAnalyzer(description = "Additionally files list is null. Currnet dir is \"${root.path}\".")
+            sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))
             return hierarchy
         }
 
         if (additionally.notEmpty()) {
             if (orderFile.exists())
-                sendToAnalyzer(description = "Order file ${orderFile.path} doesn't contain some files.")
+                sendToAnalyzer(Attention("Order file '${orderFile.path}' doesn't contain some files."))
 
             additionally.forEach { process(it) }
         }

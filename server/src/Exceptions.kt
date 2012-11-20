@@ -15,3 +15,5 @@
  */
 
 class InternalError(message: String): RuntimeException(message)
+
+class Attention(message: String): RuntimeException(message)

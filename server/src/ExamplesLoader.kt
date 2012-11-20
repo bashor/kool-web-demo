@@ -22,7 +22,7 @@ import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.common.utils.files.baseName
 
 private val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
-private val DEFAULT_TARGET = hashSet(TargetPlatform.JAVA)
+private val DEFAULT_TARGETS = hashSet(TargetPlatform.JAVA)
 
 public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>): AbstractExamplesProcessor<Map<String, Example>>(helpForExamples) {
 
@@ -46,14 +46,14 @@ public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, S
 
                     Example(name = baseName,
                             text = rawExample[TEXT_PROP].orEmpty(),
-                            targets = if (targets.notEmpty()) targets else DEFAULT_TARGET,
+                            targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
                             args = rawExample[ARGS_PROP].orEmpty(),
                             source = source)
                 } else {
-                    //todo not found example description
+                    sendToAnalyzer(description = "Example \"baseName\" doesn't have description.")
                     Example(name = baseName,
                             text = "",
-                            targets = DEFAULT_TARGET,
+                            targets = DEFAULT_TARGETS,
                             args = "",
                             source = source)
                 }

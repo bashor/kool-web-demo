@@ -22,7 +22,7 @@ data class ErrorReport(val lastAction: String = "",
                        val message: String = "",
                        val stackTrace: String = "",
                        val description: String = "",
-                       val attachment: String = "")
+                       val attachment: Attachment? = null)
 
 fun ErrorReport.toJsonString(): String {
     val map = hashMap(
@@ -31,6 +31,9 @@ fun ErrorReport.toJsonString(): String {
             "message" to this.message,
             "stackTrace" to this.stackTrace,
             "description" to this.description)
+
+    if (attachment != null)
+        map.put("attachment", """{"name" : "${attachment.name}", "content" : "${attachment.content}"}""")
 
     return  JSONObject(map).toString()
 }

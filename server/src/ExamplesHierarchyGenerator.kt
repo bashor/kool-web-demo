@@ -38,9 +38,6 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
     protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): List<Map<String, Any>> {
         val hierarchy = ArrayList<Map<String, Any>>()
 
-        //todo check exist ORDER_FILE
-        val order = (root / ORDER_FILE).readLines()
-
         fun process(file: File) {
             val baseName = file.baseName
             val map = hashMap<String, Any>(NAME_PROP to baseName)
@@ -53,7 +50,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
                 val target = if (rawExample != null) {
                     rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
                 } else {
-                    //todo not found example description
+                    sendToAnalyzer(description = "Example \"baseName\" doesn't have description.")
                     DEFAULT_TARGET_STR
                 }
 
@@ -65,17 +62,27 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
             hierarchy.add(map)
         }
 
-        order.forEach { process(root / it) }
+        val orderFile = root / ORDER_FILE
 
-        val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !order.contains(it.name)}
+        val orderLines = if (orderFile.exists()) {
+            orderFile.readLines()
+        } else {
+            sendToAnalyzer(description = "Order file ${orderFile.path} not found.")
+            arrayList<String>()
+        }
+
+        orderLines.forEach { process(root / it) }
+
+        val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name)}
 
         if (additionally == null) {
-            //todo ???
+            sendToAnalyzer(description = "Additionally files list is null. Currnet dir is \"${root.path}\".")
             return hierarchy
         }
 
         if (additionally.notEmpty()) {
-            //todo
+            if (orderFile.exists())
+                sendToAnalyzer(description = "Order file ${orderFile.path} doesn't contain some files.")
 
             additionally.forEach { process(it) }
         }

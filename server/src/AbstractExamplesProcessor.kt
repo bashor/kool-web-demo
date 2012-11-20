@@ -39,11 +39,7 @@ abstract class AbstractExamplesProcessor<R>(helpForExamples: VersionedContent<Li
     override fun snapshot(): ContentSnapshot<R> {
         val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
         if (!root.exists()) {
-            //todo error handling
-            //            ToExceptionAnalyzer
-            //            ToConsole
-
-            //            return "Examples root doesn't exists"
+            throw InternalError("Root directory of Examples doesn't exists.\nSettings.EXAMPLES_DIRECTORY_PATH = \"${Settings.EXAMPLES_DIRECTORY_PATH}\"")
         }
 
         val name2rawExamples = transformRawExamplesListToMap(helpForExamplesWatcher.content)

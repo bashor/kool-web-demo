@@ -47,10 +47,10 @@ private val PLUGIN_NAME = "Kool Web Demo"
 private val LOGIN = "idea_anonymous"
 private val PASSWORD = "guest"
 
-fun sendToAnalyzer(exception: Throwable,
+public fun sendToAnalyzer(exception: Throwable,
                    lastAction: String = "",
                    description: String = "",
-                   attachment: String = "") {
+                   attachment: Attachment? = null) {
 
     val stackTrace = ByteArrayOutputStream();
     exception.printStackTrace(PrintStream(stackTrace, true));
@@ -63,11 +63,11 @@ fun sendToAnalyzer(exception: Throwable,
             attachment = attachment))
 }
 
-fun sendToAnalyzer(lastAction: String = "",
+public fun sendToAnalyzer(lastAction: String = "",
                    message: String = "",
                    stackTrace: String = "",
                    description: String = "",
-                   attachment: String = "") {
+                   attachment: Attachment? = null) {
 
     sendToAnalyzer(ErrorReport(
             lastAction = lastAction,
@@ -77,7 +77,7 @@ fun sendToAnalyzer(lastAction: String = "",
             attachment = attachment))
 }
 
-fun sendToAnalyzer(error: ErrorReport) {
+public fun sendToAnalyzer(error: ErrorReport) {
     LOG_FOR_EXCEPTIONS.exception(error)
 
     if (common.Settings.IS_PRODUCTION) {
@@ -93,7 +93,7 @@ private fun sendReport(error: ErrorReport) {
     }
 }
 
-public fun postNewThread(error: ErrorReport) {
+private fun postNewThread(error: ErrorReport) {
     val params : List<Pair<String, String>> = createParametersFor(error)
     val response = URL(NEW_THREAD_URL).duplexConnection().post(params.toByteArray())
 

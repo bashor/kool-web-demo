@@ -27,26 +27,7 @@ import org.jetbrains.webdemo.common.utils.notEmpty
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.xml.sax.SAXException
-
-public fun Document(file : File) : Document? {
-    val docBuilderFactory = DocumentBuilderFactory.newInstance()
-    try {
-        val docBuilder = docBuilderFactory?.newDocumentBuilder()
-        val document = docBuilder?.parse(file)
-
-        document?.getDocumentElement()?.normalize()
-        return document!!
-    } catch (e: IOException) {
-        //todo logging
-        return null;
-    } catch (e: ParserConfigurationException) {
-        //todo logging
-        return null;
-    } catch (e: SAXException) {
-        //todo logging
-        return null;
-    }
-}
+import org.jetbrains.webdemo.server.sendToAnalyzer
 
 class HelpLoader(path: String,
                  private val containerTag: String,
@@ -61,11 +42,15 @@ class HelpLoader(path: String,
         val doc = Document(file)
 
         if (doc == null) {
-            //todo logging
             return ContentSnapshot(version, elements)
         }
 
-        val nodeList = doc.getElementsByTagName(containerTag)!!
+        val nodeList = doc.getElementsByTagName(containerTag)
+
+        if (nodeList == null) {
+            sendToAnalyzer(description = "For ${file.path} Document#getElementsByTagName with $containerTag returned null.")
+            return ContentSnapshot(version, elements)
+        }
 
         for (node in nodeList) {
             //fixme after issue KT-2982 will be fixed
@@ -88,5 +73,29 @@ class HelpLoader(path: String,
 
         contentUpdatedHandler(elements)
         return ContentSnapshot(version, elements)
+    }
+}
+
+private fun Document(file : File) : Document? {
+    fun sendException(e: Throwable) {
+        sendToAnalyzer(exception = e, lastAction="Create org.w3c.dom.Document for ${file.name}", attachment = Attachment(file))
+    }
+
+    val docBuilderFactory = DocumentBuilderFactory.newInstance()
+    try {
+        val docBuilder = docBuilderFactory?.newDocumentBuilder()
+        val document = docBuilder?.parse(file)
+
+        document?.getDocumentElement()?.normalize()
+        return document
+    } catch (e: IOException) {
+        sendException(e)
+        return null;
+    } catch (e: ParserConfigurationException) {
+        sendException(e)
+        return null;
+    } catch (e: SAXException) {
+        sendException(e)
+        return null;
     }
 }

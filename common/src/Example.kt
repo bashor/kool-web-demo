@@ -22,10 +22,8 @@ public val TARGET_PROP: String = "target"
 public val ARGS_PROP: String = "args"
 public val SOURCE_PROP: String = "source"
 
-public data class Example(
-    val name: String,
-    val text: String,
-    val targets: Set<TargetPlatform>,
-    val args: String,
-    val source: String
-)
+public data class Example(val name: String,
+                          val text: String,
+                          val targets: Set<TargetPlatform>,
+                          val args: String,
+                          val source: String)

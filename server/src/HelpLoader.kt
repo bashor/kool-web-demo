@@ -28,10 +28,7 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.xml.sax.SAXException
 
-class HelpLoader(path: String,
-                 private val containerTag: String,
-                 private val contentUpdatedHandler: (List<Map<String, String>>) -> Unit = {}) : VersionedContent<List<Map<String, String>>> {
-
+class HelpLoader(path: String, private val containerTag: String): VersionedContent<List<Map<String, String>>> {
     private val file = File(path)
 
     override fun version(): Long = file.lastModified()
@@ -70,14 +67,13 @@ class HelpLoader(path: String,
             }
         }
 
-        contentUpdatedHandler(elements)
         return ContentSnapshot(version, elements)
     }
 }
 
-private fun Document(file : File) : Document? {
+private fun Document(file: File): Document? {
     fun sendException(e: Throwable) {
-        sendToAnalyzer(exception = e, lastAction="Create org.w3c.dom.Document for ${file.name}", attachment = Attachment(file))
+        sendToAnalyzer(exception = e, lastAction = "Create org.w3c.dom.Document for ${file.name}", attachment = Attachment(file))
     }
 
     val docBuilderFactory = DocumentBuilderFactory.newInstance()

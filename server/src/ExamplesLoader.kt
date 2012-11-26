@@ -37,13 +37,15 @@ public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, S
                 val rawExample = name2rawExamples[baseName]
                 val example =
                         if (rawExample != null) {
-                            val targets = rawExample[TARGET_PROP]
-                                    .orEmpty()
-                                    .toUpperCase()
-                                    .split(' ')
-                                    .filter { ALL_TARGETS.contains(it) }
-                                    .map { TargetPlatform.valueOf(it) }
-                                    .toSet()
+                            //fixme
+                            val targets = hashSet<TargetPlatform>()
+//                                    rawExample[TARGET_PROP]
+//                                    .orEmpty()
+//                                    .toUpperCase()
+//                                    .split(' ')
+//                                    .filter { ALL_TARGETS.contains(it) }
+//                                    .map { TargetPlatform.valueOf(it) }
+//                                    .toSet()
 
                             Example(name = baseName,
                                     text = rawExample[TEXT_PROP].orEmpty(),

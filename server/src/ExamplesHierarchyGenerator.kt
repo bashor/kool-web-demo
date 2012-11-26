@@ -82,11 +82,17 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
             return hierarchy
         }
 
-        if (additionally.notEmpty()) {
+        //fixme
+//        if (additionally.notEmpty()) {
+        if (additionally.size != 0) {
             if (orderFile.exists())
                 sendToAnalyzer(Attention("Order file '${orderFile.path}' doesn't contain some files."))
 
-            additionally.forEach { process(it) }
+            //fixme
+//            additionally.forEach { process(it) }
+            for (file in additionally) {
+                process(file)
+            }
         }
 
         return hierarchy

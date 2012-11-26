@@ -20,7 +20,6 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Calendar
-import org.jetbrains.jet.internal.com.intellij.util.SystemProperties
 import org.jetbrains.webdemo.common
 import org.jetbrains.webdemo.common.utils.throwable.*
 
@@ -34,8 +33,8 @@ private val HTTP_WWW_FORM = "application/x-www-form-urlencoded"
 private val HTTP_POST = "POST"
 private val TIMEOUT = 10 * 1000
 
-private val JAVA_VERSION = SystemProperties.getJavaVersion().orEmpty()
-private val JAVA_VM_VENDOR = SystemProperties.getJavaVmVendor().orEmpty()
+private val JAVA_VERSION = System.getProperty("java.version").orEmpty()
+private val JAVA_VM_VENDOR = System.getProperty("java.vendor").orEmpty()
 private val APP_NAME = "Kotlin"
 private val PLUGIN_NAME = "Kool Web Demo"
 private val LOGIN = "idea_anonymous"
@@ -127,7 +126,7 @@ private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> 
 
     if (error.attachment != null) {
         params.addAll(arrayList(Pair<String, String>("attachment.name", error.attachment.name),
-                Pair("attachment.value", error.attachment.content.getBytes().toBase64())))
+                Pair("attachment.value", error.attachment.content)))
     }
 
     return params

@@ -23,11 +23,8 @@ import java.net.URL
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import org.jetbrains.jet.internal.com.intellij.util.Base64Converter
 
 private fun Calendar.format(format: String = "yyyy-MM-dd") = SimpleDateFormat(format).format(this.getTime()).orEmpty()
-
-private fun ByteArray.toBase64() = Base64Converter.encode(this).orEmpty()
 
 private fun URL.duplexConnection(): HttpURLConnection {
     val connection = this.openConnection() as HttpURLConnection

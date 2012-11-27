@@ -52,7 +52,7 @@ public fun sendToAnalyzer(exception: Throwable,
             description = description,
             attachment = attachment))
 }
-
+//fixme don't try send report if it's happened in test mode
 public fun sendToAnalyzer(error: ErrorReport) {
     LOG_FOR_EXCEPTIONS.exception(error)
 

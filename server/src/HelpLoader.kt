@@ -22,11 +22,11 @@ import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.ParserConfigurationException
 import org.jetbrains.webdemo.common.ContentSnapshot
 import org.jetbrains.webdemo.common.VersionedContent
-import org.jetbrains.webdemo.common.utils.domHelpers.*
 import org.jetbrains.webdemo.common.utils.notEmpty
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.xml.sax.SAXException
+import org.jetbrains.webdemo.server.domHelpers.*
 
 class HelpLoader(path: String, private val containerTag: String): VersionedContent<List<Map<String, String>>> {
     private val file = File(path)
@@ -35,7 +35,7 @@ class HelpLoader(path: String, private val containerTag: String): VersionedConte
     override fun snapshot(): ContentSnapshot<List<Map<String, String>>> {
         val elements = arrayList<Map<String, String>>()
         val version = version()
-        val doc = Document(file)
+        val doc = file.toDocument()
 
         if (doc == null) {
             return ContentSnapshot(version, elements)
@@ -68,29 +68,5 @@ class HelpLoader(path: String, private val containerTag: String): VersionedConte
         }
 
         return ContentSnapshot(version, elements)
-    }
-}
-
-private fun Document(file: File): Document? {
-    fun sendException(e: Throwable) {
-        sendToAnalyzer(exception = e, lastAction = "Create org.w3c.dom.Document for ${file.name}", attachment = Attachment(file))
-    }
-
-    val docBuilderFactory = DocumentBuilderFactory.newInstance()
-    try {
-        val docBuilder = docBuilderFactory?.newDocumentBuilder()
-        val document = docBuilder?.parse(file)
-
-        document?.getDocumentElement()?.normalize()
-        return document
-    } catch (e: IOException) {
-        sendException(e)
-        return null;
-    } catch (e: ParserConfigurationException) {
-        sendException(e)
-        return null;
-    } catch (e: SAXException) {
-        sendException(e)
-        return null;
     }
 }

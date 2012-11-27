@@ -21,6 +21,7 @@ import java.util.ArrayList
 import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.common.utils.files.baseName
 import org.jetbrains.webdemo.common.utils.files.div
+import java.io.FileFilter
 
 private val FILES_PROP = "files"
 private val TYPE_PROP = "type"
@@ -76,6 +77,9 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
         orderLines.forEach { process(root / it) }
 
         val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name) }
+//        val additionally = root.listFiles(object: FileFilter {
+//            public override fun accept(it: File) = (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name)
+//        })
 
         if (additionally == null) {
             sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))

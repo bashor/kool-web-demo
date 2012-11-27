@@ -13,7 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jetbrains.webdemo.common.utils
 
-val <T: Any> Array<T>.first: T?
-    inline get() = if (this.isEmpty()) null else this[0]
+package org.jetbrains.webdemo.common.utils.io
+
+import java.io.StringReader
+import java.io.Reader
+import org.xml.sax.InputSource
+
+public inline fun String.reader(): StringReader = StringReader(this)
+public inline fun Reader.source(): InputSource = InputSource(this)

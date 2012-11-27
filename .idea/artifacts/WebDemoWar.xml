@@ -13,6 +13,11 @@
           <element id="library" level="project" name="json" />
           <element id="library" level="project" name="log4j-1.2.16" />
           <element id="library" level="project" name="junit-4.10" />
+          <element id="library" level="project" name="com.springsource.org.hamcrest.core-1.1.0" />
+          <element id="library" level="project" name="com.springsource.org.objenesis-1.0.0" />
+          <element id="library" level="project" name="mockito-all-1.9.5" />
+          <element id="library" level="project" name="mockito-core-1.9.5-sources" />
+          <element id="library" level="project" name="mockito-core-1.9.5" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="servlet/web/Web" />

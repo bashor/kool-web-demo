@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="com.springsource.org.hamcrest.core-1.1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.hamcrest.core-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.objenesis-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.hamcrest.core-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.objenesis-1.0.0.jar!/" />
+    </SOURCES>
+  </library>
+</component>

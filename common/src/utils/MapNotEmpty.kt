@@ -15,11 +15,4 @@
  */
 package org.jetbrains.webdemo.common.utils
 
-/**
- * Created by IntelliJ IDEA.
- * User: Zalim Bahsorov
- * Date: 10/27/12
- * Time: 9:11 PM
- */
-
 inline public fun <K, V> Map<K, V>.notEmpty(): Boolean = !this.isEmpty()

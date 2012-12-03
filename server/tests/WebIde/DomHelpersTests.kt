@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server.domHelpers
+package org.jetbrains.webdemo.server.webIde.domHelpers
 
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server.domHelpers
+package org.jetbrains.webdemo.server.webIde.domHelpers
 
 import com.sun.xml.internal.ws.util.xml.NodeListIterator
 import org.w3c.dom.NamedNodeMap
@@ -23,8 +23,8 @@ import org.w3c.dom.NodeList
 import org.w3c.dom.Text
 import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Document
-import org.jetbrains.webdemo.server.sendToAnalyzer
-import org.jetbrains.webdemo.server.Attachment
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.Attachment
 import java.io.File
 import javax.xml.parsers.DocumentBuilder
 import java.io.IOException

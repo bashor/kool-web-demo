@@ -26,8 +26,8 @@ import org.jetbrains.webdemo.common.utils.StatusCode
 import org.jetbrains.webdemo.common.utils.header
 import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.write
-import org.jetbrains.webdemo.server.sendToAnalyzer
 import org.jetbrains.webdemo.common.utils.error
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 
 abstract class BaseHttpServlet: HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?

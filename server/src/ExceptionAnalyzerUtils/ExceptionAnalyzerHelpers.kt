@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.ExceptionAnalyzerUtils
 
 import java.io.IOException
 import java.io.OutputStream
@@ -23,6 +23,8 @@ import java.net.URL
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import org.jetbrains.webdemo.server.LOG_FOR_EXCEPTIONS
+import org.jetbrains.webdemo.server.exception
 
 private fun Calendar.format(format: String = "yyyy-MM-dd") = SimpleDateFormat(format).format(this.getTime()).orEmpty()
 

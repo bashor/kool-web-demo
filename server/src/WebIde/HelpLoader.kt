@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.webIde
 
 import java.io.File
 import java.io.IOException
@@ -26,7 +26,10 @@ import org.jetbrains.webdemo.common.utils.notEmpty
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.xml.sax.SAXException
-import org.jetbrains.webdemo.server.domHelpers.*
+import org.jetbrains.webdemo.server.webIde.domHelpers.*
+import org.jetbrains.webdemo.server.webIde.domHelpers.toDocument
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
+import org.jetbrains.webdemo.server.Attention
 
 class HelpLoader(path: String, private val containerTag: String): VersionedContent<List<Map<String, String>>> {
     private val file = File(path)

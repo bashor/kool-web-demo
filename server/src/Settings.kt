@@ -20,7 +20,7 @@ import java.io.File
 import javax.naming.Context
 import javax.naming.InitialContext
 import javax.naming.NamingException
-import org.jetbrains.webdemo.server.sendToAnalyzer
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 
 val APP_HOME = getAppHome()
 

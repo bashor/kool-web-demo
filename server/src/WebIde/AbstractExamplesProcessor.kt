@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.webIde
 
 import java.io.File
 import org.jetbrains.webdemo.common.*
+import org.jetbrains.webdemo.server.Settings
 
-fun transformRawExamplesListToMap(rawExamples: List<Map<String, String>>): Map<String, Map<String, String>> {
+private fun transformRawExamplesListToMap(rawExamples: List<Map<String, String>>): Map<String, Map<String, String>> {
     val name2rawExample = hashMap<String, Map<String, String>>()
     for (rawExample in rawExamples) {
         val name = rawExample[NAME_PROP]

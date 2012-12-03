@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.ExceptionAnalyzerUtils
 
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -22,6 +22,11 @@ import java.net.URL
 import java.util.Calendar
 import org.jetbrains.webdemo.common
 import org.jetbrains.webdemo.common.utils.throwable.*
+import org.jetbrains.webdemo.server.LOG
+import org.jetbrains.webdemo.server.LOG_FOR_EXCEPTIONS
+import org.jetbrains.webdemo.server.Settings
+import org.jetbrains.webdemo.server.exception
+
 
 private val ENCODING = "UTF8"
 private val POST_DELIMITER = "&"

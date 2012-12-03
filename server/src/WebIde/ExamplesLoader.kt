@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.webIde
 
 import java.io.File
 import java.util.HashMap
 import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.common.utils.files.baseName
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
+import org.jetbrains.webdemo.server.Attention
 
 private val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
 private val DEFAULT_TARGETS = hashSet(TargetPlatform.JAVA)

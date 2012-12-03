@@ -18,6 +18,7 @@ package org.jetbrains.webdemo.server
 
 import org.apache.log4j.Logger
 import org.jetbrains.webdemo.common.utils.throwable.*
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.*
 
 public val LOG_FOR_EXCEPTIONS: Logger = Logger.getLogger("exceptionLogger");
 public val LOG: Logger = Logger.getLogger("infoLogger")

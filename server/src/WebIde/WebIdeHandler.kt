@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.webIde
 
+import org.jetbrains.webdemo.server.Settings
 import org.jetbrains.webdemo.common.ExampleHolder
 import org.jetbrains.webdemo.common.VersionedContent
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.server
+package org.jetbrains.webdemo.server.ExceptionAnalyzerUtils
 
 data class ErrorReport(val message: String = "",
                        val stackTrace: String = "",

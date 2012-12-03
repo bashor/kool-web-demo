@@ -77,7 +77,7 @@ val Node.inner: String
     }
 
 inline fun File.toDocument() = parseToDocument(this, { this.parse(it) }, { Attachment(this) })
-inline fun String.toDocument() = parseToDocument(this, { this.parse(it.reader().source()) }, { Attachment("<String>", this) })
+inline fun String.toDocument() = parseToDocument(this, { this.parse(it.reader.source()) }, { Attachment("<String>", this) })
 
 private fun <T> parseToDocument(input: T, parse: DocumentBuilder.(T) -> Document?, converter: (T) -> Attachment): Document? {
     fun sendException(e: Throwable) {

@@ -20,5 +20,6 @@ import java.io.StringReader
 import java.io.Reader
 import org.xml.sax.InputSource
 
-public inline fun String.reader(): StringReader = StringReader(this)
-public inline fun Reader.source(): InputSource = InputSource(this)
+//fixme already exist in StringJVM
+//inline public fun String.reader(): StringReader = StringReader(this)
+inline public fun Reader.source(): InputSource = InputSource(this)

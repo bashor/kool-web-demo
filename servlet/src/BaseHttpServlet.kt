@@ -27,6 +27,7 @@ import org.jetbrains.webdemo.common.utils.header
 import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.write
 import org.jetbrains.webdemo.server.sendToAnalyzer
+import org.jetbrains.webdemo.common.utils.error
 
 abstract class BaseHttpServlet: HttpServlet() {
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
@@ -47,7 +48,7 @@ abstract class BaseHttpServlet: HttpServlet() {
                                 "${exceptionMessage} character encoding is not supported"
                             }
                     //todo logging
-                    response.status(StatusCode.BAD_REQUEST, message)
+                    response.error(StatusCode.BAD_REQUEST, message)
                     return
                 }
 
@@ -55,7 +56,7 @@ abstract class BaseHttpServlet: HttpServlet() {
                 try {
                     HttpUtils.parseQueryString(decodedQuery) as Map<String, Array<String>>
                 } catch (e: IllegalArgumentException) {
-                    response.status(StatusCode.BAD_REQUEST, "The query string is invalid")
+                    response.error(StatusCode.BAD_REQUEST, "The query string is invalid")
                     return
                 }
 
@@ -68,20 +69,20 @@ abstract class BaseHttpServlet: HttpServlet() {
                     } catch (e: Throwable) {
                         //Do not stop server
                         sendToAnalyzer(exception = e, description = "QueryString: $decodedQuery", lastAction = "Call handler")
-                        response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
+                        response.error(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
                         return
                     }
 
             if (responseBody == null) {
-                response.status(StatusCode.BAD_REQUEST, "Unsupported command")
+                response.error(StatusCode.BAD_REQUEST, "Unsupported command")
                 return
             }
 
             if (!response.status(StatusCode.OK).write(responseBody)) {
-                response.status(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
+                response.error(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
             }
         } else {
-            response.status(StatusCode.BAD_REQUEST, "The Parameter \"do\" is not found or empty")
+            response.error(StatusCode.BAD_REQUEST, "The Parameter \"do\" is not found or empty")
         }
     }
 }

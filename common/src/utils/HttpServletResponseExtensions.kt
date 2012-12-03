@@ -25,12 +25,16 @@ inline public fun HttpServletResponse.write(body: String): Boolean {
     return this.getWriter().checkError()
 }
 
-inline public fun HttpServletResponse.status(statusCode: StatusCode, message: String? = null): HttpServletResponse {
-    if (message == null)
-        this.setStatus(statusCode.value)
-    else
-        this.setStatus(statusCode.value, message)
+inline public fun HttpServletResponse.status(statusCode: StatusCode): HttpServletResponse {
+    this.setStatus(statusCode.value)
     return this
+}
+
+inline public fun HttpServletResponse.error(statusCode: StatusCode, message: String? = null) {
+    if (message == null)
+        this.sendError(statusCode.value)
+    else
+        this.sendError(statusCode.value, message)
 }
 
 public fun HttpServletResponse.header(vararg headers: Pair<String, Any>): HttpServletResponse {

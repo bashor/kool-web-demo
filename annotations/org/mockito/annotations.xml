@@ -5,4 +5,7 @@
     <item name='org.mockito.Mockito org.mockito.stubbing.OngoingStubbing&lt;T&gt; when(T)'>
         <annotation name='org.jetbrains.annotations.NotNull'/>
     </item>
+    <item name='org.mockito.Mockito T verify(T)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
 </root>

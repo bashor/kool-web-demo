@@ -16,7 +16,7 @@
 
 package org.jetbrains.webdemo.servlet
 
-import org.jetbrains.webdemo.common.ContentWatcher
+import org.jetbrains.webdemo.common.CachedContent
 import org.jetbrains.webdemo.common.WebIdeCommands.*
 import org.jetbrains.webdemo.common.utils.first
 import org.jetbrains.webdemo.common.utils.json.toJsonString
@@ -26,10 +26,10 @@ import org.jetbrains.webdemo.server.sendToAnalyzer
 
 class WebIdeServlet: BaseHttpServlet() {
     val webIdeHandler = WebIdeHandler()
-    val helpForKeywords = ContentWatcher(webIdeHandler.helpForKeywords, { it.toJsonString() })
-    val helpForExamples = ContentWatcher(webIdeHandler.helpForExamples, { it.toJsonString() })
-    val examplesList = ContentWatcher(webIdeHandler.hierarchy, { it.toJsonString() })
-    val examples = ContentWatcher(webIdeHandler.examples, { it })
+    val helpForKeywords = CachedContent(webIdeHandler.helpForKeywords, { it.toJsonString() })
+    val helpForExamples = CachedContent(webIdeHandler.helpForExamples, { it.toJsonString() })
+    val examplesList = CachedContent(webIdeHandler.hierarchy, { it.toJsonString() })
+    val examples = CachedContent(webIdeHandler.examples, { it })
 
     override fun handle(command: String, params: Map<String, Array<String>>): String? = when (command) {
         LOAD_HELP_FOR_EXAMPLES -> helpForExamples.content

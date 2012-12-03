@@ -32,7 +32,7 @@ fun transformRawExamplesListToMap(rawExamples: List<Map<String, String>>): Map<S
 }
 
 abstract class AbstractExamplesProcessor<R>(helpForExamples: VersionedContent<List<Map<String, String>>>): VersionedContent<R> {
-    val helpForExamplesWatcher = ContentWatcher(helpForExamples, { it })
+    val helpForExamplesWatcher = CachedContent(helpForExamples, { it })
 
     override fun version(): Long = helpForExamplesWatcher.source.version()
 

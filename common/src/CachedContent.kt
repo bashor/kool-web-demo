@@ -16,7 +16,7 @@
 
 package org.jetbrains.webdemo.common
 
-class ContentWatcher<T, R>(val source: VersionedContent<T>, val mapper: (T) -> R) {
+class CachedContent<T, R>(val source: VersionedContent<T>, val mapper: (T) -> R) {
     var version: Long = 0
     var content: R = updateContent()
         get() {

@@ -16,20 +16,15 @@
 
 package org.jetbrains.webdemo.server.domHelpers
 
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import org.jetbrains.webdemo.common.tests.helpers.ifCall
 import org.junit.Test as test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
 import org.w3c.dom.Node
-import kotlin.test.assertEquals
-import org.jetbrains.webdemo.common.tests.helpers.ifCall
-import junit.framework.TestCase
-import org.junit.runners.JUnit4
-import org.junit.runner.RunWith
-import org.w3c.dom.Text
 import org.w3c.dom.NodeList
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-import kotlin.test.assertFalse
-import org.w3c.dom.Document
 
 RunWith(javaClass<JUnit4>())
 class DomHelpersTests {

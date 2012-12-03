@@ -18,7 +18,7 @@ package org.jetbrains.webdemo.common.utils.files
 
 import java.io.File
 
-inline fun File.div(file: String) = File(this.getAbsolutePath() + File.separator + file)
+inline fun File.div(file: String) = File(this.canonicalPath + File.separator + file)
 
 val File.baseName: String
     get() {

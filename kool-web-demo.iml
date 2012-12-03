@@ -5,8 +5,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="junit-4.10" level="project" />
-    <orderEntry type="library" name="mockito-all-1.9.5-sources" level="project" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="server" />
+    <orderEntry type="module" module-name="servlet" />
   </component>
 </module>
 

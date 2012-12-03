@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jetbrains.webdemo.common.utils.tests
+package org.jetbrains.webdemo.common.utils
 
 import org.jetbrains.webdemo.common.utils.*
 

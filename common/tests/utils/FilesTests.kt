@@ -40,7 +40,6 @@ class FilesTests {
         val expectedPath = start.canonicalPath + File.separator + endPath
 
         val file = start / endPath
-        println("$expectedPath -> ${file.canonicalPath}")
         assertEquals(expectedPath, file.canonicalPath)
     }
 }

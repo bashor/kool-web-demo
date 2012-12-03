@@ -20,6 +20,7 @@ import org.jetbrains.webdemo.common.ContentWatcher
 import org.jetbrains.webdemo.common.WebIdeCommands.*
 import org.jetbrains.webdemo.common.utils.first
 import org.jetbrains.webdemo.common.utils.json.toJsonString
+import org.jetbrains.webdemo.common.toJsonString
 import org.jetbrains.webdemo.server.WebIdeHandler
 import org.jetbrains.webdemo.server.sendToAnalyzer
 

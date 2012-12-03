@@ -16,14 +16,28 @@
 
 package org.jetbrains.webdemo.common
 
+import org.json.JSONObject
+
 public val NAME_PROP: String = "name"
 public val TEXT_PROP: String = "text"
 public val TARGET_PROP: String = "target"
 public val ARGS_PROP: String = "args"
 public val SOURCE_PROP: String = "source"
 
-public data class Example(val name: String,
+public data class ExampleHolder(val name: String,
                           val text: String,
                           val targets: Set<TargetPlatform>,
                           val args: String,
                           val source: String)
+
+inline fun ExampleHolder.toJsonString(): String {
+    val result = JSONObject()
+
+    result.put(NAME_PROP, this.name)
+    result.put(TEXT_PROP, this.text)
+    result.put(TARGET_PROP, this.targets.toList().map { it.toString().toLowerCase() }.makeString(" "))
+    result.put(ARGS_PROP, this.args)
+    result.put(SOURCE_PROP, this.source)
+
+    return result.toString().orEmpty()
+}

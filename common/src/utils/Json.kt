@@ -27,15 +27,3 @@ inline fun <T> Collection<T>.toJsonString(): String {
     }
     return json.toString().orEmpty()
 }
-
-inline fun Example.toJsonString(): String {
-    val result = JSONObject()
-
-    result.put(NAME_PROP, this.name)
-    result.put(TEXT_PROP, this.text)
-    result.put(TARGET_PROP, this.targets.toList().map { it.toString().toLowerCase() }.makeString(" "))
-    result.put(ARGS_PROP, this.args)
-    result.put(SOURCE_PROP, this.source)
-
-    return result.toString().orEmpty()
-}

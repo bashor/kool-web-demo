@@ -16,16 +16,19 @@
 
 package org.jetbrains.webdemo.common.utils
 
-//todo implementation?
-inline public fun String.stripMargin(marginChar: Char = '|'): String {
-    return this.replaceFirst("""^[^\$marginChar]*\$marginChar""", "").replaceAll("""\n[^\$marginChar]*\$marginChar""", "\n")
-    //    return StringReader(this).useLines {
-    //        it.map {
-    //            val marginPos = it.indexOf(marginChar)
-    //            if (marginPos != -1)
-    //                it.substring(marginPos)
-    //            else
-    //                it
-    //        }
-    //    }.fold(StringBuilder()) {(builder, str)-> builder.append(str)}.toString()
-}
+import java.io.StringReader
+
+inline public fun String.stripMargin(marginChar: Char = '|'): String =
+        this.reader.useLines {
+            it.map {
+                var pos = 0
+
+                while(pos < it.length && Character.isSpace(it[pos])) pos++
+
+                if (pos < it.length && it[pos] == marginChar) {
+                    it.substring(pos + 1)
+                } else {
+                    it
+                }
+            }.makeString("\n")
+        }

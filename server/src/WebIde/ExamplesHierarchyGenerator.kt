@@ -79,26 +79,17 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
         orderLines.forEach { process(root / it) }
 
         val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name) }
-//        val additionally = root.listFiles(object: FileFilter {
-//            public override fun accept(it: File) = (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name)
-//        })
 
         if (additionally == null) {
             sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))
             return hierarchy
         }
 
-        //fixme
-//        if (additionally.notEmpty()) {
-        if (additionally.size != 0) {
+        if (additionally.notEmpty()) {
             if (orderFile.exists())
                 sendToAnalyzer(Attention("Order file '${orderFile.path}' doesn't contain some files."))
 
-            //fixme
-//            additionally.forEach { process(it) }
-            for (file in additionally) {
-                process(file)
-            }
+            additionally.forEach { process(it) }
         }
 
         return hierarchy

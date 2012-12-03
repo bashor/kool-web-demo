@@ -16,13 +16,11 @@
 
 package org.jetbrains.webdemo.common.utils.files
 
-import org.junit.Test as test
-import kotlin.test.expect
-import junit.framework.TestCase
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import java.io.File
 import kotlin.test.assertEquals
+import org.junit.Test as test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
 RunWith(javaClass<JUnit4>())
 class FilesTests {

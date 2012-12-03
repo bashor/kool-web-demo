@@ -16,11 +16,11 @@
 
 package org.jetbrains.webdemo.common.utils
 
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import kotlin.test.assertTrue
-import kotlin.test.assertFalse
 
 RunWith(javaClass<JUnit4>())
 public class MapNotEmptyTests {

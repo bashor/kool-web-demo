@@ -16,16 +16,10 @@
 
 package org.jetbrains.webdemo.common.utils.json
 
+import kotlin.test.assertEquals
 import org.junit.Test as test
-import org.mockito.Mockito.*
-import kotlin.test.expect
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
-import kotlin.test.assertEquals
-import javax.servlet.http.HttpServletResponse
-import org.jetbrains.webdemo.common.tests.helpers.ifCall
-import org.jetbrains.webdemo.common.toJsonString
 
 RunWith(javaClass<JUnit4>())
 public class JsonTests {

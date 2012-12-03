@@ -16,11 +16,9 @@
 
 package org.jetbrains.webdemo.common.utils
 
-import org.jetbrains.webdemo.common.utils.*
-
-import org.junit.Test as test
 import kotlin.test.expect
-import junit.framework.TestCase
+import org.jetbrains.webdemo.common.utils.*
+import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 

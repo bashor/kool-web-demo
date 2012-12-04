@@ -34,7 +34,7 @@ public class AbstractExamplesProcessorTests {
 RunWith(javaClass<JUnit4>())
 public class TransformRawExamplesListToMapTests {
     test fun `for empty list`() {
-        assertTrue(transformRawExamplesListToMap(list<Map<String, String>>()).empty)
+        assertTrue(transformRawExamplesListToMap(listOf<Map<String, String>>()).empty)
     }
 
     test fun `skiping items without name`() {
@@ -62,7 +62,7 @@ public class TransformRawExamplesListToMapTests {
     }
 
     test fun `all transformed`() {
-        val input = list<Map<String, String>>(
+        val input = listOf<Map<String, String>>(
                 map(NAME_PROP to "name1",
                         TEXT_PROP to "text1",
                         TARGET_PROP to "target1",

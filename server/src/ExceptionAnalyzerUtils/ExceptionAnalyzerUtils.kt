@@ -138,7 +138,7 @@ private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> 
             "error.description" to error.description)
 
     if (error.attachment != null) {
-        params.addAll(list("attachment.name" to error.attachment.name, "attachment.value" to error.attachment.content))
+        params.addAll(listOf("attachment.name" to error.attachment.name, "attachment.value" to error.attachment.content))
     }
 
     return params

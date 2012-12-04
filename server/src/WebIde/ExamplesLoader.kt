@@ -24,7 +24,7 @@ import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.server.Attention
 
 private val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
-private val DEFAULT_TARGETS = set(TargetPlatform.JAVA)
+private val DEFAULT_TARGETS = setOf(TargetPlatform.JAVA)
 
 fun ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>) =
                 ExamplesProcessor<Map<String, ExampleHolder>>(helpForExamples) {

@@ -34,22 +34,22 @@ public class AbstractExamplesProcessorTests {
 RunWith(javaClass<JUnit4>())
 public class TransformRawExamplesListToMapTests {
     test fun `for empty list`() {
-        assertTrue(transformRawExamplesListToMap(arrayList<Map<String, String>>()).empty)
+        assertTrue(transformRawExamplesListToMap(list<Map<String, String>>()).empty)
     }
 
     test fun `skiping items without name`() {
-        val input = arrayList<Map<String, String>>(
-                hashMap(NAME_PROP to "name1",
+        val input = arrayListOf<Map<String, String>>(
+                map(NAME_PROP to "name1",
                         TEXT_PROP to "text1",
                         TARGET_PROP to "target1",
                         ARGS_PROP to "arg1",
                         SOURCE_PROP to "source1"),
-                hashMap(//without name
+                map(//without name
                         TEXT_PROP to "text2",
                         TARGET_PROP to "target2",
                         ARGS_PROP to "arg1 arg2",
                         SOURCE_PROP to "source2"),
-                hashMap(NAME_PROP to "name3",
+                map(NAME_PROP to "name3",
                         TEXT_PROP to "text3",
                         TARGET_PROP to "target3",
                         ARGS_PROP to "arg3",
@@ -62,18 +62,18 @@ public class TransformRawExamplesListToMapTests {
     }
 
     test fun `all transformed`() {
-        val input = arrayList<Map<String, String>>(
-                hashMap(NAME_PROP to "name1",
+        val input = list<Map<String, String>>(
+                map(NAME_PROP to "name1",
                         TEXT_PROP to "text1",
                         TARGET_PROP to "target1",
                         ARGS_PROP to "arg1",
                         SOURCE_PROP to "source1"),
-                hashMap(NAME_PROP to "name2",
+                map(NAME_PROP to "name2",
                         TEXT_PROP to "text2",
                         TARGET_PROP to "target2",
                         ARGS_PROP to "arg1 arg2",
                         SOURCE_PROP to "source2"),
-                hashMap(NAME_PROP to "name3",
+                map(NAME_PROP to "name3",
                         TEXT_PROP to "text3",
                         TARGET_PROP to "target3",
                         ARGS_PROP to "arg3",

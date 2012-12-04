@@ -24,13 +24,13 @@ import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.server.Attention
 
 private val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
-private val DEFAULT_TARGETS = hashSet(TargetPlatform.JAVA)
+private val DEFAULT_TARGETS = set(TargetPlatform.JAVA)
 
 public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>): AbstractExamplesProcessor<Map<String, ExampleHolder>>(helpForExamples) {
 
 
     protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): Map<String, ExampleHolder> {
-        val examples: HashMap<String, ExampleHolder> = hashMap<String, ExampleHolder>()
+        val examples = hashMapOf<String, ExampleHolder>()
 
         root recurse {
             if (it.extension == KT_EXTENSION) {

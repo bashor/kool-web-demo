@@ -43,7 +43,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
 
         fun process(file: File) {
             val baseName = file.baseName
-            val map = hashMap<String, Any>(NAME_PROP to baseName)
+            val map = hashMapOf<String, Any>(NAME_PROP to baseName)
 
             if (file.isDirectory()) {
                 map.putAll(TYPE_PROP  to FOLDER,
@@ -73,7 +73,7 @@ public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<M
                     orderFile.readLines()
                 } else {
                     sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
-                    arrayList<String>()
+                    list<String>()
                 }
 
         orderLines.forEach { process(root / it) }

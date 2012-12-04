@@ -25,10 +25,10 @@ import org.junit.runners.JUnit4
 RunWith(javaClass<JUnit4>())
 public class MapNotEmptyTests {
     test fun `for empty map`() {
-        assertFalse(hashMap<Any, Any>().notEmpty())
+        assertFalse(map<Any, Any>().notEmpty())
     }
 
     test fun `for nonempty map`() {
-        assertTrue(hashMap(1 to 2).notEmpty())
+        assertTrue(map(1 to 2).notEmpty())
     }
 }

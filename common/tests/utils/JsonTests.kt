@@ -24,11 +24,11 @@ import org.junit.runners.JUnit4
 RunWith(javaClass<JUnit4>())
 public class JsonTests {
     test fun `empty collection to json`() {
-        assertEquals("[]", arrayList<Any>().toJsonString())
+        assertEquals("[]", list<Any>().toJsonString())
     }
 
     test fun `non empty collection to json`() {
-        val input = arrayList(1, "asd", 2.toLong())
+        val input = list(1, "asd", 2.toLong())
         assertEquals("[1,\"asd\",2]", input.toJsonString())
     }
 }

@@ -21,7 +21,7 @@ import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.server.Settings
 
 private fun transformRawExamplesListToMap(rawExamples: List<Map<String, String>>): Map<String, Map<String, String>> {
-    val name2rawExample = hashMap<String, Map<String, String>>()
+    val name2rawExample = hashMapOf<String, Map<String, String>>()
     for (rawExample in rawExamples) {
         val name = rawExample[NAME_PROP]
         if (name == null)

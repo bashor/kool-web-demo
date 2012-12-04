@@ -1,0 +1,5 @@
+<root>
+    <item name='org.w3c.dom.Document org.w3c.dom.NodeList getElementsByTagName(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

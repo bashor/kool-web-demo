@@ -36,40 +36,41 @@ class HelpLoader(path: String, private val containerTag: String): VersionedConte
 
     override fun version(): Long = file.lastModified()
     override fun snapshot(): ContentSnapshot<List<Map<String, String>>> {
-        val elements = arrayList<Map<String, String>>()
         val version = version()
-        val doc = file.toDocument()
+        val document = file.toDocument()
 
-        if (doc == null) {
-            return ContentSnapshot(version, elements)
+        if (document == null) {
+            return ContentSnapshot(version, list<Map<String, String>>())
         }
 
-        val nodeList = doc.getElementsByTagName(containerTag)
-
-        if (nodeList == null) {
-            sendToAnalyzer(Attention("For '${file.path}' Document#getElementsByTagName with $containerTag returned null."))
-            return ContentSnapshot(version, elements)
-        }
-
-        for (node in nodeList) {
-            //fixme after issue KT-2982 will be fixed
-            if (node !is Element || !node.hasChildNodes())
-                continue
-
-            val map = hashMap<String, String>();
-            for (subNode in node.getChildNodes()!!) {
-                //fixme after issue KT-2982 will be fixed
-                if (subNode !is Element)
-                    continue
-
-                map.put(subNode.name, subNode.inner)
-            }
-
-            if (map.notEmpty()) {
-                elements.add(map)
-            }
-        }
-
+        val elements = parseHelpFromDocument(document, containerTag)
         return ContentSnapshot(version, elements)
     }
+}
+
+private fun parseHelpFromDocument(document: Document, containerTag: String): List<Map<String, String>> {
+    val elements = arrayListOf<Map<String, String>>()
+
+    val nodeList = document.getElementsByTagName(containerTag)
+
+    for (node in nodeList) {
+        //fixme after issue KT-2982 will be fixed
+        if (node !is Element || !node.hasChildNodes())
+            continue
+
+        val map = hashMapOf<String, String>();
+        for (subNode in node.getChildNodes()!!) {
+            //fixme after issue KT-2982 will be fixed
+            if (subNode !is Element)
+                continue
+
+            map.put(subNode.name, subNode.inner)
+        }
+
+        if (map.notEmpty()) {
+            elements.add(map)
+        }
+    }
+
+    return elements
 }

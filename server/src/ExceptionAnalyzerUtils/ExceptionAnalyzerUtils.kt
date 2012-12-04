@@ -111,34 +111,34 @@ private fun postReport(error: ErrorReport) {
 private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> {
     val date = Calendar.getInstance().format()
     val compilationTimestamp = System.currentTimeMillis().toString()
-    //todo
-    val params = arrayList("protocol.version" to "1",
-            Pair("user.login", LOGIN),
-            Pair("user.password", PASSWORD),
-            Pair("os.name", " "),
-            Pair("java.version", JAVA_VERSION),
-            Pair("java.vm.vendor", JAVA_VM_VENDOR),
-            Pair("app.name", APP_NAME),
-            Pair("app.name.full", APP_NAME),
-            Pair("app.name.version", APP_NAME),
-            Pair("app.eap", "false"),
-            Pair("app.build", "Kotlin-0.0"),
-            Pair("app.version.major", Settings.KOTLIN_COMPILER_VERSION),
-            Pair("app.version.minor", Settings.KOTLIN_COMPILER_VERSION),
-            Pair("app.build.date", date),
-            Pair("app.build.date.release.", date),
-            Pair("app.update.channel", "update-chanel"),
-            Pair("app.compilation.timestamp", compilationTimestamp),
-            Pair("plugin.name", PLUGIN_NAME),
-            Pair("plugin.version", Settings.KOTLIN_COMPILER_VERSION),
-            Pair("last.action", error.lastAction),
-            Pair("error.message", error.message),
-            Pair("error.stacktrace", error.stackTrace),
-            Pair("error.description", error.description))
+
+    val params = arrayListOf(
+            "protocol.version" to "1",
+            "user.login" to LOGIN,
+            "user.password" to PASSWORD,
+            "os.name" to " ",
+            "java.version" to JAVA_VERSION,
+            "java.vm.vendor" to JAVA_VM_VENDOR,
+            "app.name" to APP_NAME,
+            "app.name.full" to APP_NAME,
+            "app.name.version" to APP_NAME,
+            "app.eap" to "false",
+            "app.build" to "Kotlin-0.0",
+            "app.version.major" to Settings.KOTLIN_COMPILER_VERSION,
+            "app.version.minor" to Settings.KOTLIN_COMPILER_VERSION,
+            "app.build.date" to date,
+            "app.build.date.release." to date,
+            "app.update.channel" to "update-chanel",
+            "app.compilation.timestamp" to compilationTimestamp,
+            "plugin.name" to PLUGIN_NAME,
+            "plugin.version" to Settings.KOTLIN_COMPILER_VERSION,
+            "last.action" to error.lastAction,
+            "error.message" to error.message,
+            "error.stacktrace" to error.stackTrace,
+            "error.description" to error.description)
 
     if (error.attachment != null) {
-        params.addAll(arrayList(Pair<String, String>("attachment.name", error.attachment.name),
-                Pair("attachment.value", error.attachment.content)))
+        params.addAll(list("attachment.name" to error.attachment.name, "attachment.value" to error.attachment.content))
     }
 
     return params

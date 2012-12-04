@@ -39,17 +39,17 @@ public class TransformRawExamplesListToMapTests {
 
     test fun `skiping items without name`() {
         val input = arrayListOf<Map<String, String>>(
-                map(NAME_PROP to "name1",
+                mapOf(NAME_PROP to "name1",
                         TEXT_PROP to "text1",
                         TARGET_PROP to "target1",
                         ARGS_PROP to "arg1",
                         SOURCE_PROP to "source1"),
-                map(//without name
+                mapOf(//without name
                         TEXT_PROP to "text2",
                         TARGET_PROP to "target2",
                         ARGS_PROP to "arg1 arg2",
                         SOURCE_PROP to "source2"),
-                map(NAME_PROP to "name3",
+                mapOf(NAME_PROP to "name3",
                         TEXT_PROP to "text3",
                         TARGET_PROP to "target3",
                         ARGS_PROP to "arg3",
@@ -63,17 +63,17 @@ public class TransformRawExamplesListToMapTests {
 
     test fun `all transformed`() {
         val input = listOf<Map<String, String>>(
-                map(NAME_PROP to "name1",
+                mapOf(NAME_PROP to "name1",
                         TEXT_PROP to "text1",
                         TARGET_PROP to "target1",
                         ARGS_PROP to "arg1",
                         SOURCE_PROP to "source1"),
-                map(NAME_PROP to "name2",
+                mapOf(NAME_PROP to "name2",
                         TEXT_PROP to "text2",
                         TARGET_PROP to "target2",
                         ARGS_PROP to "arg1 arg2",
                         SOURCE_PROP to "source2"),
-                map(NAME_PROP to "name3",
+                mapOf(NAME_PROP to "name3",
                         TEXT_PROP to "text3",
                         TARGET_PROP to "target3",
                         ARGS_PROP to "arg3",

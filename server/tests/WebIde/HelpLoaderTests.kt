@@ -19,13 +19,37 @@ package org.jetbrains.webdemo.server.webIde
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.jetbrains.webdemo.server.webIde.domHelpers.toDocument
 import kotlin.test.assertNotNull
 import kotlin.test.expect
-import org.jetbrains.webdemo.server.Attention
 import kotlin.test.failsWith
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
+
+import org.jetbrains.webdemo.server.Attention
+import org.jetbrains.webdemo.server.webIde.domHelpers.toDocument
+import org.jetbrains.webdemo.server.Settings
+import org.jetbrains.webdemo.common.utils.json.toJsonString
+import java.io.File
+
+RunWith(javaClass<JUnit4>())
+class HelpLoaderTests {
+    test fun `load help for keywords`() {
+        doTest(Settings.HELP_FOR_KEYWORDS_PATH, KEYWORD_TAG)
+    }
+
+    test fun `load help for examples`() {
+        doTest(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
+    }
+
+    fun doTest(path: String, tag: String) {
+        val help = HelpLoader(path, tag)
+
+        val expected = File(path + ".expected").readText()
+        val result = help.snapshot().content
+
+        assertEquals(expected, result.toString())
+    }
+}
 
 RunWith(javaClass<JUnit4>())
 public class ParseHelpFromDocumentTests {

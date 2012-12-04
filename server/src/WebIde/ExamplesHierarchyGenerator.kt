@@ -34,64 +34,64 @@ private val ORDER_FILE = "order.txt"
 
 private val DEFAULT_TARGET_STR = TargetPlatform.JAVA.toString().toLowerCase()
 
-public class ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<Map<String, String>>>):
-                AbstractExamplesProcessor<List<Map<String, Any>>>(helpForExamples) {
-
-
-    protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): List<Map<String, Any>> {
-        val hierarchy = ArrayList<Map<String, Any>>()
-
-        fun process(file: File) {
-            val baseName = file.baseName
-            val map = hashMapOf<String, Any>(NAME_PROP to baseName)
-
-            if (file.isDirectory()) {
-                map.putAll(TYPE_PROP  to FOLDER,
-                           FILES_PROP to process(file, name2rawExamples))
-            } else {
-                val rawExample = name2rawExamples[baseName]
-                val target =
-                        if (rawExample != null) {
-                            rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
-                        } else {
-                            sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
-                            DEFAULT_TARGET_STR
-                        }
-
-                map.putAll(TYPE_PROP   to FILE,
-                           TARGET_PROP to target)
-
-            }
-
-            hierarchy.add(map)
-        }
-
-        val orderFile = root / ORDER_FILE
-
-        val orderLines =
-                if (orderFile.exists()) {
-                    orderFile.readLines()
-                } else {
-                    sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
-                    list<String>()
+fun ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<Map<String, String>>>) =
+                ExamplesProcessor<List<Map<String, Any>>>(helpForExamples) {
+                    (root, name2rawExamples) -> generateHierarchy(root, name2rawExamples)
                 }
 
-        orderLines.forEach { process(root / it) }
+private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<String, String>>): List<Map<String, Any>> {
+    val hierarchy = ArrayList<Map<String, Any>>()
 
-        val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name) }
+    fun process(file: File) {
+        val baseName = file.baseName
+        val map = hashMapOf<String, Any>(NAME_PROP to baseName)
 
-        if (additionally == null) {
-            sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))
-            return hierarchy
+        if (file.isDirectory()) {
+            map.putAll(TYPE_PROP  to FOLDER,
+                       FILES_PROP to generateHierarchy(file, name2rawExamples))
+        } else {
+            val rawExample = name2rawExamples[baseName]
+            val target =
+                    if (rawExample != null) {
+                        rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
+                    } else {
+                        sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
+                        DEFAULT_TARGET_STR
+                    }
+
+            map.putAll(TYPE_PROP   to FILE,
+                       TARGET_PROP to target)
+
         }
 
-        if (additionally.notEmpty()) {
-            if (orderFile.exists())
-                sendToAnalyzer(Attention("Order file '${orderFile.path}' doesn't contain some files."))
+        hierarchy.add(map)
+    }
 
-            additionally.forEach { process(it) }
-        }
+    val orderFile = root / ORDER_FILE
 
+    val orderLines =
+            if (orderFile.exists()) {
+                orderFile.readLines()
+            } else {
+                sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
+                list<String>()
+            }
+
+    orderLines.forEach { process(root / it) }
+
+    val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name) }
+
+    if (additionally == null) {
+        sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))
         return hierarchy
     }
+
+    if (additionally.notEmpty()) {
+        if (orderFile.exists())
+            sendToAnalyzer(Attention("Order file '${orderFile.path}' doesn't contain some files."))
+
+        additionally.forEach { process(it) }
+    }
+
+    return hierarchy
 }

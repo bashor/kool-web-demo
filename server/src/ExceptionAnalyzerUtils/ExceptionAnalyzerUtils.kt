@@ -26,6 +26,7 @@ import org.jetbrains.webdemo.server.LOG
 import org.jetbrains.webdemo.server.LOG_FOR_EXCEPTIONS
 import org.jetbrains.webdemo.server.Settings
 import org.jetbrains.webdemo.server.exception
+import kotlin.test.fail
 
 
 private val ENCODING = "UTF8"
@@ -57,8 +58,14 @@ public fun sendToAnalyzer(exception: Throwable,
             description = description,
             attachment = attachment))
 }
-//fixme don't try send report if it's happened in test mode
+
 public fun sendToAnalyzer(error: ErrorReport) {
+    //fixme logging??? or assert???
+    if (common.Settings.IS_TESTING) {
+        fail(error.toString())
+        return
+    }
+
     LOG_FOR_EXCEPTIONS.exception(error)
 
     if (common.Settings.IS_PRODUCTION) {
@@ -104,7 +111,7 @@ private fun postReport(error: ErrorReport) {
 private fun createParametersFor(error: ErrorReport): List<Pair<String, String>> {
     val date = Calendar.getInstance().format()
     val compilationTimestamp = System.currentTimeMillis().toString()
-
+    //todo
     val params = arrayList("protocol.version" to "1",
             Pair("user.login", LOGIN),
             Pair("user.password", PASSWORD),

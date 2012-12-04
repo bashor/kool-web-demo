@@ -114,7 +114,7 @@ class DomHelpersTests {
         val nodeList = doc!!.getElementsByTagName(nodeName)
         assertNotNull(nodeList)
 
-        return nodeList!!
+        return nodeList
     }
 
     private fun getFirstNodeFromString(input: String, nodeName: String): Node {

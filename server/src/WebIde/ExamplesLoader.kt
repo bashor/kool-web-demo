@@ -26,45 +26,46 @@ import org.jetbrains.webdemo.server.Attention
 private val ALL_TARGETS = TargetPlatform.values() map { it.toString().toUpperCase() }
 private val DEFAULT_TARGETS = set(TargetPlatform.JAVA)
 
-public class ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>): AbstractExamplesProcessor<Map<String, ExampleHolder>>(helpForExamples) {
+fun ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>) =
+                ExamplesProcessor<Map<String, ExampleHolder>>(helpForExamples) {
+                    (root, name2rawExamples) -> loadExamples(root, name2rawExamples)
+                }
 
+private fun loadExamples(root: File, name2rawExamples: Map<String, Map<String, String>>): Map<String, ExampleHolder> {
+    val examples = hashMapOf<String, ExampleHolder>()
 
-    protected override fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): Map<String, ExampleHolder> {
-        val examples = hashMapOf<String, ExampleHolder>()
+    root recurse {
+        if (it.extension == KT_EXTENSION) {
+            val baseName = it.baseName
+            val source = it.readText()
+            val rawExample = name2rawExamples[baseName]
+            val example =
+                    if (rawExample != null) {
+                        val targets = rawExample[TARGET_PROP]
+                                .orEmpty()
+                                .toUpperCase()
+                                .split(' ')
+                                .filter { ALL_TARGETS.contains(it) }
+                                .map { TargetPlatform.valueOf(it) }
+                                .toSet()
 
-        root recurse {
-            if (it.extension == KT_EXTENSION) {
-                val baseName = it.baseName
-                val source = it.readText()
-                val rawExample = name2rawExamples[baseName]
-                val example =
-                        if (rawExample != null) {
-                            val targets = rawExample[TARGET_PROP]
-                                    .orEmpty()
-                                    .toUpperCase()
-                                    .split(' ')
-                                    .filter { ALL_TARGETS.contains(it) }
-                                    .map { TargetPlatform.valueOf(it) }
-                                    .toSet()
+                        ExampleHolder(name = baseName,
+                                text = rawExample[TEXT_PROP].orEmpty(),
+                                targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
+                                args = rawExample[ARGS_PROP].orEmpty(),
+                                source = source)
+                    } else {
+                        sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
+                        ExampleHolder(name = baseName,
+                                text = "",
+                                targets = DEFAULT_TARGETS,
+                                args = "",
+                                source = source)
+                    }
 
-                            ExampleHolder(name = baseName,
-                                    text = rawExample[TEXT_PROP].orEmpty(),
-                                    targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
-                                    args = rawExample[ARGS_PROP].orEmpty(),
-                                    source = source)
-                        } else {
-                            sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
-                            ExampleHolder(name = baseName,
-                                    text = "",
-                                    targets = DEFAULT_TARGETS,
-                                    args = "",
-                                    source = source)
-                        }
-
-                examples.put(baseName, example)
-            }
+            examples.put(baseName, example)
         }
-
-        return examples
     }
+
+    return examples
 }

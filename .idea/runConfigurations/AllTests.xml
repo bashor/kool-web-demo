@@ -16,7 +16,10 @@
     <option name="TEST_SEARCH_SCOPE">
       <value defaultName="moduleWithDependencies" />
     </option>
-    <envs />
+    <envs>
+      <env name="kotlin.web.demo.is_testing" value="true" />
+      <env name="kotlin.web.demo.app_home" value="testsData" />
+    </envs>
     <patterns />
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="Run" />

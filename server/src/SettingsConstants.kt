@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.webdemo.common.Settings
+package org.jetbrains.webdemo.server.Settings.constants
 
-//todo replace to enum?
-val IS_PRODUCTION: Boolean = false
-val IS_TESTING: Boolean = getProperty("is_testing", "false") == "true"
-
-val PREFIX = "kotlin.web.demo."
-fun getProperty(name: String, default: String) = System.getProperty(PREFIX + name) ?: System.getenv(PREFIX + name) ?: default
-fun setProperty(name: String, value: String) = System.setProperty(PREFIX + name, value)
+val PROP_APP_HOME = "app_home"
+val PROP_LOG4J = PROP_APP_HOME

@@ -28,8 +28,29 @@ import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.write
 import org.jetbrains.webdemo.common.utils.error
 import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
+import javax.naming.InitialContext
+import javax.naming.Context
+import javax.naming.NamingException
+import org.jetbrains.webdemo.server.Settings.constants.*
+import org.jetbrains.webdemo.common.Settings
 
 abstract class BaseHttpServlet: HttpServlet() {
+    public override fun init() {
+        super<HttpServlet>.init()
+
+        val envContext = InitialContext().lookup("java:comp/env") as Context
+
+        val appHome = try {
+            envContext.lookup(PROP_APP_HOME) as String
+        } catch (e: NamingException) {
+            sendToAnalyzer(exception = e, lastAction = "Lookup app_home in Servlet's context")
+            ""
+        }
+
+        Settings.setProperty(PROP_APP_HOME, appHome)
+        Settings.setProperty(PROP_LOG4J, appHome)
+    }
+
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 
     protected override fun service(request: HttpServletRequest, response: HttpServletResponse) {

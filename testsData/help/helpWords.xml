@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<help>
+    <keyword>
+        <name>for</name>
+        <text>
+            For loop iterates through anything that provides an iterator. The syntax is as follows:
+            <pre>for (item in collection)</pre>
+            <pre>  print(item)</pre>
+            <a href="http://confluence.jetbrains.net/display/Kotlin/Control+structures#Controlstructures-Forloop">More
+                info
+            </a>
+        </text>
+    </keyword>
+    <keyword>
+        <name>namespace</name>
+        <text>
+            A source file may start with a header namespace declaration (see <a
+                href="http://confluence.jetbrains.net/display/Kotlin/Grammar#Grammar-namespaceHeader">the grammar</a>):
+            <pre>namespace foo.bar</pre>
+            <pre>// ...</pre>
+            <a href="http://confluence.jetbrains.net/display/Kotlin/Namespaces">More info</a>
+        </text>
+    </keyword>
+    <keyword>
+        <name>object</name>
+        <text>
+            Sometimes we need to create an object of a slight modification of some class, without explicitly declaring a
+            new subclass for it. Java handles this case with <b>anonymous inner</b> classes. Kotlin slightly generalizes this
+            concept with
+            <b>object</b>
+            expressions and
+            <b>object</b>
+            declarations.
+            <br/><a href="http://confluence.jetbrains.net/display/Kotlin/Object+expressions+and+Declarations">More info</a>
+        </text>
+    </keyword>
+</help>

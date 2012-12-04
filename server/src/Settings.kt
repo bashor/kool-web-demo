@@ -21,8 +21,10 @@ import javax.naming.Context
 import javax.naming.InitialContext
 import javax.naming.NamingException
 import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
+import org.jetbrains.webdemo.common.Settings
+import org.jetbrains.webdemo.server.Settings.constants.PROP_APP_HOME
 
-val APP_HOME = getAppHome()
+val APP_HOME = Settings.getProperty(PROP_APP_HOME, ".")
 
 val EXAMPLES_DIRECTORY = "examples";
 val HELP_DIRECTORY = "help";
@@ -30,25 +32,10 @@ val HELP_DIRECTORY = "help";
 val HELP_FOR_EXAMPLES_FILE = "helpExamples.xml"
 val HELP_FOR_KEYWORDS_FILE = "helpWords.xml"
 
-val EXAMPLES_DIRECTORY_PATH = APP_HOME + EXAMPLES_DIRECTORY
-val HELP_DIRECTORY_PATH = APP_HOME + HELP_DIRECTORY
+val EXAMPLES_DIRECTORY_PATH = APP_HOME + File.separator + EXAMPLES_DIRECTORY
+val HELP_DIRECTORY_PATH = APP_HOME + File.separator + HELP_DIRECTORY
 
 val HELP_FOR_EXAMPLES_PATH: String = EXAMPLES_DIRECTORY_PATH + File.separator + HELP_FOR_EXAMPLES_FILE
 val HELP_FOR_KEYWORDS_PATH: String = HELP_DIRECTORY_PATH + File.separator + HELP_FOR_KEYWORDS_FILE;
 
 val KOTLIN_COMPILER_VERSION: String = "Unknown"
-
-fun getAppHome(): String {
-    //fixme find a more elegant solution
-    val envContext = InitialContext().lookup("java:comp/env") as Context
-
-    val appHome = try {
-        envContext.lookup("app_home") as String
-    } catch (e: NamingException) {
-        sendToAnalyzer(exception = e, lastAction = "Lookup app_home in Servlet's context")
-        ""
-    }
-    System.setProperty("kotlin.web.demo.log4j", appHome)
-
-    return appHome
-}

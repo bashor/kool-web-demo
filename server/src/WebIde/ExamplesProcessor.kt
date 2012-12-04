@@ -20,19 +20,10 @@ import java.io.File
 import org.jetbrains.webdemo.common.*
 import org.jetbrains.webdemo.server.Settings
 
-private fun transformRawExamplesListToMap(rawExamples: List<Map<String, String>>): Map<String, Map<String, String>> {
-    val name2rawExample = hashMapOf<String, Map<String, String>>()
-    for (rawExample in rawExamples) {
-        val name = rawExample[NAME_PROP]
-        if (name == null)
-            continue
+class ExamplesProcessor<R>(
+        helpForExamples: VersionedContent<List<Map<String, String>>>,
+        val processor: (File, Map<String, Map<String, String>>) -> R): VersionedContent<R> {
 
-        name2rawExample.put(name, rawExample)
-    }
-    return name2rawExample
-}
-
-abstract class AbstractExamplesProcessor<R>(helpForExamples: VersionedContent<List<Map<String, String>>>): VersionedContent<R> {
     val helpForExamplesWatcher = CachedContent(helpForExamples, { it })
 
     override fun version(): Long = helpForExamplesWatcher.source.version()
@@ -44,8 +35,18 @@ abstract class AbstractExamplesProcessor<R>(helpForExamples: VersionedContent<Li
         }
 
         val name2rawExamples = transformRawExamplesListToMap(helpForExamplesWatcher.content)
-        return ContentSnapshot(helpForExamplesWatcher.version, process(root, name2rawExamples))
+        return ContentSnapshot(helpForExamplesWatcher.version, processor(root, name2rawExamples))
     }
+}
 
-    protected abstract fun process(root: File, name2rawExamples: Map<String, Map<String, String>>): R
+private fun transformRawExamplesListToMap(rawExamples: List<Map<String, String>>): Map<String, Map<String, String>> {
+    val name2rawExample = hashMapOf<String, Map<String, String>>()
+    for (rawExample in rawExamples) {
+        val name = rawExample[NAME_PROP]
+        if (name == null)
+            continue
+
+        name2rawExample.put(name, rawExample)
+    }
+    return name2rawExample
 }

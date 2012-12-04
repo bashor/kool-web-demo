@@ -1,0 +1,5 @@
+<root>
+    <item name='java.lang.System java.lang.String getProperty(java.lang.String, java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

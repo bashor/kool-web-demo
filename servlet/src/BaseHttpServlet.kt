@@ -33,11 +33,12 @@ import javax.naming.Context
 import javax.naming.NamingException
 import org.jetbrains.webdemo.server.Settings.constants.*
 import org.jetbrains.webdemo.common.Settings
+import javax.servlet.ServletConfig
 
 abstract class BaseHttpServlet: HttpServlet() {
-    public override fun init() {
-        super<HttpServlet>.init()
 
+    //todo replace to init? need single init!
+    {
         val envContext = InitialContext().lookup("java:comp/env") as Context
 
         val appHome = try {
@@ -100,6 +101,7 @@ abstract class BaseHttpServlet: HttpServlet() {
             }
 
             if (!response.status(StatusCode.OK).write(responseBody)) {
+                //todo ??
                 response.error(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
             }
         } else {

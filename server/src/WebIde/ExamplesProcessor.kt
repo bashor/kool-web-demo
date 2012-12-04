@@ -24,9 +24,9 @@ class ExamplesProcessor<R>(
         helpForExamples: VersionedContent<List<Map<String, String>>>,
         val processor: (File, Map<String, Map<String, String>>) -> R): VersionedContent<R> {
 
-    val helpForExamplesWatcher = CachedContent(helpForExamples, { it })
+    val cachedHelpForExamples = CachedContent(helpForExamples, { it })
 
-    override fun version(): Long = helpForExamplesWatcher.source.version()
+    override fun version(): Long = cachedHelpForExamples.source.version()
 
     override fun snapshot(): ContentSnapshot<R> {
         val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
@@ -34,8 +34,8 @@ class ExamplesProcessor<R>(
             throw InternalError("Root directory of Examples doesn't exists.\nSettings.EXAMPLES_DIRECTORY_PATH = \"${Settings.EXAMPLES_DIRECTORY_PATH}\"")
         }
 
-        val name2rawExamples = transformRawExamplesListToMap(helpForExamplesWatcher.content)
-        return ContentSnapshot(helpForExamplesWatcher.version, processor(root, name2rawExamples))
+        val name2rawExamples = transformRawExamplesListToMap(cachedHelpForExamples.content)
+        return ContentSnapshot(cachedHelpForExamples.version, processor(root, name2rawExamples))
     }
 }
 

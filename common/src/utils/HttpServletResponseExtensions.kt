@@ -22,7 +22,9 @@ inline public fun HttpServletResponse.write(body: String): Boolean {
     this.getWriter() use {
         it.write(body)
     }
-    return this.getWriter().checkError()
+
+    //todo testing
+    return !this.getWriter().checkError()
 }
 
 inline public fun HttpServletResponse.status(statusCode: StatusCode): HttpServletResponse {

@@ -40,7 +40,7 @@ class HelpLoader(path: String, private val containerTag: String): VersionedConte
         val document = file.toDocument()
 
         if (document == null) {
-            return ContentSnapshot(version, list<Map<String, String>>())
+            return ContentSnapshot(version, listOf<Map<String, String>>())
         }
 
         val elements = parseHelpFromDocument(document, containerTag)

@@ -74,7 +74,7 @@ private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<Stri
                 orderFile.readLines()
             } else {
                 sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
-                list<String>()
+                listOf<String>()
             }
 
     orderLines.forEach { process(root / it) }

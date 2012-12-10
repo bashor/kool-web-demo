@@ -45,6 +45,7 @@ class HelpLoaderTests {
         val help = HelpLoader(path, tag)
 
         val expected = File(path + ".expected").readText()
+        //fixme it's workaround for avoiding compiling problems with help.content()
         val result = help.snapshot().content
 
         assertEquals(expected, result.toString())

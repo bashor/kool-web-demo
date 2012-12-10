@@ -36,26 +36,31 @@ private val DEFAULT_TARGET_STR = TargetPlatform.JAVA.toString().toLowerCase()
 
 fun ExamplesHierarchyGenerator(helpForExamples: VersionedContent<List<Map<String, String>>>) =
                 ExamplesProcessor<List<Map<String, Any>>>(helpForExamples) {
-                    (root, name2rawExamples) -> generateHierarchy(root, name2rawExamples)
+                    (root, name2rawExamples) -> generateHierarchy(root, name2rawExamples, { sendToAnalyzer(it) })
                 }
 
-private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<String, String>>): List<Map<String, Any>> {
+private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<String, String>>, errorReporter: (Throwable) -> Unit): List<Map<String, Any>> {
     val hierarchy = ArrayList<Map<String, Any>>()
 
     fun process(file: File) {
+        if (!file.exists()) {
+            errorReporter(Attention("File '$file' not found."))
+            return
+        }
+
         val baseName = file.baseName
         val map = hashMapOf<String, Any>(NAME_PROP to baseName)
 
         if (file.isDirectory()) {
             map.putAll(TYPE_PROP  to FOLDER,
-                       FILES_PROP to generateHierarchy(file, name2rawExamples))
+                       FILES_PROP to generateHierarchy(file, name2rawExamples, errorReporter))
         } else {
             val rawExample = name2rawExamples[baseName]
             val target =
                     if (rawExample != null) {
                         rawExample[TARGET_PROP] ?: DEFAULT_TARGET_STR
                     } else {
-                        sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
+                            errorReporter(Attention("Example '$baseName' doesn't have description."))
                         DEFAULT_TARGET_STR
                     }
 
@@ -73,7 +78,7 @@ private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<Stri
             if (orderFile.exists()) {
                 orderFile.readLines()
             } else {
-                sendToAnalyzer(Attention("Order file '${orderFile.path}' not found."))
+                errorReporter(Attention("Order file '${orderFile.path}' not found."))
                 listOf<String>()
             }
 
@@ -82,13 +87,13 @@ private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<Stri
     val additionally = root.listFiles { (it.isDirectory() || it.extension == KT_EXTENSION) && !orderLines.contains(it.name) }
 
     if (additionally == null) {
-        sendToAnalyzer(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))
+        errorReporter(Attention("Additionally files list is null. Currnet dir is '${root.path}'."))
         return hierarchy
     }
 
     if (additionally.notEmpty()) {
         if (orderFile.exists())
-            sendToAnalyzer(Attention("Order file '${orderFile.path}' doesn't contain some files."))
+            errorReporter(Attention("Order file '${orderFile.path}' doesn't contain some files."))
 
         additionally.forEach { process(it) }
     }

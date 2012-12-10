@@ -33,7 +33,7 @@ public class ExamplesLoaderTests {
     test fun `duplicated examples`() {
         val root = File(Settings.EXAMPLES_DIRECTORY_PATH + "WithDuplicate")
         val errors = arrayListOf<String>()
-        val examples = loadExamples(root, mapOf("example" to mapOf<String, String>()), { errors.add(it.message) } )
+        loadExamples(root, mapOf("example" to mapOf<String, String>()), { errors.add(it.message) } )
 
         val expectedErrors = listOf("Duplicated example name 'example'.")
 
@@ -51,10 +51,10 @@ public class ExamplesLoaderTests {
         val examples = loadExamples(root, transformRawExamplesListToMap(content), { errors.add(it.message) } )
 
         //fixme fix dependence to targets
-        val expected = (root / "examplesList.expected").readText()
+        val expected = (root / "examplesList.expected").readText().split("\n---\n").toList()
         val errorsExpected = (root / "examplesListErrors.expected").readText()
 
-        assertEquals(expected, examples.iterator().makeString("\n---\n"))
+        assertEquals(expected.toSortedList(), examples.iterator().map { it.toString() }.toList().toSortedList())
         assertEquals(errorsExpected, errors.makeString("\n"))
     }
 }

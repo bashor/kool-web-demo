@@ -28,7 +28,10 @@ public data class ExampleHolder(val name: String,
                           val text: String,
                           val targets: Set<TargetPlatform>,
                           val args: String,
-                          val source: String)
+                          val source: String) {
+
+    fun toString(): String = "ExampleHolder(name=$name, text=$text, targets=${targets.toSortedSet()}, args=$args, source=$source)"
+}
 
 inline fun ExampleHolder.toJsonString(): String {
     val result = JSONObject()

@@ -28,10 +28,10 @@ private val DEFAULT_TARGETS = setOf(TargetPlatform.JAVA)
 
 fun ExamplesLoader(helpForExamples: VersionedContent<List<Map<String, String>>>) =
                 ExamplesProcessor<Map<String, ExampleHolder>>(helpForExamples) {
-                    (root, name2rawExamples) -> loadExamples(root, name2rawExamples)
+                    (root, name2rawExamples) -> loadExamples(root, name2rawExamples, { sendToAnalyzer(it) })
                 }
 
-private fun loadExamples(root: File, name2rawExamples: Map<String, Map<String, String>>): Map<String, ExampleHolder> {
+private fun loadExamples(root: File, name2rawExamples: Map<String, Map<String, String>>, errorReporter: (Throwable) -> Unit): Map<String, ExampleHolder> {
     val examples = hashMapOf<String, ExampleHolder>()
 
     root recurse {
@@ -55,7 +55,7 @@ private fun loadExamples(root: File, name2rawExamples: Map<String, Map<String, S
                                 args = rawExample[ARGS_PROP].orEmpty(),
                                 source = source)
                     } else {
-                        sendToAnalyzer(Attention("Example '$baseName' doesn't have description."))
+                        errorReporter(Attention("Example '$baseName' doesn't have description."))
                         ExampleHolder(name = baseName,
                                 text = "",
                                 targets = DEFAULT_TARGETS,

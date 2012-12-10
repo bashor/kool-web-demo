@@ -22,17 +22,27 @@ import org.junit.runners.JUnit4
 
 import org.jetbrains.webdemo.server.Settings
 import org.jetbrains.webdemo.common.VersionedContent
+import org.jetbrains.webdemo.common.utils.files.div
+import org.jetbrains.webdemo.common.utils.throwable.message
+import java.io.File
+import kotlin.test.assertEquals
 
 RunWith(javaClass<JUnit4>())
 public class ExamplesLoaderTests {
-    test fun `first`() {
-//        val helpForExamples = HelpLoader(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
-//        checkHelpForExamples(helpForExamples)
-//
-//        val loader = ExamplesLoader(helpForExamples)
-    }
+    test fun `full test for load examples`() {
+        //todo split this test?
+        val helpForExamples = HelpLoader(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
+        val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
+        //fixme it's workaround for avoiding compiling problems with help.content()
+        val content = helpForExamples.snapshot().content
 
-    fun checkHelpForExamples(help: VersionedContent<List<Map<String, String>>>) {
-//        assertEqual(expectedHelpForExamples, help.content())
+        val errors = arrayListOf<String>()
+        val examples = loadExamples(root, transformRawExamplesListToMap(content), { errors.add(it.message) } )
+
+        val expected = (root / "examplesList.expected").readText()
+        val errorsExpected = (root / "examplesListErrors.expected").readText()
+
+        assertEquals(expected, examples.iterator().makeString("\n---\n"))
+        assertEquals(errorsExpected, errors.makeString("\n"))
     }
 }

@@ -24,12 +24,10 @@ import kotlin.test.assertTrue
 import org.jetbrains.webdemo.common.*
 import kotlin.dom.removeClass
 
-RunWith(javaClass<JUnit4>())
-public class AbstractExamplesProcessorTests {
-    //todo
-    test fun a() {
-    }
-}
+//RunWith(javaClass<JUnit4>())
+//public class ExamplesProcessorTests {
+//    //todo
+//}
 
 RunWith(javaClass<JUnit4>())
 public class TransformRawExamplesListToMapTests {

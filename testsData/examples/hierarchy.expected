@@ -1,6 +1,6 @@
 {type=folder, files=[{target=java js, type=file, name=Simplest version}, {target=java js, type=file, name=Reading many names from the command line}, {target=java js, type=file, name=An object-oriented Hello}], name=Hello, world!}
 {type=folder, files=[{target=java, type=file, name=Traffic light}], name=Canvas}
-{type=folder, files=[], name=order with non existent file}
 {type=folder, files=[{target=java, type=file, name=Multi-declarations}, {target=java, type=file, name=Data classes}], name=without order file}
 {type=folder, files=[{target=java, type=file, name=Data classes2}, {target=java, type=file, name=Multi-declarations2}], name=examples without descriptions}
 {type=folder, files=[{target=java, type=file, name=lost example}], name=lost files}
+{type=folder, files=[], name=order with non existent file}

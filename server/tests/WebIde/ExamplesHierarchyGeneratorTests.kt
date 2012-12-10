@@ -91,6 +91,7 @@ public class ExamplesHierarchyGeneratorTests {
                 "Order file '${ root / "without order file/order.txt" }' not found.",
                 "Order file '${ root / "lost files/order.txt" }' doesn't contain some files.")
 
-        assertEquals(expected.toSortedList(), examples.iterator().map { it.toString() }.toList().toSortedList())
-        assertEquals(expectedErrors.toSortedList().makeString("\n"), errors.toSortedList().makeString("\n"))
-    }}
+        assertEquals(expected.toSortedList(), examples.map { it.toString() }.toSortedList())
+        assertEquals(expectedErrors.toSortedList(), errors.toSortedList())
+    }
+}

@@ -72,7 +72,7 @@ public class ExamplesHierarchyGeneratorTests {
         val errors = arrayListOf<String>()
         val examples = generateHierarchy(root, transformRawExamplesListToMap(content), { errors.add(it.message) } )
 
-        val expected = (root / "hierarchy.expected").readText()
+        val expected = (root / "hierarchy.expected").readLines()
         val expectedErrors = listOf(
                 "Example 'Traffic light' doesn't have description.",
                 "Example 'Data classes' doesn't have description.",
@@ -92,6 +92,6 @@ public class ExamplesHierarchyGeneratorTests {
                 "Order file '${ root / "empty/order.txt" }' not found.",
                 "Order file '${ root / "lost files/order.txt" }' doesn't contain some files.")
 
-        assertEquals(expected, examples.iterator().makeString("\n---\n"))
+        assertEquals(expected.toSortedList(), examples.iterator().map { it.toString() }.toList().toSortedList())
         assertEquals(expectedErrors.toSortedList().makeString("\n"), errors.toSortedList().makeString("\n"))
     }}

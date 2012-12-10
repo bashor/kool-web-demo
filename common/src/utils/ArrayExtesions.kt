@@ -15,5 +15,13 @@
  */
 package org.jetbrains.webdemo.common.utils
 
+import java.util.Arrays
+
 val <T: Any> Array<T>.first: T?
     inline get() = if (this.isEmpty()) null else this[0]
+
+public inline fun  <T> Array<T>.sort() : Array<T> {
+    val sorted = this.copyOf()
+    Arrays.sort(sorted)
+    return sorted
+}

@@ -19,6 +19,7 @@ package org.jetbrains.webdemo.server.webIde
 import java.io.File
 import java.util.ArrayList
 import org.jetbrains.webdemo.common.*
+import org.jetbrains.webdemo.common.utils.sort
 import org.jetbrains.webdemo.common.utils.files.baseName
 import org.jetbrains.webdemo.common.utils.files.div
 import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
@@ -95,7 +96,7 @@ private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<Stri
         if (orderFile.exists())
             errorReporter(Attention("Order file '${orderFile.path}' doesn't contain some files."))
 
-        additionally.forEach { process(it) }
+        additionally.sort().forEach { process(it) }
     }
 
     return hierarchy

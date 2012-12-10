@@ -7,7 +7,7 @@ An object-oriented Hello=ExampleHolder(name=An object-oriented Hello, text=Here 
             Note that there's no
             <b>new</b>
             keyword used to create an object.
-        , targets=[JAVA, JS], args=guest1, source=class Greeter(val name : String) {
+        , targets=[JS, JAVA], args=guest1, source=class Greeter(val name : String) {
   fun greet() {
     println("Hello, ${name}");
   }
@@ -16,6 +16,56 @@ An object-oriented Hello=ExampleHolder(name=An object-oriented Hello, text=Here 
 fun main(args : Array<String>) {
   Greeter(args[0]).greet()
 })
+---
+Reading many names from the command line=ExampleHolder(name=Reading many names from the command line, text=Line 2 demonstrates the
+            <a target="_blank" href="http://confluence.jetbrains.net/display/Kotlin/Control+structures#Controlstructures-Forloop">
+                <b>for</b>-loop</a>
+            , that would have been called "enhanced" if there were any other for-loop in Kotlin.
+        , targets=[JS, JAVA], args=guest1 guest2 guest3, source=fun main(args : Array<String>) {
+  for (name in args)
+    println("Hello, $name!")
+})
+---
+Multi-declarations=ExampleHolder(name=Multi-declarations, text=, targets=[JAVA], args=, source=import java.util.TreeMap
+
+fun main(args: Array<String>) {
+  val map = TreeMap<String, Int>()
+  map.put("one", 1)
+  map.put("two", 2)
+  
+  for ((key, value) in map) { 
+    println("key = $key, value = $value")
+  }
+})
+---
+Simplest version=ExampleHolder(name=Simplest version, text=We declare a package-level function main which returns Unit and takes an Array of strings as a
+            parameter.
+            <br></br>
+            Note that semicolons are optional.
+        , targets=[JS, JAVA], args=, source=fun main(args : Array<String>) {
+  println("Hello, world!")
+})
+---
+Data classes2=ExampleHolder(name=Data classes2, text=, targets=[JAVA], args=, source=data class User(val name: String, val id: Int)
+
+fun getUser(): User {
+  return User("Alex", 1)
+}
+
+fun main(args: Array<String>) {
+  val user = getUser()
+  println("name = ${user.name}, id = ${user.id}")
+
+  // or
+
+  val (name, id) = getUser()
+  println("name = $name, id = $id")
+    
+  // or
+    
+  println("name = ${getUser().component1()}, id = ${getUser().component2()}")
+}
+)
 ---
 Traffic light=ExampleHolder(name=Traffic light, text=, targets=[JAVA], args=, source=package traffic
 
@@ -519,20 +569,19 @@ fun getRandomArbitary(val min: Int, val max: Int): Double {
 }
 )
 ---
-Reading many names from the command line=ExampleHolder(name=Reading many names from the command line, text=Line 2 demonstrates the
-            <a target="_blank" href="http://confluence.jetbrains.net/display/Kotlin/Control+structures#Controlstructures-Forloop">
-                <b>for</b>-loop</a>
-            , that would have been called "enhanced" if there were any other for-loop in Kotlin.
-        , targets=[JAVA, JS], args=guest1 guest2 guest3, source=fun main(args : Array<String>) {
-  for (name in args)
-    println("Hello, $name!")
+Multi-declarations2=ExampleHolder(name=Multi-declarations2, text=, targets=[JAVA], args=, source=import java.util.TreeMap
+
+fun main(args: Array<String>) {
+  val map = TreeMap<String, Int>()
+  map.put("one", 1)
+  map.put("two", 2)
+  
+  for ((key, value) in map) { 
+    println("key = $key, value = $value")
+  }
 })
 ---
-Simplest version=ExampleHolder(name=Simplest version, text=We declare a package-level function main which returns Unit and takes an Array of strings as a
-            parameter.
-            <br></br>
-            Note that semicolons are optional.
-        , targets=[JAVA, JS], args=, source=fun main(args : Array<String>) {
+lost example=ExampleHolder(name=lost example, text=, targets=[JAVA], args=, source=fun main(args : Array<String>) {
   println("Hello, world!")
 })
 ---
@@ -554,17 +603,4 @@ fun main(args: Array<String>) {
   // or
     
   println("name = ${getUser().component1()}, id = ${getUser().component2()}")
-}
-)
----
-Multi-declarations=ExampleHolder(name=Multi-declarations, text=, targets=[JAVA], args=, source=import java.util.TreeMap
-
-fun main(args: Array<String>) {
-  val map = TreeMap<String, Int>()
-  map.put("one", 1)
-  map.put("two", 2)
-  
-  for ((key, value) in map) { 
-    println("key = $key, value = $value")
-  }
 })

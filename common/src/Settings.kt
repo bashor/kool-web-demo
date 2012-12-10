@@ -16,10 +16,11 @@
 
 package org.jetbrains.webdemo.common.Settings
 
+val PREFIX = "kotlin.web.demo."
+fun getProperty(name: String, default: String) = System.getProperty(PREFIX + name) ?: System.getenv(PREFIX + name) ?: default
+fun setProperty(name: String, value: String) = System.setProperty(PREFIX + name, value)
+
 //todo replace to enum?
 val IS_PRODUCTION: Boolean = false
 val IS_TESTING: Boolean = getProperty("is_testing", "false") == "true"
 
-val PREFIX = "kotlin.web.demo."
-fun getProperty(name: String, default: String) = System.getProperty(PREFIX + name) ?: System.getenv(PREFIX + name) ?: default
-fun setProperty(name: String, value: String) = System.setProperty(PREFIX + name, value)

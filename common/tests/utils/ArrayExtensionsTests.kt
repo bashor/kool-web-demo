@@ -21,6 +21,8 @@ import org.jetbrains.webdemo.common.utils.*
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 RunWith(javaClass<JUnit4>())
 class ArrayExtensionsTests {
@@ -34,5 +36,13 @@ class ArrayExtensionsTests {
         expect(1) {
             array<Int>(1, 2, 3).first
         }
+    }
+
+    test fun `sort empty array`() {
+        assertTrue(array<Int>().sort().isEmpty())
+    }
+
+    test fun `sort Int array`() {
+        assertEquals(array<Int>(0, 2, 3, 3, 7, 99).makeString(), array<Int>(2, 7, 3, 3, 0, 99).sort().makeString())
     }
 }

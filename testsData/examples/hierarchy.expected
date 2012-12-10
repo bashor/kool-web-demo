@@ -3,5 +3,4 @@
 {type=folder, files=[], name=order with non existent file}
 {type=folder, files=[{target=java, type=file, name=Multi-declarations}, {target=java, type=file, name=Data classes}], name=without order file}
 {type=folder, files=[{target=java, type=file, name=Data classes2}, {target=java, type=file, name=Multi-declarations2}], name=examples without descriptions}
-{type=folder, files=[], name=empty}
 {type=folder, files=[{target=java, type=file, name=lost example}], name=lost files}

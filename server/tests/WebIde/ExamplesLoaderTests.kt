@@ -52,9 +52,9 @@ public class ExamplesLoaderTests {
 
         //fixme fix dependence to targets
         val expected = (root / "examplesList.expected").readText().split("\n---\n").toList()
-        val errorsExpected = (root / "examplesListErrors.expected").readText()
+        val errorsExpected = (root / "examplesListErrors.expected").readLines()
 
         assertEquals(expected.toSortedList(), examples.iterator().map { it.toString() }.toList().toSortedList())
-        assertEquals(errorsExpected, errors.makeString("\n"))
+        assertEquals(errorsExpected.toSortedList(), errors.toSortedList())
     }
 }

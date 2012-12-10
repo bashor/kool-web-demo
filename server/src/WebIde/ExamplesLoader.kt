@@ -63,7 +63,10 @@ private fun loadExamples(root: File, name2rawExamples: Map<String, Map<String, S
                                 source = source)
                     }
 
-            examples.put(baseName, example)
+            val prev = examples.put(baseName, example)
+            if (prev != null) {
+                errorReporter(Attention("Duplicated example name '$baseName'."))
+            }
         }
     }
 

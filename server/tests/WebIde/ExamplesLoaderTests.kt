@@ -26,9 +26,20 @@ import org.jetbrains.webdemo.common.utils.files.div
 import org.jetbrains.webdemo.common.utils.throwable.message
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 RunWith(javaClass<JUnit4>())
 public class ExamplesLoaderTests {
+    test fun `duplicated examples`() {
+        val root = File(Settings.EXAMPLES_DIRECTORY_PATH + "WithDuplicate")
+        val errors = arrayListOf<String>()
+        val examples = loadExamples(root, mapOf("example" to mapOf<String, String>()), { errors.add(it.message) } )
+
+        val expectedErrors = listOf("Duplicated example name 'example'.")
+
+        assertEquals(expectedErrors, errors)
+    }
+
     test fun `full test for load examples`() {
         //todo split this test?
         val helpForExamples = HelpLoader(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
@@ -39,6 +50,7 @@ public class ExamplesLoaderTests {
         val errors = arrayListOf<String>()
         val examples = loadExamples(root, transformRawExamplesListToMap(content), { errors.add(it.message) } )
 
+        //fixme fix dependence to targets
         val expected = (root / "examplesList.expected").readText()
         val errorsExpected = (root / "examplesListErrors.expected").readText()
 

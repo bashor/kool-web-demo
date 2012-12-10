@@ -27,7 +27,7 @@ public class ExampleHolderTests {
     test fun `exampleHolder to json string`() {
         val name = "examplename"
         val text = "description"
-        val targets = hashSet(TargetPlatform.JAVA, TargetPlatform.CANVAS)
+        val targets = setOf(TargetPlatform.JAVA, TargetPlatform.CANVAS)
         val targetsStr = "java canvas"
         val args = "arg1 arg2"
         val source = "fun main(){}"

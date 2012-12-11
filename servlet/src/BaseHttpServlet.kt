@@ -60,8 +60,15 @@ abstract class BaseHttpServlet: HttpServlet() {
         //fixme after issue KT-2982 will be fixed
         val decodedQuery =
                 try {
-                    URLDecoder.decode(request.getQueryString(), "UTF-8")
+                    val query = request.getQueryString()
+                    if (query == null) {
+                        response.error(StatusCode.BAD_REQUEST, "The URL does not contain query string.")
+                        return
+                    }
+
+                    URLDecoder.decode(query, "UTF-8")
                 } catch (e: UnsupportedEncodingException) {
+                    //todo extract
                     val exceptionMessage = e.getMessage().orEmpty()
                     val message =
                             if (exceptionMessage.contains("URLDecoder:")) {
@@ -101,7 +108,6 @@ abstract class BaseHttpServlet: HttpServlet() {
             }
 
             if (!response.status(StatusCode.OK).write(responseBody)) {
-                //todo ??
                 response.error(StatusCode.INTERNAL_SERVER_ERROR, "Internal server error")
             }
         } else {

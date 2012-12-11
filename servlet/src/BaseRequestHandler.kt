@@ -35,10 +35,8 @@ import org.jetbrains.webdemo.server.Settings.constants.*
 import org.jetbrains.webdemo.common.Settings
 import javax.servlet.ServletConfig
 
-abstract class BaseRequestHandler: HttpServlet() {
-
-    //todo replace to init? need single init!
-    {
+//fixme this workaround
+val forceInit =
         if (!Settings.IS_TESTING) {
             val envContext = InitialContext().lookup("java:comp/env") as Context
 
@@ -52,7 +50,9 @@ abstract class BaseRequestHandler: HttpServlet() {
             Settings.setProperty(PROP_APP_HOME, appHome)
             Settings.setProperty(PROP_LOG4J, appHome)
         }
-    }
+
+
+abstract class BaseRequestHandler: HttpServlet() {
 
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 

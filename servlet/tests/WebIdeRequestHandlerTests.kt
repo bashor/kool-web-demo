@@ -73,7 +73,8 @@ public class WebIdeRequestHandlerTests {
         webIdeHandler.version = version
         webIdeHandler.content = content
 
-        val webIdeRequestHandler = WebIdeRequestHandler(webIdeHandler)
+        //fixme drop named argument
+        val webIdeRequestHandler = WebIdeRequestHandler(webIdeHandler = webIdeHandler)
 
         assertEquals(version, webIdeRequestHandler.field().version)
         assertEquals(expected, webIdeRequestHandler.field().content)
@@ -97,7 +98,8 @@ public class WebIdeRequestHandlerTests {
         webIdeHandler.version = version
         webIdeHandler.content = content
 
-        val webIdeRequestHandler = WebIdeRequestHandler(webIdeHandler)
+        //fixme drop named argument
+        val webIdeRequestHandler = WebIdeRequestHandler(webIdeHandler = webIdeHandler)
 
         assertEquals(version, webIdeRequestHandler.field().version)
         assertEquals(expected, webIdeRequestHandler.field().content)

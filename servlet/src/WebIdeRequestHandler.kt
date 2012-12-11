@@ -21,12 +21,18 @@ import org.jetbrains.webdemo.common.WebIdeCommands.*
 import org.jetbrains.webdemo.common.utils.first
 import org.jetbrains.webdemo.common.utils.json.toJsonString
 import org.jetbrains.webdemo.common.toJsonString
+import org.jetbrains.webdemo.server.webIde.WebIdeHandlerImpl
 import org.jetbrains.webdemo.server.webIde.WebIdeHandler
 import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.server.Attention
+import javax.servlet.ServletConfig
 
-class WebIdeServlet: BaseHttpServlet() {
-    val webIdeHandler = WebIdeHandler()
+
+//fixme this workaround. (Because WebIdeRequestHandler doesen't work in servlet container)
+class WebIdeRequestHandlerWorker: WebIdeRequestHandler()
+
+open class WebIdeRequestHandler(val webIdeHandler: WebIdeHandler = WebIdeHandlerImpl()): BaseRequestHandler() {
+
     val helpForKeywords = CachedContent(webIdeHandler.helpForKeywords, { it.toJsonString() })
     val helpForExamples = CachedContent(webIdeHandler.helpForExamples, { it.toJsonString() })
     val examplesList = CachedContent(webIdeHandler.hierarchy, { it.toJsonString() })
@@ -39,11 +45,10 @@ class WebIdeServlet: BaseHttpServlet() {
         LOAD_EXAMPLE -> {
             val name = params["name"]?.first
             if (name == null) {
-                sendToAnalyzer(Attention("Wrong loadExample request:  parameter name not found"))
-                null
-            } else {
-                examples.content[name]?.toJsonString()
+                throw Attention("Wrong loadExample request:  parameter name not found")
             }
+
+            examples.content[name]?.toJsonString()
         }
         else -> null
     }

@@ -76,6 +76,7 @@ val Node.inner: String
         return inner.toString()
     }
 
+//fixme use Stream
 inline fun File.toDocument() = parseToDocument(this, { this.parse(it) }, { Attachment(this) })
 inline fun String.toDocument() = parseToDocument(this, { this.parse(it.reader.source()) }, { Attachment("<String>", this) })
 

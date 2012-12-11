@@ -16,12 +16,16 @@
 
 package org.jetbrains.webdemo.server.webIde
 
-import org.jetbrains.webdemo.common.VersionedContent
+import org.jetbrains.webdemo.server.Settings
 import org.jetbrains.webdemo.common.ExampleHolder
+import org.jetbrains.webdemo.common.VersionedContent
 
-public trait WebIdeHandler {
-    public val helpForKeywords: VersionedContent<List<Map<String, String>>>
-    public val helpForExamples: VersionedContent<List<Map<String, String>>>
-    public val examples: VersionedContent<Map<String, ExampleHolder>>
-    public val hierarchy: VersionedContent<List<Map<String, Any>>>
+private val EXAMPLE_TAG = "example"
+private val KEYWORD_TAG = "keyword"
+
+public class WebIdeHandlerImpl: WebIdeHandler {
+    public override val helpForKeywords = HelpLoader(Settings.HELP_FOR_KEYWORDS_PATH, KEYWORD_TAG)
+    public override val helpForExamples = HelpLoader(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
+    public override val examples = ExamplesLoader(helpForExamples)
+    public override val hierarchy = ExamplesHierarchyGenerator(helpForExamples)
 }

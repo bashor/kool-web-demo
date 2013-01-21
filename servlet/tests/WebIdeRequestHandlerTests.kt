@@ -133,14 +133,16 @@ public class WebIdeRequestHandlerTests {
         }
     }
 
-    val emptyHelp = listOf<Map<String, String>>()
-    val emptyExamples = mapOf<String, ExampleHolder>()
-    val emptyHierarchy = listOf<Map<String, Any>>()
-
     abstract class UpdatableWebIdeHandler<T: Any>() : WebIdeHandler {
         var version: Long = 0
         var content: T? = null
 
+        class object {
+            val emptyHelp = listOf<Map<String, String>>()
+            val emptyExamples = mapOf<String, ExampleHolder>()
+            val emptyHierarchy = listOf<Map<String, Any>>()
+        }
+        
         public override val helpForKeywords: VersionedContent<List<Map<String, String>>> = AlwaysFailedVersionedContent<List<Map<String, String>>>(emptyHelp)
         public override val helpForExamples: VersionedContent<List<Map<String, String>>> = AlwaysFailedVersionedContent<List<Map<String, String>>>(emptyHelp)
         public override val examples: VersionedContent<Map<String, ExampleHolder>> = AlwaysFailedVersionedContent<Map<String, ExampleHolder>>(emptyExamples)

@@ -17,4 +17,4 @@
 package org.jetbrains.webdemo.server.Settings.constants
 
 val PROP_APP_HOME = "app_home"
-val PROP_LOG4J = PROP_APP_HOME
+val PROP_LOG4J = "log4j"

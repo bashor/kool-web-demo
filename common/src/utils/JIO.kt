@@ -22,5 +22,3 @@ import org.xml.sax.InputSource
 
 //fixme replace String.reader implementation in StringJVM to String.reader()
 //inline public fun String.reader(): StringReader = StringReader(this)
-
-inline public fun Reader.source(): InputSource = InputSource(this)

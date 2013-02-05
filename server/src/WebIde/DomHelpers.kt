@@ -31,9 +31,10 @@ import java.io.IOException
 import javax.xml.parsers.ParserConfigurationException
 import org.xml.sax.SAXException
 import java.io.StringReader
-import org.xml.sax.InputSource
 import java.io.Reader
 import org.jetbrains.webdemo.common.utils.io.*
+import java.io.FileInputStream
+import org.xml.sax.InputSource
 
 inline fun NodeList.iterator(): NodeListIterator = NodeListIterator(this)
 
@@ -76,13 +77,12 @@ val Node.inner: String
         return inner.toString()
     }
 
-//fixme use Stream
-inline fun File.toDocument() = parseToDocument(this, { this.parse(it) }, { Attachment(this) })
-inline fun String.toDocument() = parseToDocument(this, { this.parse(it.reader.source()) }, { Attachment("<String>", this) })
+inline fun File.toDocument() = parseToDocument(InputSource(FileInputStream(this)), { Attachment(this) })
+inline fun String.toDocument() = parseToDocument(InputSource(this.reader), { Attachment("<String>", this) })
 
-private fun <T> parseToDocument(input: T, parse: DocumentBuilder.(T) -> Document?, converter: (T) -> Attachment): Document? {
+private fun parseToDocument(input: InputSource, getAttachment: () -> Attachment): Document? {
     fun sendException(e: Throwable) {
-        val attachment = converter(input)
+        val attachment = getAttachment()
         sendToAnalyzer(exception = e, lastAction = "Create org.w3c.dom.Document for ${attachment.name}", attachment = attachment)
     }
 

@@ -35,24 +35,25 @@ import org.jetbrains.webdemo.server.Settings.constants.*
 import org.jetbrains.webdemo.common.Settings
 import javax.servlet.ServletConfig
 
-//fixme this workaround
-val forceInit =
+abstract class BaseRequestHandler: HttpServlet() {
+
+    //todo replace to init? need single init!
+    {
         if (!Settings.IS_TESTING) {
             val envContext = InitialContext().lookup("java:comp/env") as Context
 
-            val appHome = try {
-                envContext.lookup(PROP_APP_HOME) as String
-            } catch (e: NamingException) {
-                sendToAnalyzer(exception = e, lastAction = "Lookup app_home in Servlet's context")
-                ""
-            }
+            val appHome =
+                    try {
+                        envContext.lookup(PROP_APP_HOME) as String
+                    } catch (e: NamingException) {
+                        sendToAnalyzer(exception = e, lastAction = "Lookup app_home in Servlet's context")
+                        "."
+                    }
 
             Settings.setProperty(PROP_APP_HOME, appHome)
             Settings.setProperty(PROP_LOG4J, appHome)
         }
-
-
-abstract class BaseRequestHandler: HttpServlet() {
+    }
 
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?
 

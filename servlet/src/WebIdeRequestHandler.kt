@@ -27,8 +27,10 @@ import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.server.Attention
 import javax.servlet.ServletConfig
 
-open class WebIdeRequestHandler(val webIdeHandler: WebIdeHandler = WebIdeHandlerImpl()): BaseRequestHandler() {
+open class WebIdeRequestHandler(webIdeHandlerInitializer: () -> WebIdeHandler = { WebIdeHandlerImpl() } // for lazy initialization
+        ): BaseRequestHandler() {
 
+    val webIdeHandler = webIdeHandlerInitializer()
     val helpForKeywords = CachedContent(webIdeHandler.helpForKeywords, { it.toJsonString() })
     val helpForExamples = CachedContent(webIdeHandler.helpForExamples, { it.toJsonString() })
     val examplesList = CachedContent(webIdeHandler.hierarchy, { it.toJsonString() })

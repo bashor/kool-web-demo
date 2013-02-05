@@ -27,10 +27,7 @@ import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.server.Attention
 import javax.servlet.ServletConfig
 
-//fixme this workarounds. (Because WebIdeRequestHandler doesen't work in servlet container)
-class WebIdeRequestHandlerWorker: WebIdeRequestHandler()
-
-open class WebIdeRequestHandler(_: Unit = forceInit, val webIdeHandler: WebIdeHandler = WebIdeHandlerImpl()): BaseRequestHandler() {
+open class WebIdeRequestHandler(val webIdeHandler: WebIdeHandler = WebIdeHandlerImpl()): BaseRequestHandler() {
 
     val helpForKeywords = CachedContent(webIdeHandler.helpForKeywords, { it.toJsonString() })
     val helpForExamples = CachedContent(webIdeHandler.helpForExamples, { it.toJsonString() })

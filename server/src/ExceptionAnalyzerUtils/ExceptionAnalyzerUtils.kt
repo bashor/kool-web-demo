@@ -66,6 +66,7 @@ public fun sendToAnalyzer(error: ErrorReport) {
         return
     }
 
+    //todo try-catch or logging after sending report?
     LOG_FOR_EXCEPTIONS.exception(error)
 
     if (common.Settings.IS_PRODUCTION) {

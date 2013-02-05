@@ -11,7 +11,7 @@
 
     <servlet>
         <servlet-name>WebIdeServlet</servlet-name>
-        <servlet-class>org.jetbrains.webdemo.servlet.WebIdeRequestHandlerWorker</servlet-class>
+        <servlet-class>org.jetbrains.webdemo.servlet.WebIdeRequestHandler</servlet-class>
     </servlet>
 
     <servlet-mapping>

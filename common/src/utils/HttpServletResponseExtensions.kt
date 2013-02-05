@@ -23,7 +23,6 @@ inline public fun HttpServletResponse.write(body: String): Boolean {
         it.write(body)
     }
 
-    //todo testing
     return !this.getWriter().checkError()
 }
 

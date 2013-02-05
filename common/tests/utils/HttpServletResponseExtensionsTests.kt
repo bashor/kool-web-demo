@@ -25,6 +25,7 @@ import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
+import kotlin.test.assertTrue
 
 RunWith(javaClass<JUnit4>())
 public class HttpServletResponseExtensionsTests {
@@ -34,6 +35,14 @@ public class HttpServletResponseExtensionsTests {
 
     test fun `call write with empty string`() {
         testWrite("")
+    }
+
+    test fun `when Writer#checkError return true`() {
+        testWriteResult(true)
+    }
+
+    test fun `when Writer#checkError return false`() {
+        testWriteResult(false)
     }
 
     test fun `set status code`() {
@@ -84,9 +93,22 @@ public class HttpServletResponseExtensionsTests {
 
         ifCall(response.getWriter()).thenReturn(writer)
 
-        response.write(data)
+        assertTrue(response.write(data))
 
         assertEquals(data, stringWriter.toString())
+    }
+
+    private fun testWriteResult(checkErrorResult: Boolean) {
+        val data = "some data"
+
+        val response = mock(javaClass<HttpServletResponse>())
+
+        val writer = mock(javaClass<PrintWriter>())
+        ifCall(writer.checkError()).thenReturn(checkErrorResult)
+
+        ifCall(response.getWriter()).thenReturn(writer)
+
+        assertEquals(!checkErrorResult, response.write(data))
     }
 
     private fun testSendError(message: String? = null) {

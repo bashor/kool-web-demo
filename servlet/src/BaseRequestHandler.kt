@@ -37,22 +37,29 @@ import javax.servlet.ServletConfig
 
 abstract class BaseRequestHandler: HttpServlet() {
 
-    //todo replace to init? need single init!
-    {
-        if (!Settings.IS_TESTING) {
-            val envContext = InitialContext().lookup("java:comp/env") as Context
+    // simulation static constructor behavior
+    private object STATIC_CTOR {
+        {
+            if (!Settings.IS_TESTING) {
+                val envContext = InitialContext().lookup("java:comp/env") as Context
 
-            val appHome =
-                    try {
-                        envContext.lookup(PROP_APP_HOME) as String
-                    } catch (e: NamingException) {
-                        sendToAnalyzer(exception = e, lastAction = "Lookup app_home in Servlet's context")
-                        "."
-                    }
+                val appHome =
+                        try {
+                            envContext.lookup(PROP_APP_HOME) as String
+                        } catch (e: NamingException) {
+                            sendToAnalyzer(exception = e, lastAction = "Lookup app_home in Servlet's context")
+                            "."
+                        }
 
-            Settings.setProperty(PROP_APP_HOME, appHome)
-            Settings.setProperty(PROP_LOG4J, appHome)
+                Settings.setProperty(PROP_APP_HOME, appHome)
+                Settings.setProperty(PROP_LOG4J, appHome)
+            }
         }
+    }
+
+    {
+        // force static constructor calling
+        STATIC_CTOR
     }
 
     abstract protected fun handle(command: String, params: Map<String, Array<String>>): String?

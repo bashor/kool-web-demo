@@ -54,35 +54,27 @@ public class HttpServletResponseExtensionsTests {
     }
 
     test fun `set int value in header`() {
-        //fixme after issue KT-3184 will be fixed
-        //             |
-        //             v
-        testSetHeader<Int>(3) { (name, value) -> this.setIntHeader(name, value) }
+        testSetHeader(3) { (name, value) -> this.setIntHeader(name, value) }
     }
 
     test fun `set date value in header`() {
-        //fixme after issue KT-3184 will be fixed
-        testSetHeader<Long>(1.toLong()) { (name, value) -> this.setDateHeader(name, value) }
+        testSetHeader(1.toLong()) { (name, value) -> this.setDateHeader(name, value) }
     }
 
     test fun `set string value in header`() {
-        //fixme after issue KT-3184 will be fixed
-        testSetHeader<String>("string") { (name, value) -> this.setHeader(name, value) }
+        testSetHeader("string") { (name, value) -> this.setHeader(name, value) }
     }
 
     test fun `add int value to header`() {
-        //fixme after issue KT-3184 will be fixed
-        testAddHeader<Int>(0) { (name, value) -> this.addIntHeader(name, value) }
+        testAddHeader(0) { (name, value) -> this.addIntHeader(name, value) }
     }
 
     test fun `add date value to header`() {
-        //fixme after issue KT-3184 will be fixed
-        testAddHeader<Long>(22.toLong()) { (name, value) -> this.addDateHeader(name, value) }
+        testAddHeader(22.toLong()) { (name, value) -> this.addDateHeader(name, value) }
     }
 
     test fun `add string value to header`() {
-        //fixme after issue KT-3184 will be fixed
-        testAddHeader<String>("yet another string") { (name, value) -> this.addHeader(name, value) }
+        testAddHeader("yet another string") { (name, value) -> this.addHeader(name, value) }
     }
 
     private fun testWrite(data: String) {

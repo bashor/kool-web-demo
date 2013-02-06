@@ -78,16 +78,8 @@ abstract class BaseRequestHandler: HttpServlet() {
 
                     URLDecoder.decode(query, "UTF-8")
                 } catch (e: UnsupportedEncodingException) {
-                    //todo extract
-                    val exceptionMessage = e.getMessage().orEmpty()
-                    val message =
-                            if (exceptionMessage.contains("URLDecoder:")) {
-                                exceptionMessage
-                            } else {
-                                "${exceptionMessage} character encoding is not supported"
-                            }
-                    //todo logging
-                    response.error(StatusCode.BAD_REQUEST, message)
+                    //todo logging?
+                    response.error(StatusCode.BAD_REQUEST, e.message)
                     return
                 }
 
@@ -124,4 +116,16 @@ abstract class BaseRequestHandler: HttpServlet() {
             response.error(StatusCode.BAD_REQUEST, "The Parameter \"do\" is not found or empty")
         }
     }
+
+    val UnsupportedEncodingException.message: String
+        get() {
+            val exceptionMessage = this.message
+            return if (exceptionMessage.contains("URLDecoder:")) {
+                    exceptionMessage
+                } else {
+                    // Make exception message more informative.
+                    // StringCoding#decode returns exception with charsetName.
+                    "${exceptionMessage} character encoding is not supported"
+                }
+        }
 }

@@ -17,8 +17,6 @@
 package org.jetbrains.webdemo.server.webIde
 
 import org.jetbrains.webdemo.server.Settings
-import org.jetbrains.webdemo.common.ExampleHolder
-import org.jetbrains.webdemo.common.VersionedContent
 
 private val EXAMPLE_TAG = "example"
 private val KEYWORD_TAG = "keyword"

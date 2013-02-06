@@ -16,16 +16,14 @@
 
 package org.jetbrains.webdemo.server.webIde
 
+import java.io.File
+import kotlin.test.assertEquals
+import org.jetbrains.webdemo.common.utils.files.div
+import org.jetbrains.webdemo.common.utils.throwable.message
+import org.jetbrains.webdemo.server.Settings
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-
-import org.jetbrains.webdemo.server.Settings
-import org.jetbrains.webdemo.common.utils.files.div
-import org.jetbrains.webdemo.common.utils.throwable.message
-import java.io.File
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 RunWith(javaClass<JUnit4>())
 public class ExamplesHierarchyGeneratorTests {

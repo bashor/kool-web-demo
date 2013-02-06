@@ -16,11 +16,11 @@
 
 package org.jetbrains.webdemo.common
 
+import kotlin.test.assertEquals
+import org.json.JSONObject
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.json.JSONObject
-import kotlin.test.assertEquals
 
 RunWith(javaClass<JUnit4>())
 public class ExampleHolderTests {

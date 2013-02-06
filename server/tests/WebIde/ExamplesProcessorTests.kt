@@ -16,14 +16,13 @@
 
 package org.jetbrains.webdemo.server.webIde
 
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.test.failsWith
+import org.jetbrains.webdemo.common.*
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
-import org.jetbrains.webdemo.common.*
-import kotlin.dom.removeClass
-import kotlin.test.failsWith
 
 RunWith(javaClass<JUnit4>())
 public class ExamplesProcessorTests {

@@ -16,8 +16,8 @@
 
 package org.jetbrains.webdemo.server.webIde
 
-import org.jetbrains.webdemo.common.VersionedContent
 import org.jetbrains.webdemo.common.ExampleHolder
+import org.jetbrains.webdemo.common.VersionedContent
 
 public trait WebIdeHandler {
     public val helpForKeywords: VersionedContent<List<Map<String, String>>>

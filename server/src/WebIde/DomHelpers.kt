@@ -17,24 +17,20 @@
 package org.jetbrains.webdemo.server.webIde.domHelpers
 
 import com.sun.xml.internal.ws.util.xml.NodeListIterator
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.ParserConfigurationException
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.Attachment
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
+import org.w3c.dom.Document
 import org.w3c.dom.NamedNodeMap
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import org.w3c.dom.Text
-import javax.xml.parsers.DocumentBuilderFactory
-import org.w3c.dom.Document
-import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
-import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.Attachment
-import java.io.File
-import javax.xml.parsers.DocumentBuilder
-import java.io.IOException
-import javax.xml.parsers.ParserConfigurationException
-import org.xml.sax.SAXException
-import java.io.StringReader
-import java.io.Reader
-import org.jetbrains.webdemo.common.utils.io.*
-import java.io.FileInputStream
 import org.xml.sax.InputSource
+import org.xml.sax.SAXException
 
 inline fun NodeList.iterator(): NodeListIterator = NodeListIterator(this)
 

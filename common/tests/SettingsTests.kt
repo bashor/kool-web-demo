@@ -16,14 +16,11 @@
 
 package org.jetbrains.webdemo.common
 
-
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.json.JSONObject
-import kotlin.test.assertEquals
-import org.jetbrains.webdemo.common.Settings
-import kotlin.test.assertTrue
 
 RunWith(javaClass<JUnit4>())
 public class SettingsTests {

@@ -18,14 +18,12 @@ package org.jetbrains.webdemo.servlet
 
 import org.jetbrains.webdemo.common.CachedContent
 import org.jetbrains.webdemo.common.WebIdeCommands.*
+import org.jetbrains.webdemo.common.toJsonString
 import org.jetbrains.webdemo.common.utils.first
 import org.jetbrains.webdemo.common.utils.json.toJsonString
-import org.jetbrains.webdemo.common.toJsonString
-import org.jetbrains.webdemo.server.webIde.WebIdeHandlerImpl
-import org.jetbrains.webdemo.server.webIde.WebIdeHandler
-import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.server.Attention
-import javax.servlet.ServletConfig
+import org.jetbrains.webdemo.server.webIde.WebIdeHandler
+import org.jetbrains.webdemo.server.webIde.WebIdeHandlerImpl
 
 open class WebIdeRequestHandler(webIdeHandlerInitializer: () -> WebIdeHandler = { WebIdeHandlerImpl() } // for lazy initialization
         ): BaseRequestHandler() {

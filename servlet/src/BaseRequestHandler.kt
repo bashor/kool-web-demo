@@ -18,22 +18,21 @@ package org.jetbrains.webdemo.servlet
 
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
+import javax.naming.Context
+import javax.naming.InitialContext
+import javax.naming.NamingException
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpUtils
+import org.jetbrains.webdemo.common.Settings
 import org.jetbrains.webdemo.common.utils.StatusCode
+import org.jetbrains.webdemo.common.utils.error
 import org.jetbrains.webdemo.common.utils.header
 import org.jetbrains.webdemo.common.utils.status
 import org.jetbrains.webdemo.common.utils.write
-import org.jetbrains.webdemo.common.utils.error
 import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
-import javax.naming.InitialContext
-import javax.naming.Context
-import javax.naming.NamingException
 import org.jetbrains.webdemo.server.Settings.constants.*
-import org.jetbrains.webdemo.common.Settings
-import javax.servlet.ServletConfig
 
 abstract class BaseRequestHandler: HttpServlet() {
 

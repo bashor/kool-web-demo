@@ -16,19 +16,15 @@
 
 package org.jetbrains.webdemo.server.webIde
 
+import java.io.File
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
+import org.jetbrains.webdemo.server.Settings
+import org.jetbrains.webdemo.server.webIde.domHelpers.toDocument
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import kotlin.test.assertNotNull
-import kotlin.test.expect
-import kotlin.test.assertTrue
-import kotlin.test.assertEquals
-
-import org.jetbrains.webdemo.server.Attention
-import org.jetbrains.webdemo.server.webIde.domHelpers.toDocument
-import org.jetbrains.webdemo.server.Settings
-import org.jetbrains.webdemo.common.utils.json.toJsonString
-import java.io.File
 
 RunWith(javaClass<JUnit4>())
 class HelpLoaderTests {

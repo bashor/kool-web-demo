@@ -16,9 +16,5 @@
 
 package org.jetbrains.webdemo.common.utils.io
 
-import java.io.StringReader
-import java.io.Reader
-import org.xml.sax.InputSource
-
 //fixme replace String.reader implementation in StringJVM to String.reader()
 //inline public fun String.reader(): StringReader = StringReader(this)

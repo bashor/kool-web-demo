@@ -17,10 +17,6 @@
 package org.jetbrains.webdemo.server.Settings
 
 import java.io.File
-import javax.naming.Context
-import javax.naming.InitialContext
-import javax.naming.NamingException
-import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 import org.jetbrains.webdemo.common.Settings
 import org.jetbrains.webdemo.server.Settings.constants.PROP_APP_HOME
 

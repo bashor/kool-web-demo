@@ -19,12 +19,11 @@ package org.jetbrains.webdemo.server.webIde
 import java.io.File
 import java.util.ArrayList
 import org.jetbrains.webdemo.common.*
-import org.jetbrains.webdemo.common.utils.sort
 import org.jetbrains.webdemo.common.utils.files.baseName
 import org.jetbrains.webdemo.common.utils.files.div
-import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
-import java.io.FileFilter
+import org.jetbrains.webdemo.common.utils.sort
 import org.jetbrains.webdemo.server.Attention
+import org.jetbrains.webdemo.server.ExceptionAnalyzerUtils.sendToAnalyzer
 
 private val FILES_PROP = "files"
 private val TYPE_PROP = "type"

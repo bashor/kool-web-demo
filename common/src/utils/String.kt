@@ -16,8 +16,6 @@
 
 package org.jetbrains.webdemo.common.utils
 
-import java.io.StringReader
-
 inline public fun String.stripMargin(marginChar: Char = '|'): String =
         this.reader.useLines {
             it.map {

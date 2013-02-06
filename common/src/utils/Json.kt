@@ -16,9 +16,7 @@
 
 package org.jetbrains.webdemo.common.utils.json
 
-import org.jetbrains.webdemo.common.*
 import org.json.JSONArray
-import org.json.JSONObject
 
 inline fun <T> Collection<T>.toJsonString(): String {
     val json = JSONArray()

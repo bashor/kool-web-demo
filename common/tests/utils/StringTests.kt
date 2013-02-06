@@ -16,10 +16,10 @@
 
 package org.jetbrains.webdemo.common.utils
 
+import kotlin.test.assertEquals
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import kotlin.test.assertEquals
 
 RunWith(javaClass<JUnit4>())
 public class StringTests {

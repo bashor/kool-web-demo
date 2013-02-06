@@ -20,12 +20,12 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import javax.servlet.http.HttpServletResponse
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.jetbrains.webdemo.common.tests.helpers.ifCall
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
-import kotlin.test.assertTrue
 
 RunWith(javaClass<JUnit4>())
 public class HttpServletResponseExtensionsTests {

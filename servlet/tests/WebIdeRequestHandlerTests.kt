@@ -16,17 +16,17 @@
 
 package org.jetbrains.webdemo.servlet
 
+import kotlin.test.assertEquals
+import kotlin.test.fail
+import org.jetbrains.webdemo.common.CachedContent
+import org.jetbrains.webdemo.common.ContentSnapshot
+import org.jetbrains.webdemo.common.ExampleHolder
+import org.jetbrains.webdemo.common.VersionedContent
+import org.jetbrains.webdemo.common.utils.json.toJsonString
+import org.jetbrains.webdemo.server.webIde.WebIdeHandler
 import org.junit.Test as test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.jetbrains.webdemo.server.webIde.WebIdeHandler
-import org.jetbrains.webdemo.common.VersionedContent
-import org.jetbrains.webdemo.common.ExampleHolder
-import org.jetbrains.webdemo.common.ContentSnapshot
-import kotlin.test.fail
-import kotlin.test.assertEquals
-import org.jetbrains.webdemo.common.utils.json.toJsonString
-import org.jetbrains.webdemo.common.CachedContent
 
 RunWith(javaClass<JUnit4>())
 public class WebIdeRequestHandlerTests {

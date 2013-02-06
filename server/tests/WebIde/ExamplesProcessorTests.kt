@@ -23,11 +23,37 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import org.jetbrains.webdemo.common.*
 import kotlin.dom.removeClass
+import kotlin.test.failsWith
 
-//RunWith(javaClass<JUnit4>())
-//public class ExamplesProcessorTests {
-//    //todo
-//}
+RunWith(javaClass<JUnit4>())
+public class ExamplesProcessorTests {
+    test fun `call with invalid path`() {
+        failsWith(javaClass<InternalError>()) {
+            ExamplesProcessor(versionedContentMock, "invalid path") { (file, map) -> } .snapshot()
+        }
+    }
+
+    test fun `check processor calling`() {
+        var called = false
+        ExamplesProcessor(versionedContentMock) {(file, map) -> called = true} .snapshot()
+
+        assertTrue(called)
+    }
+
+    test fun `check version`() {
+        val exampleProcessor = ExamplesProcessor(versionedContentMock) {(file, map) -> }
+        var i = versionedContentMock.version() + 1
+
+        assertEquals(i++, exampleProcessor.version());
+        assertEquals(i, exampleProcessor.version());
+    }
+
+    private val versionedContentMock = object : VersionedContent<List<Map<String, String>>> {
+        private var i: Long = 0
+        override fun version(): Long = i++
+        override fun snapshot(): ContentSnapshot<List<Map<String, String>>> = ContentSnapshot(version(), arrayListOf())
+    }
+}
 
 RunWith(javaClass<JUnit4>())
 public class TransformRawExamplesListToMapTests {
@@ -37,17 +63,17 @@ public class TransformRawExamplesListToMapTests {
 
     test fun `skiping items without name`() {
         val input = arrayListOf<Map<String, String>>(
-                mapOf(NAME_PROP to "name1",
+          /*1*/ mapOf(NAME_PROP to "name1",
                         TEXT_PROP to "text1",
                         TARGET_PROP to "target1",
                         ARGS_PROP to "arg1",
                         SOURCE_PROP to "source1"),
-                mapOf(//without name
+          /*2*/ mapOf(//without name
                         TEXT_PROP to "text2",
                         TARGET_PROP to "target2",
                         ARGS_PROP to "arg1 arg2",
                         SOURCE_PROP to "source2"),
-                mapOf(NAME_PROP to "name3",
+          /*3*/ mapOf(NAME_PROP to "name3",
                         TEXT_PROP to "text3",
                         TARGET_PROP to "target3",
                         ARGS_PROP to "arg3",

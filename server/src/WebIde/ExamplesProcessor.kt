@@ -22,6 +22,7 @@ import org.jetbrains.webdemo.server.Settings
 
 class ExamplesProcessor<R>(
         helpForExamples: VersionedContent<List<Map<String, String>>>,
+        val exampleDirectoryPath: String = Settings.EXAMPLES_DIRECTORY_PATH,
         val processor: (File, Map<String, Map<String, String>>) -> R): VersionedContent<R> {
 
     val cachedHelpForExamples = CachedContent(helpForExamples, { it })
@@ -29,7 +30,7 @@ class ExamplesProcessor<R>(
     override fun version(): Long = cachedHelpForExamples.source.version()
 
     override fun snapshot(): ContentSnapshot<R> {
-        val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
+        val root = File(exampleDirectoryPath)
         if (!root.exists()) {
             throw InternalError("Root directory of Examples doesn't exists.\nSettings.EXAMPLES_DIRECTORY_PATH = \"${Settings.EXAMPLES_DIRECTORY_PATH}\"")
         }

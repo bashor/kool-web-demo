@@ -21,7 +21,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import kotlin.test.assertNotNull
 import kotlin.test.expect
-import kotlin.test.failsWith
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
 

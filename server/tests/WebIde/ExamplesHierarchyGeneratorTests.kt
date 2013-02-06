@@ -65,7 +65,7 @@ public class ExamplesHierarchyGeneratorTests {
         val helpForExamples = HelpLoader(Settings.HELP_FOR_EXAMPLES_PATH, EXAMPLE_TAG)
         val root = File(Settings.EXAMPLES_DIRECTORY_PATH)
         //fixme it's workaround for avoiding compiling problems with help.content()
-        val content = helpForExamples.snapshot().content
+        val content = helpForExamples.content()
 
         val errors = arrayListOf<String>()
         val examples = generateHierarchy(root, transformRawExamplesListToMap(content), { errors.add(it.message) } )

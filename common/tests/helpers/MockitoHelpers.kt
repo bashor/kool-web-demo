@@ -19,5 +19,4 @@ package org.jetbrains.webdemo.common.tests.helpers
 import org.mockito.Mockito.*
 import org.mockito.stubbing.OngoingStubbing
 
-//fixme (replace T? to T) after issue KT-3313 will be fixed
-inline fun <T> ifCall(methodCall: T?): OngoingStubbing<T> = `when`(methodCall)
+inline fun <T> ifCall(methodCall: T): OngoingStubbing<T> = `when`(methodCall)

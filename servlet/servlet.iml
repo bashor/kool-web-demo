@@ -27,7 +27,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinRuntime" level="project" />
     <orderEntry type="library" name="servlet-api" level="project" />
-    <orderEntry type="library" name="javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="servlet-api-2.5-sources" level="project" />
     <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="server" />
     <orderEntry type="library" name="log4j-1.2.16" level="project" />

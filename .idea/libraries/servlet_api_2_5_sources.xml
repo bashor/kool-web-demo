@@ -1,8 +1,5 @@
 <component name="libraryTable">
   <library name="servlet-api-2.5-sources">
-    <ANNOTATIONS>
-      <root url="file://$PROJECT_DIR$/annotations" />
-    </ANNOTATIONS>
     <CLASSES />
     <JAVADOC />
     <SOURCES>

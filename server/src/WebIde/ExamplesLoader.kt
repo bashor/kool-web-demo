@@ -50,7 +50,7 @@ private fun loadExamples(root: File, name2rawExamples: Map<String, Map<String, S
 
                         ExampleHolder(name = baseName,
                                 text = rawExample[TEXT_PROP].orEmpty(),
-                                targets = if (targets.notEmpty()) targets else DEFAULT_TARGETS,
+                                targets = if (targets.isNotEmpty()) targets else DEFAULT_TARGETS,
                                 args = rawExample[ARGS_PROP].orEmpty(),
                                 source = source)
                     } else {

@@ -91,7 +91,7 @@ private fun generateHierarchy(root: File, name2rawExamples: Map<String, Map<Stri
         return hierarchy
     }
 
-    if (additionally.notEmpty()) {
+    if (additionally.isNotEmpty()) {
         if (orderFile.exists())
             errorReporter(Attention("Order file '${orderFile.path}' doesn't contain some files."))
 

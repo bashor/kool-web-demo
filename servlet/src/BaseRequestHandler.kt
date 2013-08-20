@@ -92,7 +92,7 @@ abstract class BaseRequestHandler: HttpServlet() {
 
         val command = params["do"]
 
-        if (command != null && command.notEmpty()) {
+        if (command != null && command.isNotEmpty()) {
             val responseBody =
                     try {
                         handle(command[0], params)

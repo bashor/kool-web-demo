@@ -35,15 +35,15 @@ import org.xml.sax.SAXException
 inline fun NodeList.iterator(): NodeListIterator = NodeListIterator(this)
 
 val Node.name: String
-    inline get() = this.getNodeName().orEmpty()
+    [inline] get() = this.getNodeName().orEmpty()
 
 val Node.value: String
-    inline get() = this.getNodeValue().orEmpty()
+    [inline] get() = this.getNodeValue().orEmpty()
 
 private fun NamedNodeMap.get(i: Int) = this.item(i)
 
 val Node.inner: String
-    inline get() {
+    [inline] get() {
         val children = this.getChildNodes()
         if (children == null)
             return ""

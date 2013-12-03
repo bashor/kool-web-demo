@@ -18,7 +18,7 @@ package org.jetbrains.webdemo.common.utils
 
 import javax.servlet.http.HttpServletResponse
 
-inline public fun HttpServletResponse.write(body: String): Boolean {
+public fun HttpServletResponse.write(body: String): Boolean {
     this.getWriter() use {
         it.write(body)
     }
@@ -26,12 +26,12 @@ inline public fun HttpServletResponse.write(body: String): Boolean {
     return !this.getWriter().checkError()
 }
 
-inline public fun HttpServletResponse.status(statusCode: StatusCode): HttpServletResponse {
+public fun HttpServletResponse.status(statusCode: StatusCode): HttpServletResponse {
     this.setStatus(statusCode.value)
     return this
 }
 
-inline public fun HttpServletResponse.error(statusCode: StatusCode, message: String? = null) {
+public fun HttpServletResponse.error(statusCode: StatusCode, message: String? = null) {
     if (message == null)
         this.sendError(statusCode.value)
     else

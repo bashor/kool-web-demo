@@ -16,7 +16,7 @@
 
 package org.jetbrains.webdemo.common.utils
 
-inline public fun String.stripMargin(marginChar: Char = '|'): String =
+public fun String.stripMargin(marginChar: Char = '|'): String =
         this.reader.useLines {
             it.map {
                 var pos = 0
